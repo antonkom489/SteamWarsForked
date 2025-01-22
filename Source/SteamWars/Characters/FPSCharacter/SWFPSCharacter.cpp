@@ -35,8 +35,6 @@ ASWFPSCharacter::ASWFPSCharacter()
 	GetMesh()->bCastHiddenShadow = true;
 
 	GetCharacterMovement()->bOrientRotationToMovement = 0;
-
-	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
 }
 
 void ASWFPSCharacter::PossessedBy(AController* NewController)
@@ -111,7 +109,6 @@ void ASWFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 		EnhancedInputComponent->BindAction(InputActions->Shoot, ETriggerEvent::Triggered, this, &ASWFPSCharacter::FairShootHandle);
 	}
-
 }
 
 void ASWFPSCharacter::Move(const FInputActionValue& Value)
@@ -159,21 +156,6 @@ void ASWFPSCharacter::StopJumping()
 void ASWFPSCharacter::FairShootHandle()
 {
 	SetLocalInputToASC(true, ESWAbilityInputID::Shoot);
-}
-
-void ASWFPSCharacter::FinishDying()
-{
-	/*if (GetLocalRole() == ROLE_Authority)
-	{
-		AGASDocumentationGameMode* GM = Cast<AGASDocumentationGameMode>(GetWorld()->GetAuthGameMode());
-
-		if (GM)
-		{
-			GM->HeroDied(GetController());
-		}
-	}*/
-	
-	Super::FinishDying();
 }
 
 void ASWFPSCharacter::InitAbilitySystemComponent()

@@ -10,27 +10,34 @@
 ASWBaseCharacter::ASWBaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	bAbilitiesInitialized = false;
 	
 	CharacterEquipmentComponent = CreateDefaultSubobject<USWCharacterEquipmentComponent>(TEXT("CharacterEquipment"));
-
-	HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
-	HitDirectionBackTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Back"));
-	HitDirectionRightTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Right"));
-	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));
+	
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
+
+	/*HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
+	HitDirectionBackTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Back"));
+	HitDirectionRightTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Right"));
+	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));*/
 }
 
 UAbilitySystemComponent* ASWBaseCharacter::GetAbilitySystemComponent() const
 {
-	return AbilitySystemComponent.Get();
+	if(AbilitySystemComponent.IsValid())
+	{
+		return AbilitySystemComponent.Get();
+	}
+	return nullptr;
 }
 
 USWAttributeSet* ASWBaseCharacter::GetAttributeSet() const
 {
-	return AttributeSet.Get();
+	if(AttributeSet.IsValid())
+	{
+		return AttributeSet.Get();
+	}
+	return nullptr;
 }
 
 int32 ASWBaseCharacter::GetAbilityLevel(ESWAbilityInputID AbilityID) const
@@ -90,10 +97,8 @@ void ASWBaseCharacter::Die()
 	{
 		PlayAnimMontage(DeathMontage);
 	}
-	else
-	{
-		FinishDying();
-	}
+	
+	FinishDying();
 }
 
 void ASWBaseCharacter::FinishDying()
@@ -101,7 +106,7 @@ void ASWBaseCharacter::FinishDying()
 	Destroy();
 }
 
-EGDHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
+/*EGDHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
 {
 	const FVector& ActorLocation = GetActorLocation();
 	float DistanceToFrontBackPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorRightVector());
@@ -157,7 +162,7 @@ void ASWBaseCharacter::PlayHitReact_Implementation(FGameplayTag HitDirection, AA
 bool ASWBaseCharacter::PlayHitReact_Validate(FGameplayTag HitDirection, AActor* DamageCauser)
 {
 	return true;
-}
+}*/
 
 int32 ASWBaseCharacter::GetCharacterLevel() const
 {
@@ -171,7 +176,11 @@ int32 ASWBaseCharacter::GetCharacterLevel() const
 
 const USWCharacterEquipmentComponent* ASWBaseCharacter::GetEquipmentComponent() const
 {
-	return CharacterEquipmentComponent;
+	if(CharacterEquipmentComponent)
+	{
+		return CharacterEquipmentComponent;
+	}
+	return nullptr;
 }
 
 float ASWBaseCharacter::GetHealth() const

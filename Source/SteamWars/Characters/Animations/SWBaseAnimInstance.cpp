@@ -18,6 +18,8 @@ void USWBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	UCharacterMovementComponent* CharacterMovement = CachedBaseCharacter->GetCharacterMovement();
 
+	AimRotation = CachedBaseCharacter->GetBaseAimRotation();
+	
 	AController* Controller = CachedBaseCharacter->GetController();
 	if(IsValid(Controller))
 	{

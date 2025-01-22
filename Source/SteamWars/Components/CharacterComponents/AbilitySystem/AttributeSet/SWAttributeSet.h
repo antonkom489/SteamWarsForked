@@ -80,8 +80,8 @@ protected:
 	virtual void OnRep_CharacterLevel(const FGameplayAttributeData& OldCharacterLevel);
 
 private:
-	FGameplayTag HitDirectionFrontTag;
+	/*FGameplayTag HitDirectionFrontTag;
 	FGameplayTag HitDirectionBackTag;
 	FGameplayTag HitDirectionRightTag;
-	FGameplayTag HitDirectionLeftTag;
+	FGameplayTag HitDirectionLeftTag;*/
 };

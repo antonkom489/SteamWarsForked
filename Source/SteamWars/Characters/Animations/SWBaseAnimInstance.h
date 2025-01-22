@@ -26,6 +26,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character | Animations")
 	bool bIsCrouching = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character | Animations")
+	FRotator AimRotation = FRotator::ZeroRotator;
+
 	/*-----------------TO-DO-----------------
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character animation")
 	bool bIsSprining = false;

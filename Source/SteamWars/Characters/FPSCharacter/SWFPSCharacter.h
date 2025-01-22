@@ -22,8 +22,6 @@ public:
 	virtual void OnRep_PlayerState() override;
 	
 	USkeletalMeshComponent* GetFPSMesh() const { return FirstPersonMeshComponent; }
-
-	virtual void FinishDying() override;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -41,8 +39,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input")
 	class UInputDataAsset* InputActions;
 	/*------------------------------------------------*/
-
-	FGameplayTag DeadTag;
 	
 public:
 	virtual void Tick(float DeltaTime) override;
@@ -58,9 +54,10 @@ private:
 	virtual void Jump() override;
 	virtual void StopJumping() override;
 	/*---------------------------------------*/
+	/*---------------Abilities---------------*/
 	void FairShootHandle();
+	/*---------------------------------------*/
 	
-
 	void InitAbilitySystemComponent();
 
 	void SetLocalInputToASC(bool bIsPressed, const ESWAbilityInputID AbilityInputID);

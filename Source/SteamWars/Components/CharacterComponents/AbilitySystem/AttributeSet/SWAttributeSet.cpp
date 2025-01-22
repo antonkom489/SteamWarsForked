@@ -6,10 +6,10 @@
 
 USWAttributeSet::USWAttributeSet()
 {
-	HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
+	/*HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
 	HitDirectionBackTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Back"));
 	HitDirectionRightTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Right"));
-	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));
+	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));*/
 }
 
 void USWAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -124,14 +124,14 @@ void USWAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 
 			if (!TargetCharacter->IsAlive())
 			{
-				//UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("%s() %s is NOT alive when receiving damage"), TEXT(__FUNCTION__), *TargetCharacter->GetName());
 			}
 
 			// Apply the health change and then clamp it
 			const float NewHealth = GetHealth() - LocalDamageDone;
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 
-			if (TargetCharacter && WasAlive)
+			/*if (TargetCharacter && WasAlive)
 			{
 				// This is the log statement for damage received. Turned off for live games.
 				//UE_LOG(LogTemp, Log, TEXT("%s() %s Damage Received: %f"), TEXT(__FUNCTION__), *GetOwningActor()->GetName(), LocalDamageDone);
@@ -172,8 +172,8 @@ void USWAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 					{
 						PC->ShowDamageNumber(LocalDamageDone, TargetCharacter);
 					}
-				}*/
-			}
+				}#1#
+			}*/
 		}
 	}// Damage
 	else if (Data.EvaluatedData.Attribute == GetHealthAttribute())

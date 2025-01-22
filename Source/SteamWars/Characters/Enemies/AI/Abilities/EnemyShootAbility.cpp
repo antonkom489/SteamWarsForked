@@ -38,14 +38,16 @@ void UEnemyShootAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle
 
 		Range = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetFiringRange();
 		Damage = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetDamage();
+
 		
 		FVector PVP = Hero->GetActorLocation();
 		FRotator PVR = Hero->GetActorRotation();
 		
 		FVector ViewDirection = PVR.RotateVector(FVector::ForwardVector);
-		
-		FVector ShotStart = PVP + FVector(50.0f, 0, 50.0f);
-		FVector ShotEnd = ShotStart + ViewDirection * 1000;
+
+		FVector ShotStart = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetComponentLocation();
+		//FVector ShotStart = PVP + FVector(50.0f, 0, 50.0f);
+		FVector ShotEnd = ShotStart + ViewDirection * 10000;
 
 		FHitResult ShotHitResult;
 

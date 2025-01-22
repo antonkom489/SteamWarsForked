@@ -62,8 +62,9 @@ void UFireShoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const 
 		Range = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetFiringRange();
 		Damage = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetDamage();
 		Threat = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetThreat();
-		
-		FVector ShotStart = PlayerViewPoint;
+
+		FVector ShotStart = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetComponentLocation();
+		//FVector ShotStart = PlayerViewPoint;
 		FVector ShotEnd = PlayerViewPoint + ViewDirection * Range;
 		FVector ShotEndThreat = PlayerViewPoint + ViewDirection * Range;
 		FCollisionQueryParams CollisionParams;
@@ -77,24 +78,6 @@ void UFireShoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const 
 			DrawDebugSphere(GetWorld(), ShotEnd, 10.f, 24, FColor::Red, false, 1.f);
 		}
 		DrawDebugLine(GetWorld(), ShotStart, ShotEnd, FColor::Green, false, 1.f, 0, 0.3f);
-
-		TArray<FHitResult> ThreatHitResult;
-		if(GetWorld()->SweepMultiByChannel(ThreatHitResult, ShotStart, ShotEndThreat,FQuat::Identity, ECC_Bullet, FCollisionShape::MakeSphere(Threat), CollisionParams))
-		{
-			for(const auto THitResult : ThreatHitResult)
-			{
-				DrawDebugSphere(GetWorld(), THitResult.Location, Threat, 24, FColor::Blue, false, 1.f);
-				if (AEnemyBaseCharacter* Enemy = Cast<AEnemyBaseCharacter>(THitResult.GetActor()))
-				{
-					Enemy->Threated(Hero->GetActorLocation());
-					UE_LOG(LogTemp, Warning, TEXT("Threat detected: %s"), *Enemy->GetName());
-				}
-				else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Threat detected, but no actor found."));
-				}
-			}
-		} 
 		
 		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(ResponseGameplayEffect, GetAbilityLevel());
 		
@@ -128,7 +111,7 @@ void UFireShoot::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGame
 	const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
-	
+	UE_LOG(LogTemp, Warning, TEXT("EndAbility!"));
 	if(Task.IsValid())
 	{
 		Task->ExternalCancel();
@@ -137,11 +120,13 @@ void UFireShoot::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGame
 
 void UFireShoot::OnCancelled(FGameplayTag EventTag, FGameplayEventData EventData)
 {
+	UE_LOG(LogTemp, Warning, TEXT("OnCancelled!"));
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, true);
 }
 
 void UFireShoot::EventReceived(FGameplayTag EventTag, FGameplayEventData Payload)
 {
+	UE_LOG(LogTemp, Warning, TEXT("EventReceived!"));
 	if (EventTag == FGameplayTag::RequestGameplayTag(FName("Event.Montage.EndAbility")))
 	{
 		EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
@@ -171,7 +156,7 @@ void UFireShoot::EventReceived(FGameplayTag EventTag, FGameplayEventData Payload
 		Range = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetFiringRange();
 		Damage = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetDamage();
 		
-		FVector ShotStart = PlayerViewPoint;
+		FVector ShotStart = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetRelativeLocation();
 		FVector ShotEnd = PlayerViewPoint + ViewDirection * Range;
 
 		FHitResult ShotHitResult;
@@ -180,6 +165,10 @@ void UFireShoot::EventReceived(FGameplayTag EventTag, FGameplayEventData Payload
 		{
 			ShotEnd = ShotHitResult.Location;
 			DrawDebugSphere(GetWorld(), ShotEnd, 10.f, 24, FColor::Red, false, 1.f);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("NotLineTrace!"));
 		}
 		DrawDebugLine(GetWorld(), ShotStart, ShotEnd, FColor::Green, false, 1.f, 0, 0.3f);
 
@@ -193,16 +182,18 @@ void UFireShoot::EventReceived(FGameplayTag EventTag, FGameplayEventData Payload
 			DamageEffectSpecHandle = ASC->MakeOutgoingSpec(
 						ResponseGameplayEffect, 1, ASC->MakeEffectContext());
 			
-			/*DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(
-				FGameplayTag::RequestGameplayTag(FName("DamageData.Base")), Damage);*/
+			DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(
+				FGameplayTag::RequestGameplayTag(FName("DamageData.Base")), Damage);
 		
 			ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
 		}
 		
 	}
+	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }
 
 void UFireShoot::OnCompleted(FGameplayTag EventTag, FGameplayEventData EventData)
 {
+	UE_LOG(LogTemp, Warning, TEXT("OnCompleted!"));
 	EndAbility(CurrentSpecHandle, CurrentActorInfo, CurrentActivationInfo, true, false);
 }
