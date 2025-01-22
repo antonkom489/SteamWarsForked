@@ -15,9 +15,7 @@ class STEAMWARS_API USWCharacterEquipmentComponent : public UActorComponent
 public:
 	EEquipableItemType GetCurrentEquippedItemType() const;
 
-	void FireShoot();
-
-	ARangeWeaponItem* GetCurrentWeapon() const { return CurrentEquippedWeapon; };
+	ARangeWeaponItem* GetCurrentWeapon() const { return CurrentEquippedWeapon.Get(); };
 	
 protected:
 	virtual void BeginPlay() override;
@@ -28,7 +26,7 @@ protected:
 private:
 	void CreateLoadout();
 	
-	ARangeWeaponItem* CurrentEquippedWeapon;
+	TWeakObjectPtr<ARangeWeaponItem> CurrentEquippedWeapon;
 	TWeakObjectPtr<class ASWBaseCharacter> CachedBaseCharacter;
 	const FName SocketCharacterWeapon = FName("CharacterWeaponSocket");
 };

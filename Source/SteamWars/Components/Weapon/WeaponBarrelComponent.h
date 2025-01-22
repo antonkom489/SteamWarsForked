@@ -16,10 +16,9 @@ class STEAMWARS_API UWeaponBarrelComponent : public USceneComponent
 public:
 	UWeaponBarrelComponent();
 
-	void Shot(FVector ShotStart, FVector ShotDirection);
-
 	float GetFiringRange() const { return FiringRange; };
 	float GetDamage() const { return Damage; };
+	float GetThreat() const { return Threat; };
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Barrel Attributes")
@@ -27,6 +26,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Barrel Attributes")
 	float Damage = 10.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Barrel Attributes")
+	float Threat = 15.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> ResponseGameplayEffect;

@@ -14,8 +14,6 @@ class STEAMWARS_API ARangeWeaponItem : public AEquipableItem
 public:
 	ARangeWeaponItem();
 
-	void FireShoot();
-
 	UWeaponBarrelComponent* GetWeaponBarrelComponent() const { return WeaponBarrel; }
 	
 protected:

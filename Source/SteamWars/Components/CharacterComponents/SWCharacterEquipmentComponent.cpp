@@ -8,20 +8,12 @@ EEquipableItemType USWCharacterEquipmentComponent::GetCurrentEquippedItemType() 
 {
 	EEquipableItemType Result = EEquipableItemType::None;
 	
-	if(IsValid(CurrentEquippedWeapon))
+	if(IsValid(CurrentEquippedWeapon.Get()))
 	{
 		Result = CurrentEquippedWeapon->GetItemType();
 	}
 	
 	return Result;
-}
-
-void USWCharacterEquipmentComponent::FireShoot()
-{
-	if(IsValid(CurrentEquippedWeapon))
-	{
-		CurrentEquippedWeapon->FireShoot();
-	}
 }
 
 void USWCharacterEquipmentComponent::BeginPlay()

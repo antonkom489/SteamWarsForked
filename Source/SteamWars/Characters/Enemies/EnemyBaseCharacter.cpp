@@ -104,3 +104,19 @@ void AEnemyBaseCharacter::StunTagChanged(const FGameplayTag CallbackTag, int32 N
 	}
 }
 
+void AEnemyBaseCharacter::Threated_Implementation(FVector ThreatedSource)
+{
+	
+}
+
+void AEnemyBaseCharacter::EnterCover_Implementation()
+{
+	bIsInCover = true;
+	Crouch();
+}
+
+void AEnemyBaseCharacter::ShotAI()
+{
+	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(ESWAbilityInputID::ShootAI));
+}
+

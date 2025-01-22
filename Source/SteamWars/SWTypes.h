@@ -19,7 +19,8 @@ enum class ESWAbilityInputID : uint8
 	None,
 	Confirm,
 	Cancel,
-	Shoot
+	Shoot,
+	ShootAI
 };
 
 UENUM(BlueprintType)

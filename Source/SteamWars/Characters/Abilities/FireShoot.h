@@ -44,5 +44,5 @@ private:
 	
 	float Range;
 	float Damage;
-	
+	float Threat;
 };

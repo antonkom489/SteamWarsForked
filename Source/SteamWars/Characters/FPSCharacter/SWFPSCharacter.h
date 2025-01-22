@@ -23,8 +23,6 @@ public:
 	
 	USkeletalMeshComponent* GetFPSMesh() const { return FirstPersonMeshComponent; }
 
-	void FairShoot();
-
 	virtual void FinishDying() override;
 	
 protected:

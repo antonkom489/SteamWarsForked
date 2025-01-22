@@ -18,27 +18,5 @@ ARangeWeaponItem::ARangeWeaponItem()
 	WeaponBarrel->SetupAttachment(WeaponMesh, SocketWeaponMuzzle);
 }
 
-void ARangeWeaponItem::FireShoot()
-{
-	if(WeaponBarrel)
-	{
-		checkf(GetOwner()->IsA<ASWFPSCharacter>(), TEXT("ARangeWeaponItem::FireShoot() only ASWFPSCharacter can be an owner of range weapon"));
-		ASWFPSCharacter* CharacterOwner = StaticCast<ASWFPSCharacter*>(GetOwner());
-
-		APlayerController* Controller = CharacterOwner->GetController<APlayerController>();
-
-		if(!IsValid(Controller)) return;
-
-		FVector PlayerViewPoint;
-		FRotator PlayerViewRotation;
-		
-		Controller->GetPlayerViewPoint(PlayerViewPoint, PlayerViewRotation);
-
-		FVector ViewDirection = PlayerViewRotation.RotateVector(FVector::ForwardVector);
-		
-		WeaponBarrel->Shot(PlayerViewPoint, ViewDirection);
-	}
-}
-
 
 

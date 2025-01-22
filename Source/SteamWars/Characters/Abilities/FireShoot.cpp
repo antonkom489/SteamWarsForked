@@ -3,9 +3,9 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 #include "Actors/Equipment/Weapons/RangeWeaponItem.h"
+#include "Characters/Enemies/EnemyBaseCharacter.h"
 #include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Components/CharacterComponents/SWCharacterEquipmentComponent.h"
-#include "Components/CharacterComponents/AbilitySystem/AbilityTasks/AbilityTask_SuccessFailEvent.h"
 #include "Components/CharacterComponents/AbilitySystem/AbilityTasks/SW_PlayMontageAndWaitForEvent.h"
 #include "Components/Weapon/WeaponBarrelComponent.h"
 
@@ -61,9 +61,13 @@ void UFireShoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const 
 
 		Range = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetFiringRange();
 		Damage = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetDamage();
+		Threat = Hero->GetEquipmentComponent()->GetCurrentWeapon()->GetWeaponBarrelComponent()->GetThreat();
 		
 		FVector ShotStart = PlayerViewPoint;
 		FVector ShotEnd = PlayerViewPoint + ViewDirection * Range;
+		FVector ShotEndThreat = PlayerViewPoint + ViewDirection * Range;
+		FCollisionQueryParams CollisionParams;
+		CollisionParams.AddIgnoredActor(Hero);
 
 		FHitResult ShotHitResult;
 
@@ -74,6 +78,24 @@ void UFireShoot::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const 
 		}
 		DrawDebugLine(GetWorld(), ShotStart, ShotEnd, FColor::Green, false, 1.f, 0, 0.3f);
 
+		TArray<FHitResult> ThreatHitResult;
+		if(GetWorld()->SweepMultiByChannel(ThreatHitResult, ShotStart, ShotEndThreat,FQuat::Identity, ECC_Bullet, FCollisionShape::MakeSphere(Threat), CollisionParams))
+		{
+			for(const auto THitResult : ThreatHitResult)
+			{
+				DrawDebugSphere(GetWorld(), THitResult.Location, Threat, 24, FColor::Blue, false, 1.f);
+				if (AEnemyBaseCharacter* Enemy = Cast<AEnemyBaseCharacter>(THitResult.GetActor()))
+				{
+					Enemy->Threated(Hero->GetActorLocation());
+					UE_LOG(LogTemp, Warning, TEXT("Threat detected: %s"), *Enemy->GetName());
+				}
+				else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Threat detected, but no actor found."));
+				}
+			}
+		} 
+		
 		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(ResponseGameplayEffect, GetAbilityLevel());
 		
 		// Pass the damage to the Damage Execution Calculation through a SetByCaller value on the GameplayEffectSpec

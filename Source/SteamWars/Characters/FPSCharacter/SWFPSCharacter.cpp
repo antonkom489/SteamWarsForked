@@ -161,11 +161,6 @@ void ASWFPSCharacter::FairShootHandle()
 	SetLocalInputToASC(true, ESWAbilityInputID::Shoot);
 }
 
-void ASWFPSCharacter::FairShoot()
-{
-	CharacterEquipmentComponent->FireShoot();
-}
-
 void ASWFPSCharacter::FinishDying()
 {
 	/*if (GetLocalRole() == ROLE_Authority)
