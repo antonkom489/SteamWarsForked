@@ -240,6 +240,7 @@ void ASWBaseCharacter::InitDefaultAttributes() const
 {
 	if (!AbilitySystemComponent.IsValid())
 	{
+		UE_LOG(LogTemp, Error, TEXT("%s() Missing ASC for %s."), *FString(__FUNCTION__), *GetName());
 		return;
 	}
 

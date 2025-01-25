@@ -115,8 +115,13 @@ void AEnemyBaseCharacter::EnterCover_Implementation()
 	Crouch();
 }
 
-void AEnemyBaseCharacter::ShotAI()
+void AEnemyBaseCharacter::ShootAI()
 {
 	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(ESWAbilityInputID::ShootAI));
+}
+
+void AEnemyBaseCharacter::ShotAI()
+{
+	AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(ESWAbilityInputID::ShotAI));
 }
 

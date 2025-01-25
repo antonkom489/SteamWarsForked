@@ -30,6 +30,9 @@ public:
 	virtual void EnterCover_Implementation();
 
 	UFUNCTION(BlueprintCallable)
+	void ShootAI();
+
+	UFUNCTION(BlueprintCallable)
 	void ShotAI();
 	
 protected:
