@@ -1,12 +1,11 @@
 ﻿#include "EnemyBaseCharacter.h"
 
-#include "Components/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
-#include "Components/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
+#include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
+#include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
 #include "Kismet/GameplayStatics.h"
 
-AEnemyBaseCharacter::AEnemyBaseCharacter()
+AEnemyBaseCharacter::AEnemyBaseCharacter(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	// Create ability system component, and set it to be explicitly replicated
 	HardRefAbilitySystemComponent = CreateDefaultSubobject<USWAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	HardRefAbilitySystemComponent->SetIsReplicated(true);
 

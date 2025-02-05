@@ -8,21 +8,107 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3380d1ad-32cb-4de7-b5f9-1c79f0b2605a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShotAbility.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShotAbility.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/Attributes/SWAmmoAtributeSet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/Attributes/SWAmmoAtributeSet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_LineTrace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_LineTrace.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_LineTraceWithBloom.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_LineTraceWithBloom.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_SphereTrace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_SphereTrace.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_Trace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGATA_Trace.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AbilityTasks/SWAT_ServerWaitForClientTargetData.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AbilityTasks/SWAT_ServerWaitForClientTargetData.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AbilityTasks/SWAT_WaitTargetDataUsingActor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AbilityTasks/SWAT_WaitTargetDataUsingActor.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AttributeSet/AmmoAttributeSet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AttributeSet/AmmoAttributeSet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWAbilityTpes.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWAbilityTpes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWBlueprintFunctionLibrary.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWBlueprintFunctionLibrary.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWDamageable.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWDamageable.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWGameplayEffectTypes.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWGameplayEffectTypes.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWTargetType.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWTargetType.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/Abilities/SWGA_CharacterJump.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/Abilities/SWGA_CharacterJump.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWFloatingStatusBarWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWFloatingStatusBarWidget.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWHUDReticle.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWHUDReticle.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWHUDWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/SteamWars/UI/SWHUDWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Meshes/SK_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Mannequin_UE4/Meshes/SK_Mannequin_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/MainArenaMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MainArenaMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/StepTestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/StepTestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/BP_EnemyTest2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BP_EncounterSpace.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BP_EncounterSpace.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BP_EnemyTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BP_EnemyTest.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_CallOutTarget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_CallOutTarget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_EnemyShootCover.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_EnemyShootCover.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_ShootFromCover.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy1/BT_ShootFromCover.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/GE_DefaultAttributes2.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/BP_FPSCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/BP_FPSCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy2/Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy2/Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Abilities/GA_FireShoot.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/BP_FPSCharacter.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/GameplayEffects/GE_DefaultAttributes.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/GameplayEffects/GE_DefaultAttributes.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/GameModes/BP_SWGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/GameModes/BP_SWGameMode.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/GameModes/DataTables/DT_SpawnWaveData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/GameModes/DataTables/DT_SpawnWaveData.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/HUD/Widgets/WBP_WaveMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/HUD/Widgets/WBP_WaveMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Weapons/Pistol/BP_Pistol.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Weapons/Pistol/BP_Pistol.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TestArms/Arms/Mesh/char_anims__3__Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TestArms/Arms/Mesh/char_anims__3__Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TestArms/Pistol/Mesh/pistol_anims.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TestArms/Pistol/Mesh/pistol_anims.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/TestArms/Pistol/Mesh/pistol_anims_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/TestArms/Pistol/Mesh/pistol_anims_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/EquipableItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/EquipableItem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/RangeWeaponItem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/RangeWeaponItem.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/RangeWeaponItem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Actors/Equipment/Weapons/RangeWeaponItem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Abilities/FireShoot.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Abilities/FireShoot.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/AIShoot.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/AIShoot.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShootAbility.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShootAbility.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShootAbility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShootAbility.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShotAbility.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/AI/Abilities/EnemyShotAbility.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/EnemyBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/EnemyBaseCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/EnemyBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/Enemies/EnemyBaseCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/Abilities/SWDamageExecCalculation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWDamageExecCalculation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/Abilities/SWDamageExecCalculation.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/SWDamageExecCalculation.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AbilityTasks/AbilityTask_SuccessFailEvent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/AbilityTasks/AbilityTask_SuccessFailEvent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AbilityTasks/AbilityTask_SuccessFailEvent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/AbilityTasks/AbilityTask_SuccessFailEvent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AbilityTasks/SW_PlayMontageAndWaitForEvent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/AbilityTasks/SW_PlayMontageAndWaitForEvent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AbilityTasks/SW_PlayMontageAndWaitForEvent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/Abilities/AbilityTasks/SW_PlayMontageAndWaitForEvent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/SWCharacterEquipmentComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/SWCharacterEquipmentComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/SWCharacterEquipmentComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/SWCharacterEquipmentComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/USaveGameSW.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/CharacterComponents/USaveGameSW.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/GameMode/SWGameMode.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/GameMode/SWGameMode.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/GameMode/SWGameMode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/GameMode/SWGameMode.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/SWTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/SWTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +135,16 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/AIModule/Classes/BehaviorTree/BTTaskNode.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Core/Public/Templates/IsPODType.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Core/Public/Templates/UnrealTypeTraits.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Engine/Classes/GameFramework/Pawn.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Engine/Private/Character.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/EnemyBaseCharacter.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/SWHUDWidget.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/SWPlayerController.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -61,21 +156,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Uproject.SteamWars.executor": "Run",
-    "git-widget-placeholder": "Nikita",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.language",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Uproject.SteamWars.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.language&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SteamWars" type="Uproject" factoryName="rider.uproject">
       <configuration_1>
@@ -173,6 +268,29 @@
       <workItem from="1737452301677" duration="2188000" />
       <workItem from="1737463933925" duration="4954000" />
       <workItem from="1737784123802" duration="5982000" />
+      <workItem from="1737966106378" duration="562000" />
+      <workItem from="1737971697009" duration="2671000" />
+      <workItem from="1737982230260" duration="595000" />
+      <workItem from="1738127168070" duration="5495000" />
+      <workItem from="1738224292133" duration="812000" />
+      <workItem from="1738225134829" duration="4009000" />
+      <workItem from="1738325441877" duration="4353000" />
+      <workItem from="1738394133900" duration="4696000" />
+      <workItem from="1738411545892" duration="2321000" />
+      <workItem from="1738482091637" duration="763000" />
+      <workItem from="1738482884417" duration="624000" />
+      <workItem from="1738483630521" duration="2958000" />
+      <workItem from="1738511524047" duration="3530000" />
+      <workItem from="1738565611361" duration="6958000" />
+      <workItem from="1738596186799" duration="1275000" />
+      <workItem from="1738615103147" duration="1252000" />
+      <workItem from="1738653833663" duration="4079000" />
+      <workItem from="1738662544155" duration="3433000" />
+      <workItem from="1738670168275" duration="2747000" />
+      <workItem from="1738700416984" duration="17274000" />
+      <workItem from="1738718633396" duration="9510000" />
+      <workItem from="1738731849499" duration="4712000" />
+      <workItem from="1738757975860" duration="4411000" />
     </task>
     <servers />
   </component>
@@ -181,6 +299,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

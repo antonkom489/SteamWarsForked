@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h"
+#include "Characters/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h"
 #include "EnemyShootAbility.generated.h"
 
 UCLASS()

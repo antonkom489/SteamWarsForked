@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Actor.h"
 #include "EquipableItem.generated.h"
 
@@ -17,7 +18,7 @@ class STEAMWARS_API AEquipableItem : public AActor
 	GENERATED_BODY()
 
 public:
-	EEquipableItemType GetItemType() const;	
+	EEquipableItemType GetItemType() const;
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Equipable Item")
 	EEquipableItemType ItemType;
