@@ -1,25 +1,28 @@
 ﻿#pragma once
 
+#include "UMySaveGame.h" // Подключите ваш класс сохранения
 #include "GameFramework/SaveGame.h"
+
 #include "USaveGameSW.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnSaveGameComplete, const FString&, SlotName, int32, UserIndex, bool, bSuccess);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnLoadGameComplete, const FString&, SlotName, int32, UserIndex, USaveGame*, LoadedGameData);
+
 
 UCLASS()
 class STEAMWARS_API USaveGameSW : public USaveGame
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FString PlayerName;
- 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
-	FString SaveSlotName;
- 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
-	uint32 ShootCount;
- 
-	USaveGameSW();
+	UFUNCTION(BlueprintCallable, Category = "SaveGame")
+	void SaveGameData(const FString& SlotName, int32 PlayerScore);
 
-	private:
-	void SaveGame(FString playerName, FString slotName, int32 ShootC);
-	void LoadGame(FString slotName);
+	UFUNCTION(BlueprintCallable, Category = "SaveGame")
+	void LoadGameData(const FString& SlotName);
+
+	UFUNCTION()
+	void LoadGameDelegateFunction(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);
+
+	UFUNCTION()
+	void SaveGameDelegateFunction(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 };

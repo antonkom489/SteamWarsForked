@@ -1,27 +1,47 @@
 ﻿#include "USaveGameSW.h"
 #include "Kismet/GameplayStatics.h"
 
-USaveGameSW::USaveGameSW()
+void USaveGameSW::SaveGameData(const FString& SlotName, int32 PlayerScore)
 {
-	SaveSlotName = TEXT("TestSaveSlot");
-	ShootCount = 0;
-}
-
-void USaveGameSW::SaveGame(FString playerName, FString slotName, int32 ShootC)
-{
-		this->PlayerName = playerName;
-	
-		if (UGameplayStatics::SaveGameToSlot(this, slotName, ShootC))
-		{
-			UE_LOG(LogTemp, Display, TEXT("Saving save slot"));
-		}
-}
-
-void USaveGameSW::LoadGame(FString slotName)
-{
-	if (UGameplayStatics::LoadGameFromSlot(slotName, 0))
+	if (UMySaveGame* SaveGameInstance = Cast<UMySaveGame>(UGameplayStatics::CreateSaveGameObject(UMySaveGame::StaticClass())))
 	{
-		// The operation was successful, so LoadedGame now contains the data we saved earlier.
-		UE_LOG(LogTemp, Warning, TEXT("LOADED: %s"), *PlayerName);
+		SaveGameInstance->PlayerName = TEXT("PlayerOne");
+		SaveGameInstance->PlayerScore = PlayerScore; // Установите значение int32
+
+		FAsyncSaveGameToSlotDelegate SavedDelegate;
+		SavedDelegate.BindUObject(this, &USaveGameSW::SaveGameDelegateFunction);
+
+		UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotName, 0, SavedDelegate);
+	}
+}
+
+void USaveGameSW::LoadGameData(const FString& SlotName)
+{
+	FAsyncLoadGameFromSlotDelegate LoadedDelegate;
+	LoadedDelegate.BindUObject(this, &USaveGameSW::LoadGameDelegateFunction);
+
+	UGameplayStatics::AsyncLoadGameFromSlot(SlotName, 0, LoadedDelegate);
+}
+
+void USaveGameSW::LoadGameDelegateFunction(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
+{
+	if (UMySaveGame* LoadedSaveGame = Cast<UMySaveGame>(LoadedGameData))
+	{
+		FString PlayerName = LoadedSaveGame->PlayerName;
+		int32 PlayerScore = LoadedSaveGame->PlayerScore;
+
+		UE_LOG(LogTemp, Log, TEXT("Player Name: %s, Player Score: %d"), *PlayerName, PlayerScore);
+	}
+}
+
+void USaveGameSW::SaveGameDelegateFunction(const FString& SlotName, const int32 UserIndex, bool bSuccess)
+{
+	if (bSuccess)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Game saved successfully in slot: %s"), *SlotName);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to save game in slot: %s"), *SlotName);
 	}
 }
