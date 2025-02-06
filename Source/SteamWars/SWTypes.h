@@ -10,7 +10,13 @@ enum class ESpawnersID : uint8
 	One,
 	Two,
 	Three,
-	Four
+	Four,
+	Five,
+	Six,
+	Seven,
+	Eith,
+	Nine,
+	Ten
 };
 
 UENUM(BlueprintType)
@@ -19,13 +25,23 @@ enum class ESWAbilityInputID : uint8
 	None,
 	Confirm,
 	Cancel,
+	PrimaryFire,
+	SecondaryFire,
+	AlternateFire,
+	Takedown,
+	Reload,
+	Sprint,
+	Crouch,
+	Jump,
+	NextWeapon,
+	PrevWeapon,
 	Shoot,
 	ShootAI,
 	ShotAI
 };
 
 UENUM(BlueprintType)
-enum class EGDHitReactDirection : uint8
+enum class ESWHitReactDirection : uint8
 {
 	// 0
 	None			UMETA(DisplayName = "None"),
@@ -40,3 +56,4 @@ enum class EGDHitReactDirection : uint8
 };
 
 const FName SocketFPCamera = FName("CameraSocket");
+const FName SocketWeaponMuzzle = FName("Barrel");

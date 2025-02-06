@@ -178,7 +178,7 @@ void ASWGameMode::InitializeSpawners()
 			if (Spawner)
 			{
 				const ESpawnersID SpawnerID = Spawner->GetSpawnID();
-				SpawnersMap.Add(SpawnerID, Spawner); 
+				SpawnersMap.Add(SpawnerID, Spawner);
 			}
 		}
 	}

@@ -1,25 +1,27 @@
 ﻿#include "SWBaseCharacter.h"
-
+#include "CharacterComponents/SWCharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/CharacterComponents/SWCharacterEquipmentComponent.h"
-#include "Components/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
-#include "Components/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
-#include "Components/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h"
+#include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
+#include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
+#include "Characters/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "UI/SWFloatingStatusBarWidget.h"
 
-ASWBaseCharacter::ASWBaseCharacter()
+ASWBaseCharacter::ASWBaseCharacter(const class FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer.SetDefaultSubobjectClass<USWCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
-	PrimaryActorTick.bCanEverTick = true;
-	
-	CharacterEquipmentComponent = CreateDefaultSubobject<USWCharacterEquipmentComponent>(TEXT("CharacterEquipment"));
-	
-	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
-	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
+	PrimaryActorTick.bCanEverTick = false;
 
-	/*HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
+	bAlwaysRelevant = true;
+
+	// Cache tags
+	HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
 	HitDirectionBackTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Back"));
 	HitDirectionRightTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Right"));
-	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));*/
+	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));
+	DeadTag = FGameplayTag::RequestGameplayTag("State.Dead");
+	BeingTakendownTag = FGameplayTag::RequestGameplayTag("State.BeingTakendown");
+	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag("Effect.RemoveOnDeath");
 }
 
 UAbilitySystemComponent* ASWBaseCharacter::GetAbilitySystemComponent() const
@@ -76,11 +78,14 @@ bool ASWBaseCharacter::IsAlive() const
 
 void ASWBaseCharacter::Die()
 {
+	// Only runs on Server
+	RemoveCharacterAbilities();
+	
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetCharacterMovement()->GravityScale = 0;
 	GetCharacterMovement()->Velocity = FVector(0);
 
-	//OnCharacterDied.Broadcast(this);
+	OnCharacterDied.Broadcast(this);
 
 	if (AbilitySystemComponent.IsValid())
 	{
@@ -97,72 +102,16 @@ void ASWBaseCharacter::Die()
 	{
 		PlayAnimMontage(DeathMontage);
 	}
-	
-	FinishDying();
+	else
+	{
+		FinishDying();
+	}
 }
 
 void ASWBaseCharacter::FinishDying()
 {
 	Destroy();
 }
-
-/*EGDHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
-{
-	const FVector& ActorLocation = GetActorLocation();
-	float DistanceToFrontBackPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorRightVector());
-	float DistanceToRightLeftPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorForwardVector());
-	
-	if (FMath::Abs(DistanceToFrontBackPlane) <= FMath::Abs(DistanceToRightLeftPlane))
-	{
-		if (DistanceToRightLeftPlane >= 0)
-		{
-			return EGDHitReactDirection::Front;
-		}
-		else
-		{
-			return EGDHitReactDirection::Back;
-		}
-	}
-	else
-	{
-		if (DistanceToFrontBackPlane >= 0)
-		{
-			return EGDHitReactDirection::Right;
-		}
-		else
-		{
-			return EGDHitReactDirection::Left;
-		}
-	}
-}
-
-void ASWBaseCharacter::PlayHitReact_Implementation(FGameplayTag HitDirection, AActor* DamageCauser)
-{
-	if (IsAlive())
-	{
-		if (HitDirection == HitDirectionLeftTag)
-		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Left);
-		}
-		else if (HitDirection == HitDirectionFrontTag)
-		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Front);
-		}
-		else if (HitDirection == HitDirectionRightTag)
-		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Right);
-		}
-		else if (HitDirection == HitDirectionBackTag)
-		{
-			ShowHitReact.Broadcast(EGDHitReactDirection::Back);
-		}
-	}
-}
-
-bool ASWBaseCharacter::PlayHitReact_Validate(FGameplayTag HitDirection, AActor* DamageCauser)
-{
-	return true;
-}*/
 
 int32 ASWBaseCharacter::GetCharacterLevel() const
 {
@@ -174,13 +123,178 @@ int32 ASWBaseCharacter::GetCharacterLevel() const
 	return 0;
 }
 
-const USWCharacterEquipmentComponent* ASWBaseCharacter::GetEquipmentComponent() const
+ESWHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
 {
-	if(CharacterEquipmentComponent)
+	/*const FVector& ActorLocation = GetActorLocation();
+	// PointPlaneDist is super cheap - 1 vector subtraction, 1 dot product.
+	float DistanceToFrontBackPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorRightVector());
+	float DistanceToRightLeftPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorForwardVector());
+
+
+	if (FMath::Abs(DistanceToFrontBackPlane) <= FMath::Abs(DistanceToRightLeftPlane))
 	{
-		return CharacterEquipmentComponent;
+		// Determine if Front or Back
+
+		// Can see if it's left or right of Left/Right plane which would determine Front or Back
+		if (DistanceToRightLeftPlane >= 0)
+		{
+			return ESWHitReactDirection::Front;
+		}
+		else
+		{
+			return ESWHitReactDirection::Back;
+		}
 	}
-	return nullptr;
+	else
+	{
+		// Determine if Right or Left
+
+		if (DistanceToFrontBackPlane >= 0)
+		{
+			return ESWHitReactDirection::Right;
+		}
+		else
+		{
+			return ESWHitReactDirection::Left;
+		}
+	}*/
+
+	return ESWHitReactDirection::Front;
+}
+
+void ASWBaseCharacter::PlayHitReact_Implementation(FGameplayTag HitDirection, AActor* DamageCauser)
+{
+	if (IsAlive())
+	{
+		if (HitDirection == HitDirectionLeftTag)
+		{
+			ShowHitReact.Broadcast(ESWHitReactDirection::Left);
+		}
+		else if (HitDirection == HitDirectionFrontTag)
+		{
+			ShowHitReact.Broadcast(ESWHitReactDirection::Front);
+		}
+		else if (HitDirection == HitDirectionRightTag)
+		{
+			ShowHitReact.Broadcast(ESWHitReactDirection::Right);
+		}
+		else if (HitDirection == HitDirectionBackTag)
+		{
+			ShowHitReact.Broadcast(ESWHitReactDirection::Back);
+		}
+	}
+}
+
+bool ASWBaseCharacter::PlayHitReact_Validate(FGameplayTag HitDirection, AActor* DamageCauser)
+{
+	return true;
+}
+
+bool ASWBaseCharacter::IsAvailableForTakedown_Implementation(UPrimitiveComponent* TakedownComponent) const
+{
+	// Pawn is available to be takendown if HP is less than 25% and is not already being takendown.
+	const float HPRatio = GetHealth() / GetMaxHealth();
+	if (
+		AbilitySystemComponent.IsValid() &&
+		bCanEverBeTakenDown &&
+		(HPRatio <= 0.25f) &&
+		!AbilitySystemComponent->HasMatchingGameplayTag(BeingTakendownTag)
+		)
+	{
+		return true;
+	}
+	
+	return IGSDamageable::IsAvailableForTakedown_Implementation(TakedownComponent);
+}
+
+float ASWBaseCharacter::GetTakedownDuration_Implementation(UPrimitiveComponent* TakedownComponent) const
+{
+	return IGSDamageable::GetTakedownDuration_Implementation(TakedownComponent);
+}
+
+void ASWBaseCharacter::PreTakedown_Implementation(AActor* Takedowner, UPrimitiveComponent* TakedownComponent)
+{
+	const float HPRatio = GetHealth() / GetMaxHealth();
+	if (AbilitySystemComponent.IsValid() && (HPRatio <= 0.25f) && HasAuthority())
+	{
+		FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(TakendownEffect, 1.f, AbilitySystemComponent->MakeEffectContext());
+		if (EffectSpecHandle.IsValid())
+		{
+			FGameplayEffectSpec* EffectSpec = EffectSpecHandle.Data.Get();
+			EffectSpec->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("Data.Damage"), GetMaxHealth());
+			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*EffectSpec);
+		}
+	}
+}
+
+void ASWBaseCharacter::PostTakedown_Implementation(AActor* Takedowner, UPrimitiveComponent* TakedownComponent)
+{
+	const float HPRatio = GetHealth() / GetMaxHealth();
+	if (AbilitySystemComponent.IsValid() && (HPRatio <= 0.25f) && HasAuthority())
+	{
+		FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(TakendownEffect, 1.f, AbilitySystemComponent->MakeEffectContext());
+		if (EffectSpecHandle.IsValid())
+		{
+			FGameplayEffectSpec* EffectSpec = EffectSpecHandle.Data.Get();
+			EffectSpec->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag("Data.Damage"), GetMaxHealth());
+			AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*EffectSpec);
+		}
+	}
+}
+
+void ASWBaseCharacter::GetPreTakedownSyncType_Implementation(bool& bShouldSync, EAbilityTaskNetSyncType& Type,
+	UPrimitiveComponent* TakedownComponent) const
+{
+	const float HPRatio = GetHealth() / GetMaxHealth();
+	if (AbilitySystemComponent.IsValid() && (HPRatio <= 0.25f))
+	{
+		bShouldSync = true;
+		Type = EAbilityTaskNetSyncType::OnlyClientWait;
+		return;
+	}
+	
+	IGSDamageable::GetPreTakedownSyncType_Implementation(bShouldSync, Type, TakedownComponent);
+}
+
+void ASWBaseCharacter::CancelTakedown_Implementation(UPrimitiveComponent* TakedownComponent)
+{
+	const float HPRatio = GetHealth() / GetMaxHealth();
+	if (AbilitySystemComponent.IsValid() && (HPRatio <= 0.25f) && HasAuthority())
+	{
+		FGameplayTagContainer CancelTags(FGameplayTag::RequestGameplayTag("Ability.TakenDown"));
+		AbilitySystemComponent->CancelAbilities(&CancelTags);
+	}
+}
+
+FSimpleMulticastDelegate* ASWBaseCharacter::GetTargetCancelTakedownDelegate(UPrimitiveComponent* TakedownComponent)
+{
+	return &TakedownCanceledDelegate;
+}
+
+bool ASWBaseCharacter::IsStatusBarAvailable_Implementation() const
+{
+	if (UIFloatingStatusBar)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void ASWBaseCharacter::FadeInStatusBar_Implementation() const
+{
+	if (UIFloatingStatusBar)
+	{
+		UIFloatingStatusBar->PlayFadeIn();
+	}
+}
+
+void ASWBaseCharacter::FadeOutStatusBar_Implementation() const
+{
+	if (UIFloatingStatusBar)
+	{
+		UIFloatingStatusBar->PlayFadeOut();
+	}
 }
 
 float ASWBaseCharacter::GetHealth() const
@@ -219,6 +333,31 @@ float ASWBaseCharacter::GetMaxStamina() const
 	return 0.0f;
 }
 
+float ASWBaseCharacter::GetMoveSpeed() const
+{
+	if (AttributeSet.IsValid())
+	{
+		return AttributeSet->GetMoveSpeed();
+	}
+
+	return 0.0f;
+}
+
+float ASWBaseCharacter::GetMoveSpeedBaseValue() const
+{
+	if (AttributeSet.IsValid())
+	{
+		return AttributeSet->GetMoveSpeedAttribute().GetGameplayAttributeData(AttributeSet.Get())->GetBaseValue();
+	}
+
+	return 0.0f;
+}
+
+void ASWBaseCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
 void ASWBaseCharacter::GiveDefaultAbilities()
 {
 	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->bCharacterAbilitiesGiven)
@@ -244,7 +383,7 @@ void ASWBaseCharacter::InitDefaultAttributes() const
 		return;
 	}
 
-	if (!DefaultAttributeEffect)
+	if (!DefaultAttributes)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
 		return;
@@ -254,7 +393,7 @@ void ASWBaseCharacter::InitDefaultAttributes() const
 	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 
-	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributeEffect, GetCharacterLevel(), EffectContext);
+	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, GetCharacterLevel(), EffectContext);
 	if (NewHandle.IsValid())
 	{
 		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());

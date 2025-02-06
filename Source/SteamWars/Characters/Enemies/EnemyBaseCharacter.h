@@ -14,7 +14,7 @@ class STEAMWARS_API AEnemyBaseCharacter : public ASWBaseCharacter
 	GENERATED_BODY()
 
 public:
-	AEnemyBaseCharacter();
+	AEnemyBaseCharacter(const class FObjectInitializer& ObjectInitializer);
 	
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnEnemyDied OnEnemyDied;

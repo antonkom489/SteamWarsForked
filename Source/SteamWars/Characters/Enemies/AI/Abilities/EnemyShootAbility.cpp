@@ -5,7 +5,7 @@
 #include "AIController.h"
 #include "Actors/Equipment/Weapons/RangeWeaponItem.h"
 #include "Characters/Enemies/EnemyBaseCharacter.h"
-#include "Components/CharacterComponents/SWCharacterEquipmentComponent.h"
+#include "Characters/CharacterComponents/SWCharacterEquipmentComponent.h"
 #include "Components/Weapon/WeaponBarrelComponent.h"
 
 
@@ -24,7 +24,7 @@ void UEnemyShootAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle
                                          const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
                                          const FGameplayEventData* TriggerEventData)
 {
-	if (ActorInfo->OwnerActor.IsValid())
+	/*if (ActorInfo->OwnerActor.IsValid())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("BAMAMMA!"))
 		// Реализуйте стрельбу
@@ -74,6 +74,6 @@ void UEnemyShootAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle
 		
 			ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
 		}
-	}
+	}*/
 	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
 }

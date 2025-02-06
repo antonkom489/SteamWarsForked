@@ -1,7 +1,7 @@
 #include "AIShoot.h"
 
 #include "AIController.h"
-#include "Components/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
+#include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 
 EBTNodeResult::Type UAIShoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
