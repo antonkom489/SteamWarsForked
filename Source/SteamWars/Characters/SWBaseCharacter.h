@@ -33,8 +33,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GAS | Character")
 	virtual int32 GetAbilityLevel(ESWAbilityInputID AbilityID) const;
-	
-	virtual void RemoveCharacterAbilities();
 	/*=========================================*/
 
 	/*===================Die===================*/
@@ -187,6 +185,7 @@ protected:
 	void GiveDefaultAbilities();
 	void InitDefaultAttributes() const;
 	virtual void AddStartupEffects();
+	virtual void RemoveCharacterAbilities();
 	
 	virtual void SetHealth(float Health);
 	virtual void SetStamina(float Stamina);

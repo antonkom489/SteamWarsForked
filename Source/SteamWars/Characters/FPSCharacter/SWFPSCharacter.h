@@ -49,7 +49,14 @@ class STEAMWARS_API ASWFPSCharacter : public ASWBaseCharacter
 public:
 	ASWFPSCharacter(const class FObjectInitializer& ObjectInitializer);
 
+	/*==========================Tags==========================*/
 	FGameplayTag CurrentWeaponTag;
+	// Cache tags
+	FGameplayTag NoWeaponTag;
+	FGameplayTag WeaponChangingDelayReplicationTag;
+	FGameplayTag WeaponAmmoTypeNoneTag;
+	FGameplayTag WeaponAbilityTag;
+	/*========================================================*/
 
 	// GAS Server only
 	virtual void PossessedBy(AController* NewController) override;
@@ -65,6 +72,7 @@ public:
 
 	virtual void FinishDying() override;
 
+	/*==========================WeaponInventory==========================*/
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	ARangeWeaponItem* GetCurrentWeapon() const;
 
@@ -84,13 +92,18 @@ public:
 	void ServerEquipWeapon(ARangeWeaponItem* NewWeapon);
 	void ServerEquipWeapon_Implementation(ARangeWeaponItem* NewWeapon);
 	bool ServerEquipWeapon_Validate(ARangeWeaponItem* NewWeapon);
-
+	
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	virtual void NextWeapon();
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	virtual void PreviousWeapon();
+	
+	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
+	int32 GetNumWeapons() const;
+	/*====================================================================*/
 
+	/*============================AmmoAttributes==========================*/
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	int32 GetPrimaryClipAmmo() const;
 
@@ -108,9 +121,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	int32 GetSecondaryReserveAmmo() const;
-
-	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
-	int32 GetNumWeapons() const;
+	/*====================================================================*/
 
 	FName GetWeaponAttachPoint();
 protected:
@@ -161,12 +172,7 @@ public:
 
 	UPROPERTY()
 	class UAmmoAttributeSet* AmmoAttributeSet;
-
-	// Cache tags
-	FGameplayTag NoWeaponTag;
-	FGameplayTag WeaponChangingDelayReplicationTag;
-	FGameplayTag WeaponAmmoTypeNoneTag;
-	FGameplayTag WeaponAbilityTag;
+	
 
 	// Attribute changed delegate handles
 	FDelegateHandle PrimaryReserveAmmoChangedDelegateHandle;

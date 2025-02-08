@@ -68,7 +68,7 @@ private:
 	int WaveNumber = 0;
 	int EnemyRemaining = 0;
 	TMap<TSubclassOf<AEnemyBaseCharacter>, int> EnemyPool;
-	TMap<int32, TMap<TSubclassOf<AEnemyBaseCharacter>, int32>> SpawnerEnemyPool;
+	TMap<ESpawnersID, TMap<TSubclassOf<AEnemyBaseCharacter>, int32>> SpawnerEnemyPool;
 	
 	void SpawnEnemy();
 	void StartWave();
