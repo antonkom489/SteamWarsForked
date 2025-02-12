@@ -9,7 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3380d1ad-32cb-4de7-b5f9-1c79f0b2605a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +36,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://0" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://2" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/EnemyBaseCharacter.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
@@ -193,6 +194,8 @@
       <workItem from="1739282604330" duration="5251000" />
       <workItem from="1739298858107" duration="1948000" />
       <workItem from="1739341165276" duration="6860000" />
+      <workItem from="1739353099704" duration="1761000" />
+      <workItem from="1739361221137" duration="2732000" />
     </task>
     <servers />
   </component>
