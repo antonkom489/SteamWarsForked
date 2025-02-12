@@ -1,5 +1,6 @@
 #include "SWAbilitySystemComponent.h"
 
+#include "AbilitySystemGlobals.h"
 #include "Abilities/SWGameplayAbility.h"
 
 void USWAbilitySystemComponent::ReceiveDamage(USWAbilitySystemComponent* SourceASC, float UnmitigatedDamage,
@@ -50,5 +51,10 @@ FGameplayAbilitySpecHandle USWAbilitySystemComponent::FindAbilitySpecHandleForCl
 	}
 
 	return FGameplayAbilitySpecHandle();
+}
+
+USWAbilitySystemComponent* USWAbilitySystemComponent::GetAbilitySystemComponentFromActor(const AActor* Actor, bool LookForComponent)
+{
+	return Cast<USWAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(Actor, LookForComponent));
 }
 

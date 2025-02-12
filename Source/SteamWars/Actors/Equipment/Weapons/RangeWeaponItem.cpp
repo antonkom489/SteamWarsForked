@@ -39,9 +39,9 @@ ARangeWeaponItem::ARangeWeaponItem()
 	CollisionComp->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 	RootComponent = CollisionComp;
 
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
-	WeaponMesh->SetupAttachment(RootComponent);
-	WeaponMesh->CastShadow = false;
+	WeaponMesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("WeaponMesh"));
+	WeaponMesh1P->SetupAttachment(RootComponent);
+	WeaponMesh1P->CastShadow = false;
 
 	WeaponPrimaryInstantAbilityTag = FGameplayTag::RequestGameplayTag("Ability.Weapon.Primary.Instant");
 	WeaponSecondaryInstantAbilityTag = FGameplayTag::RequestGameplayTag("Ability.Weapon.Secondary.Instant");
@@ -53,7 +53,7 @@ ARangeWeaponItem::ARangeWeaponItem()
 	StatusText = DefaultStatusText;
 	
 	WeaponBarrel = CreateDefaultSubobject<UWeaponBarrelComponent>(TEXT("WeaponBarrel"));
-	WeaponBarrel->SetupAttachment(WeaponMesh, SocketWeaponMuzzle);
+	WeaponBarrel->SetupAttachment(WeaponMesh1P, SocketWeaponMuzzle);
 
 	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.Dead"));
 	RestrictedPickupTags.AddTag(FGameplayTag::RequestGameplayTag("State.KnockedDown"));
@@ -67,7 +67,7 @@ class UAbilitySystemComponent* ARangeWeaponItem::GetAbilitySystemComponent() con
 
 USkeletalMeshComponent* ARangeWeaponItem::GetWeaponMesh() const
 {
-	return WeaponMesh;
+	return WeaponMesh1P;
 }
 
 void ARangeWeaponItem::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -99,12 +99,17 @@ void ARangeWeaponItem::SetOwningCharacter(ASWFPSCharacter* InOwningCharacter)
 		SetOwner(InOwningCharacter);
 		AttachToComponent(OwningCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 		CollisionComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		if (OwningCharacter->GetCurrentWeapon() != this)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("OwningCharacter->GetCurrentWeapon() != this"));
+		}
 	}
 	else
 	{
 		AbilitySystemComponent = nullptr;
 		SetOwner(nullptr);
 		DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		UE_LOG(LogTemp, Warning, TEXT("Non Owning Character"));
 	}
 }
 
@@ -138,7 +143,7 @@ void ARangeWeaponItem::Equip()
 		WeaponMesh1P->AttachToComponent(OwningCharacter->GetFPSMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, AttachPoint);
 		WeaponMesh1P->SetRelativeLocation(WeaponMesh1PEquippedRelativeLocation);
 		WeaponMesh1P->SetRelativeRotation(WeaponMesh1PEquippedRelativeRotation);
-
+		
 		WeaponMesh1P->SetVisibility(true, true);
 
 		if (WeaponAnimLinkLayer1P)
@@ -455,7 +460,11 @@ void ARangeWeaponItem::PickUpOnTouch(ASWFPSCharacter* InCharacter)
 		return;
 	}
 
-	InCharacter->AddWeaponToInventory(this, true);
+	if (InCharacter->AddWeaponToInventory(this, true))
+	{
+		WeaponMesh1P->CastShadow = false;
+		WeaponMesh1P->SetVisibility(true, true);
+	}
 
 	/*if (InCharacter->AddWeaponToInventory(this, true) && OwningCharacter->IsInFirstPersonPerspective())
 	{

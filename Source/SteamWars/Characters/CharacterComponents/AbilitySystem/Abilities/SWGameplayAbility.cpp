@@ -5,6 +5,7 @@
 #include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilityTpes.h"
+#include "Characters/CharacterComponents/AbilitySystem/SWTargetType.h"
 
 USWGameplayAbility::USWGameplayAbility()
 {
@@ -56,7 +57,39 @@ FGameplayAbilityTargetDataHandle USWGameplayAbility::MakeGameplayAbilityTargetDa
 FSWGameplayEffectContainerSpec USWGameplayAbility::MakeEffectContainerSpecFromContainer(
 	const FSWGameplayEffectContainer& Container, const FGameplayEventData& EventData, int32 OverrideGameplayLevel)
 {
+	// First figure out our actor info
 	FSWGameplayEffectContainerSpec ReturnSpec;
+	AActor* OwningActor = GetOwningActorFromActorInfo();
+	AActor* AvatarActor = GetAvatarActorFromActorInfo();
+	ASWBaseCharacter* AvatarCharacter = Cast<ASWBaseCharacter>(AvatarActor);
+	USWAbilitySystemComponent* OwningASC = USWAbilitySystemComponent::GetAbilitySystemComponentFromActor(OwningActor);
+
+	if (OwningASC)
+	{
+		// If we have a target type, run the targeting logic. This is optional, targets can be added later
+		if (Container.TargetType.Get())
+		{
+			TArray<FHitResult> HitResults;
+			TArray<AActor*> TargetActors;
+			TArray<FGameplayAbilityTargetDataHandle> TargetData;
+			const USWTargetType* TargetTypeCDO = Container.TargetType.GetDefaultObject();
+			TargetTypeCDO->GetTargets(AvatarCharacter, AvatarActor, EventData, TargetData, HitResults, TargetActors);
+			ReturnSpec.AddTargets(TargetData, HitResults, TargetActors);
+		}
+
+		// If we don't have an override level, use the ability level
+		if (OverrideGameplayLevel == INDEX_NONE)
+		{
+			//OverrideGameplayLevel = OwningASC->GetDefaultAbilityLevel();
+			OverrideGameplayLevel = GetAbilityLevel();
+		}
+
+		// Build GameplayEffectSpecs for each applied effect
+		for (const TSubclassOf<UGameplayEffect>& EffectClass : Container.TargetGameplayEffectClasses)
+		{
+			ReturnSpec.TargetGameplayEffectSpecs.Add(MakeOutgoingGameplayEffectSpec(EffectClass, OverrideGameplayLevel));
+		}
+	}
 	return ReturnSpec;
 }
 
@@ -219,7 +252,7 @@ bool USWGameplayAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Han
 bool USWGameplayAbility::CheckCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
 	FGameplayTagContainer* OptionalRelevantTags) const
 {
-	return Super::CheckCost(Handle, ActorInfo, OptionalRelevantTags);
+	return Super::CheckCost(Handle, ActorInfo, OptionalRelevantTags) && GSCheckCost(Handle, *ActorInfo);
 }
 
 bool USWGameplayAbility::GSCheckCost_Implementation(const FGameplayAbilitySpecHandle Handle,

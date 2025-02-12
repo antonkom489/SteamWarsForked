@@ -26,6 +26,13 @@ ASWFPSCharacter::ASWFPSCharacter(const class FObjectInitializer& ObjectInitializ
 	BaseTurnRate = 45.0f;
 	BaseLookUpRate = 45.0f;
 	bASCInputBound = false;
+	bChangedWeaponLocally = false;
+	NoWeaponTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Equipped.None"));
+	WeaponChangingDelayReplicationTag = FGameplayTag::RequestGameplayTag(FName("Ability.Weapon.IsChangingDelayReplication"));
+	WeaponAmmoTypeNoneTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.None"));
+	WeaponAbilityTag = FGameplayTag::RequestGameplayTag(FName("Ability.Weapon"));
+	CurrentWeaponTag = NoWeaponTag;
+	Inventory = FSWHeroInventory();
 
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = true;
@@ -214,6 +221,7 @@ void ASWFPSCharacter::SpawnDefaultInventory()
 		NewWeapon->FinishSpawning(FTransform::Identity);
 
 		bool bEquipFirstWeapon = i == 0;
+		UE_LOG(LogTemp, Warning, TEXT("bEquipFirstWeapon: %s"), (bEquipFirstWeapon ? TEXT("true") : TEXT("false")));
 		AddWeaponToInventory(NewWeapon, bEquipFirstWeapon);
 	}
 }
@@ -257,8 +265,8 @@ void ASWFPSCharacter::SetCurrentWeapon(ARangeWeaponItem* NewWeapon, ARangeWeapon
 
 		// Weapons coming from OnRep_CurrentWeapon won't have the owner set
 		CurrentWeapon = NewWeapon;
-		CurrentWeapon->SetOwningCharacter(this);
 		CurrentWeapon->Equip();
+		CurrentWeapon->SetOwningCharacter(this);
 		CurrentWeaponTag = CurrentWeapon->WeaponTag;
 
 		if (AbilitySystemComponent.IsValid())
@@ -566,6 +574,7 @@ bool ASWFPSCharacter::AddWeaponToInventory(ARangeWeaponItem* NewWeapon, bool bEq
 {
 	if (DoesWeaponExistInInventory(NewWeapon))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("DoesWeaponExistInInventory(NewWeapon)"));
 		USoundCue* PickupSound = NewWeapon->GetPickupSound();
 
 		/*if (PickupSound && IsLocallyControlled())
@@ -612,6 +621,10 @@ bool ASWFPSCharacter::AddWeaponToInventory(ARangeWeaponItem* NewWeapon, bool bEq
 		NewWeapon->Destroy();
 
 		return false;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("!DoesWeaponExistInInventory(NewWeapon)"));
 	}
 
 	if (GetLocalRole() < ROLE_Authority)
