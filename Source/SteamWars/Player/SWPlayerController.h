@@ -51,12 +51,22 @@ public:
 	void ClientSetControlRotation_Implementation(FRotator NewRotation);
 	bool ClientSetControlRotation_Validate(FRotator NewRotation);
 
+	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
+	void TogglePauseMenu();
+
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
 	TSubclassOf<class USWHUDWidget> UIHUDWidgetClass;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
+	TSubclassOf<UUserWidget> SWPauseMenuWidgetClass;
+
 	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
 	class USWHUDWidget* UIHUDWidget;
+
+
+	UFUNCTION(BlueprintCallable, Category = "GAS|Gameplay")
+	void Restart();
 
 	// Server only
 	virtual void OnPossess(APawn* InPawn) override;
@@ -71,7 +81,10 @@ protected:
 	void ServerKill_Implementation();
 	bool ServerKill_Validate();
 
-	
+	bool bIsPaused;
+
+	void ShowPauseMenu();
+	void HidePauseMenu();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputMappingContext* InputMappingContext = nullptr;
@@ -90,6 +103,8 @@ protected:
 	float RotArrayY[3];
 	int64 RotCacheIndex = 0;
 
+	UUserWidget* PauseMenu;
+	
 	void Input_Move(const FInputActionValue& InputActionValue);
 	void Input_LookMouse(const FInputActionValue& InputActionValue);
 };

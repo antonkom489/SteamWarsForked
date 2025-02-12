@@ -1,5 +1,6 @@
 #include "SWPlayerController.h"
 
+#include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "SWPlayerState.h"
@@ -176,6 +177,7 @@ void ASWPlayerController::OnRep_PlayerState()
 void ASWPlayerController::Kill()
 {
 	ServerKill();
+	Restart();
 }
 
 void ASWPlayerController::ServerKill_Implementation()
@@ -314,5 +316,55 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 			currentWeapon->bUpdateRecoilYawCheckpointInNextShot = true;
 		}
 
+	}
+}
+
+void ASWPlayerController::TogglePauseMenu()
+{
+	if (bIsPaused)
+	{
+		HidePauseMenu();
+	}
+	else
+	{
+		ShowPauseMenu();
+	}
+}
+
+void ASWPlayerController::ShowPauseMenu()
+{
+	if (SWPauseMenuWidgetClass)
+	{
+		PauseMenu = CreateWidget<UUserWidget>(this, SWPauseMenuWidgetClass);
+		if (PauseMenu)
+		{
+			PauseMenu->AddToViewport();
+			bIsPaused = true;
+			SetInputMode(FInputModeUIOnly());
+			bShowMouseCursor = true; 
+		}
+	}
+}
+
+void ASWPlayerController::HidePauseMenu()
+{
+	if (PauseMenu)
+	{
+		PauseMenu->RemoveFromParent();
+	}
+    
+	bIsPaused = false;
+	SetInputMode(FInputModeGameOnly());
+	bShowMouseCursor = false; 
+}
+
+void ASWPlayerController::Restart()
+{
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		FName CurrentLevelName = FName(*World->GetMapName());
+        
+		UGameplayStatics::OpenLevel(World, CurrentLevelName);
 	}
 }
