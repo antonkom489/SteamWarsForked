@@ -8,6 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3380d1ad-32cb-4de7-b5f9-1c79f0b2605a" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/UMySaveGame.cpp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/UMySaveGame.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" afterDir="false" />
@@ -18,6 +19,26 @@
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Components/CharacterComponents/USaveGameSW.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/Content/Characters/Heroes/Mannequin/Meshes/SK_Mannequin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Characters/Heroes/Mannequin/Meshes/SK_Mannequin.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enviroment/BP/BP_trampoline_Direct.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enviroment/BP/BP_trampoline_Direct.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Enviroment/BP/BP_trampoline_UP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Enviroment/BP/BP_trampoline_UP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/Levl_2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Levl_2.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy2/Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/Enemy/Enemy2/Enemy.uasset" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/UI/SWSceneManager.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/UI/SWSceneManager.h" beforeDir="false" />
+>>>>>>> origin/Ui
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,11 +46,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DpaMonitoringSettings">
+<<<<<<< HEAD
     <option name="firstShow" value="false" />
+=======
+    <option name="autoShow" value="false" />
+>>>>>>> main
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="HighlightingSettingsPerFile">
     <setting file="file://C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Core/Public/Delegates/DelegateAccessHandler.h" root0="FORCE_HIGHLIGHTING" />
@@ -39,6 +65,29 @@
     <setting file="file://C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectHandle.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Epic Games/UE_5.4/Engine/Source/Runtime/GameplayTags/Private/GameplayTagContainer.cpp" root0="FORCE_HIGHLIGHTING" />
+=======
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mo11ex&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/antonkom489/SteamWarsForked.git&quot;,
+    &quot;accountId&quot;: &quot;f585c761-4fa7-46cc-96a1-4451283e1661&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+<<<<<<< HEAD
+=======
+    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/EnemyBaseCharacter.gen.cpp" root0="SKIP_HIGHLIGHTING" />
+>>>>>>> origin/Ui
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/SteamWars/SteamWars.Build.cs" root0="FORCE_HIGHLIGHTING" />
+>>>>>>> main
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -61,12 +110,89 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.language&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager">
     <configuration name="SteamWars" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
+<<<<<<< HEAD
+=======
+        <option name="CONFIGURATION" value="DebugGame Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="D:\Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;D:\Unreal Projects\SteamWarsForked\SteamWars.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="D:\Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      </configuration_1>
+      <configuration_2 setup="1">
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="D:\Unreal Projects\SteamWarsForked\Binaries\Win64\SteamWars-Win64-DebugGame.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="D:\Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      </configuration_2>
+      <configuration_3 setup="1">
+        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="D:\Games\UE_5.4\Engine\Binaries\Win64\UnrealEditor.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value=" &quot;D:\Unreal Projects\SteamWarsForked\SteamWars.uproject&quot;" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="D:\Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      </configuration_3>
+      <configuration_4 setup="1">
+        <option name="CONFIGURATION" value="Development" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="D:\Unreal Projects\SteamWarsForked\Binaries\Win64\SteamWars.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="D:\Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      </configuration_4>
+      <configuration_5 setup="1">
+        <option name="CONFIGURATION" value="Shipping" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXECUTABLE_PATH" value="D:\Unreal Projects\SteamWarsForked\Binaries\Win64\SteamWars-Win64-Shipping.exe" />
+        <option name="MANDATORY_PROGRAM_PARAMETERS" value="" />
+        <option name="CUSTOM_PROGRAM_PARAMETERS" value="" />
+        <option name="WORKING_DIRECTORY" value="D:\Games\UE_5.4" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="1" />
+        <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      </configuration_5>
+      <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+      <option name="AUTO_SELECT_PRIORITY" value="10010" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="SteamWars" type="Uproject" factoryName="rider.uproject">
+      <configuration_1>
+>>>>>>> main
         <option name="CONFIGURATION" value="DebugGame Editor" />
         <option name="PLATFORM" value="Win64" />
         <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
@@ -129,9 +255,13 @@
         <option name="PASS_PARENT_ENVS" value="1" />
         <option name="USE_EXTERNAL_CONSOLE" value="1" />
         <option name="TERMINAL_INTERACTION_BEHAVIOR" value="FORCE_CONSOLE" />
+<<<<<<< HEAD
         <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
       </configuration_5>
       <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
+=======
+      </configuration_5>
+>>>>>>> main
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/SteamWars.uproject" />
       <option name="AUTO_SELECT_PRIORITY" value="10010" />
       <method v="2">
@@ -148,6 +278,7 @@
       <option name="presentableId" value="Default" />
       <updated>1736888344120</updated>
       <workItem from="1736888346872" duration="351000" />
+<<<<<<< HEAD
       <workItem from="1737228568532" duration="1900000" />
       <workItem from="1737283367707" duration="10374000" />
       <workItem from="1737301589884" duration="1321000" />
@@ -160,6 +291,62 @@
       <workItem from="1737713337967" duration="14424000" />
       <workItem from="1737885870680" duration="8899000" />
       <workItem from="1738760619799" duration="3926000" />
+=======
+      <workItem from="1736889039030" duration="867000" />
+      <workItem from="1736951827086" duration="7782000" />
+      <workItem from="1736969705412" duration="1149000" />
+      <workItem from="1737017119835" duration="1332000" />
+      <workItem from="1737034880752" duration="5758000" />
+      <workItem from="1737054792248" duration="2413000" />
+      <workItem from="1737281476003" duration="2315000" />
+      <workItem from="1737370528056" duration="3647000" />
+      <workItem from="1737379768594" duration="4696000" />
+      <workItem from="1737392174866" duration="2020000" />
+      <workItem from="1737443107596" duration="1798000" />
+      <workItem from="1737452301677" duration="2188000" />
+      <workItem from="1737463933925" duration="4954000" />
+      <workItem from="1737784123802" duration="5982000" />
+      <workItem from="1737966106378" duration="562000" />
+      <workItem from="1737971697009" duration="2671000" />
+      <workItem from="1737982230260" duration="595000" />
+      <workItem from="1738127168070" duration="5495000" />
+      <workItem from="1738224292133" duration="812000" />
+      <workItem from="1738225134829" duration="4009000" />
+      <workItem from="1738325441877" duration="4353000" />
+      <workItem from="1738394133900" duration="4696000" />
+      <workItem from="1738411545892" duration="2321000" />
+      <workItem from="1738482091637" duration="763000" />
+      <workItem from="1738482884417" duration="624000" />
+      <workItem from="1738483630521" duration="2958000" />
+      <workItem from="1738511524047" duration="3530000" />
+      <workItem from="1738565611361" duration="6958000" />
+      <workItem from="1738596186799" duration="1275000" />
+      <workItem from="1738615103147" duration="1252000" />
+      <workItem from="1738653833663" duration="4079000" />
+      <workItem from="1738662544155" duration="3433000" />
+      <workItem from="1738670168275" duration="2747000" />
+      <workItem from="1738700416984" duration="17274000" />
+      <workItem from="1738718633396" duration="9510000" />
+      <workItem from="1738731849499" duration="4712000" />
+      <workItem from="1738757975860" duration="4411000" />
+      <workItem from="1738810149610" duration="2078000" />
+      <workItem from="1738935559775" duration="2280000" />
+      <workItem from="1739008088222" duration="3731000" />
+<<<<<<< HEAD
+      <workItem from="1739454216673" duration="1753000" />
+      <workItem from="1739456138051" duration="957000" />
+      <workItem from="1739469286045" duration="1813000" />
+=======
+      <workItem from="1739282604330" duration="5251000" />
+      <workItem from="1739298858107" duration="1948000" />
+      <workItem from="1739341165276" duration="6860000" />
+      <workItem from="1739353099704" duration="1761000" />
+      <workItem from="1739361221137" duration="2732000" />
+      <workItem from="1739379806736" duration="10794000" />
+      <workItem from="1739438822375" duration="6123000" />
+      <workItem from="1739469649519" duration="2272000" />
+>>>>>>> origin/Ui
+>>>>>>> main
     </task>
     <servers />
   </component>
@@ -168,6 +355,17 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

@@ -40,26 +40,11 @@ class STEAMWARS_API ASWGameMode : public AGameMode
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawners")
-	TSubclassOf<AEnemyBaseCharacter> EnemyChar;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
-	int WaveNumber = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<ESpawnersID, AEnemySpawner*> SpawnersMap;
-	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
 	float TransitionWaveTime = 3.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
 	int EnemyMaxCount = 5;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
-	int EnemyRemaining = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
-	TMap<TSubclassOf<AEnemyBaseCharacter>, int> EnemyPool;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave")
 	UDataTable* WaveDataTable;
@@ -69,9 +54,22 @@ public:
 	
 	FORCEINLINE FTimerHandle GetTimerHandle() const { return WaveTimer; }
 
+	UFUNCTION(BlueprintCallable, Category = "Wave")
+	int32 GetWaveNumber() const { return WaveNumber; }
+
+	UFUNCTION(BlueprintCallable, Category = "Wave")
+	int32 GetEnemyRemaining() const { return EnemyRemaining; };
+
 private:
 	FTimerHandle WaveTimer;
 
+	TSubclassOf<AEnemyBaseCharacter> EnemyChar;
+	TMap<ESpawnersID, AEnemySpawner*> SpawnersMap;
+	int WaveNumber = 0;
+	int EnemyRemaining = 0;
+	TMap<TSubclassOf<AEnemyBaseCharacter>, int> EnemyPool;
+	TMap<ESpawnersID, TMap<TSubclassOf<AEnemyBaseCharacter>, int32>> SpawnerEnemyPool;
+	
 	void SpawnEnemy();
 	void StartWave();
 	void EnterTransition();

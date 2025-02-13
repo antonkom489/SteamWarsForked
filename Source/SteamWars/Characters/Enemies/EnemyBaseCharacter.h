@@ -14,12 +14,26 @@ class STEAMWARS_API AEnemyBaseCharacter : public ASWBaseCharacter
 	GENERATED_BODY()
 
 public:
-	AEnemyBaseCharacter();
+	AEnemyBaseCharacter(const class FObjectInitializer& ObjectInitializer);
 	
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnEnemyDied OnEnemyDied;
 	
 	virtual void FinishDying() override;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Events")
+	void Threated(FVector ThreatedSource);
+	virtual void Threated_Implementation(FVector ThreatedSource);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Events")
+	void EnterCover();
+	virtual void EnterCover_Implementation();
+
+	UFUNCTION(BlueprintCallable)
+	void ShootAI();
+
+	UFUNCTION(BlueprintCallable)
+	void ShotAI();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -29,7 +43,7 @@ protected:
 	class USWAbilitySystemComponent* HardRefAbilitySystemComponent;
 
 	// Actual hard pointer to AttributeSetBase
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Events")
 	class USWAttributeSet* HardRefAttributeSet;
 	
 	FDelegateHandle HealthChangedDelegateHandle;
@@ -39,4 +53,8 @@ protected:
 
 	// Tag change callbacks
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+
+private:
+	bool bIsInCover = false;
 };
