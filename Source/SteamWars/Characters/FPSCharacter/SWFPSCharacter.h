@@ -183,6 +183,8 @@ public:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+	bool IsEndPlay = false;
+
 	virtual void PostInitializeComponents() override;
 
 	UFUNCTION(BlueprintNativeEvent)
@@ -266,4 +268,7 @@ private:
 	void InitAbilitySystemComponent();
 
 	void SetLocalInputToASC(bool bIsPressed, const ESWAbilityInputID AbilityInputID);
+
+	void Pause();
+	void RestartLevel();
 };

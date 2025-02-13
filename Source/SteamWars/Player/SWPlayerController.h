@@ -17,6 +17,7 @@ public:
 	ASWPlayerController();
 
 	void CreateHUD();
+	//void CreatePauseHUD();
 
 	class USWHUDWidget* GetGSHUD();
 
@@ -53,6 +54,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
 	void TogglePauseMenu();
+	
+	UFUNCTION(BlueprintCallable, Category = "GAS|Gameplay")
+	void Restart();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
@@ -65,8 +69,6 @@ protected:
 	class USWHUDWidget* UIHUDWidget;
 
 
-	UFUNCTION(BlueprintCallable, Category = "GAS|Gameplay")
-	void Restart();
 
 	// Server only
 	virtual void OnPossess(APawn* InPawn) override;

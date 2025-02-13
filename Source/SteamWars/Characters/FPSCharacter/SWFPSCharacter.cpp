@@ -125,6 +125,10 @@ class USWFloatingStatusBarWidget* ASWFPSCharacter::GetFloatingStatusBar()
 
 void ASWFPSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+	Pause();
+
+	IsEndPlay = true;
+	
 	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->RemoveLooseGameplayTag(CurrentWeaponTag);
@@ -929,8 +933,47 @@ void ASWFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 		EnhancedInputComponent->BindAction(InputActions->PrevWeaponAction, ETriggerEvent::Completed, this,
 			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::PrevWeapon, false);
+
+		EnhancedInputComponent->BindAction(InputActions->PrevWeaponAction, ETriggerEvent::Completed, this,
+			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::PrevWeapon, false);
+
+		EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this,
+			&ASWFPSCharacter::Pause);
+
+		EnhancedInputComponent->BindAction(InputActions->RestartAction, ETriggerEvent::Triggered, this,
+			&ASWFPSCharacter::RestartLevel);
 	}
 	//BindASCInput();
+}
+
+void ASWFPSCharacter::Pause()
+{
+	ASWPlayerController* SWPlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
+	if (SWPlayerController && !IsEndPlay)
+	{
+		SWPlayerController->TogglePauseMenu();
+	}
+}
+
+void ASWFPSCharacter::RestartLevel()
+{
+	UWorld* World = GetWorld();
+
+	if (!World)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("World is null"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("World is not null__________________________________"));
+	}
+
+	if (World)
+	{
+		FName CurrentLevelName = FName(*World->GetMapName());
+        
+		UGameplayStatics::OpenLevel(World, CurrentLevelName);
+	}
 }
 
 void ASWFPSCharacter::Move(const FInputActionValue& Value)

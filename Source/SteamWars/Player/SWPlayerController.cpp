@@ -319,18 +319,6 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 	}
 }
 
-void ASWPlayerController::TogglePauseMenu()
-{
-	if (bIsPaused)
-	{
-		HidePauseMenu();
-	}
-	else
-	{
-		ShowPauseMenu();
-	}
-}
-
 void ASWPlayerController::ShowPauseMenu()
 {
 	if (SWPauseMenuWidgetClass)
@@ -356,6 +344,18 @@ void ASWPlayerController::HidePauseMenu()
 	bIsPaused = false;
 	SetInputMode(FInputModeGameOnly());
 	bShowMouseCursor = false; 
+}
+
+void ASWPlayerController::TogglePauseMenu()
+{
+	if (UGameplayStatics::IsGamePaused(GetWorld()))
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), false);
+	}
+	else
+	{
+		UGameplayStatics::SetGamePaused(GetWorld(), true);
+	}
 }
 
 void ASWPlayerController::Restart()

@@ -9,8 +9,15 @@
   <component name="ChangeListManager">
     <list default="true" id="3380d1ad-32cb-4de7-b5f9-1c79f0b2605a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SteamWars.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Data/DA_InputDataAsset.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SteamWar/Core/Characters/FPSCharacter/Input/IMC_DefaultMapping.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Characters/InputData/InputDataAsset.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/SteamWars/Player/SWPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/UI/SWSceneManager.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/SteamWars/UI/SWSceneManager.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +43,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://2" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/SteamWars/UHT/EnemyBaseCharacter.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/FPSCharacter/SWFPSCharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/SteamWars/Characters/SWBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
@@ -196,6 +203,9 @@
       <workItem from="1739341165276" duration="6860000" />
       <workItem from="1739353099704" duration="1761000" />
       <workItem from="1739361221137" duration="2732000" />
+      <workItem from="1739379806736" duration="10794000" />
+      <workItem from="1739438822375" duration="6123000" />
+      <workItem from="1739469649519" duration="2272000" />
     </task>
     <servers />
   </component>
