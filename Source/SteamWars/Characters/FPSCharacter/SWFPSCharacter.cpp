@@ -724,6 +724,7 @@ void ASWFPSCharacter::NextWeapon()
 {
 	if (Inventory.Weapons.Num() < 2)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Inventory.Weapons.Num() < 2"));
 		return;
 	}
 
@@ -732,10 +733,12 @@ void ASWFPSCharacter::NextWeapon()
 
 	if (CurrentWeaponIndex == INDEX_NONE)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("CurrentWeaponIndex == INDEX_NONE"));
 		EquipWeapon(Inventory.Weapons[0]);
 	}
 	else
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Equip"));
 		EquipWeapon(Inventory.Weapons[(CurrentWeaponIndex + 1) % Inventory.Weapons.Num()]);
 	}
 }
