@@ -543,15 +543,14 @@ void ASWFPSCharacter::FinishDying()
 		return;
 	}
 
-	ASWGameMode* GM = Cast<ASWGameMode>(GetWorld()->GetAuthGameMode());
+	//ASWGameMode* GM = Cast<ASWGameMode>(GetWorld()->GetAuthGameMode());
 
 	//TODO: hero died
 	/*if (GM)
 	{
 		GM->HeroDied(GetController());
 	}*/
-
-	RemoveCharacterAbilities();
+	
 
 	if (AbilitySystemComponent.IsValid())
 	{
@@ -561,10 +560,9 @@ void ASWFPSCharacter::FinishDying()
 		EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
 		int32 NumEffectsRemoved = AbilitySystemComponent->RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
-		AbilitySystemComponent->ApplyGameplayEffectToSelf(Cast<UGameplayEffect>(DeathEffect->GetDefaultObject()), 1.0f, AbilitySystemComponent->MakeEffectContext());
+		if(DeathEffect)
+			AbilitySystemComponent->ApplyGameplayEffectToSelf(Cast<UGameplayEffect>(DeathEffect->GetDefaultObject()), 1.0f, AbilitySystemComponent->MakeEffectContext());
 	}
-
-	OnCharacterDied.Broadcast(this);
 	
 	Super::FinishDying();
 }

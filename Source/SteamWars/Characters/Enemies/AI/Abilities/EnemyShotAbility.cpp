@@ -37,33 +37,36 @@ void UEnemyShotAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		
 		FVector ViewDirection = PVR.RotateVector(FVector::ForwardVector);
 
-		FVector ShotStart = Hero->GetActorLocation() + FVector(30.0f, 0.f, 0.f);
+		FVector ShotStart = Hero->GetActorLocation() + FVector(0.0f, 0.f, 0.f);
 		//FVector ShotStart = PVP + FVector(50.0f, 0, 50.0f);
-		FVector ShotEnd = ShotStart + ViewDirection * 100;
+		FVector ShotEnd = ShotStart + ViewDirection * 300;
 
 		FCollisionQueryParams QueryParams;
 		QueryParams.AddIgnoredActor(Hero);
 		
-		FHitResult ShotHitResult;
+		TArray<FHitResult> ShotHitResults;
 
-		if(GetWorld()->LineTraceSingleByChannel(ShotHitResult, ShotStart, ShotEnd, ECC_Bullet, QueryParams))
+		if(GetWorld()->SweepMultiByChannel(ShotHitResults, ShotStart, ShotEnd, FQuat::Identity, ECC_Bullet, FCollisionShape::MakeSphere(40.0f)))
 		{
-			ShotEnd = ShotHitResult.Location;
-			DrawDebugSphere(GetWorld(), ShotEnd, 50.f, 24, FColor::Red, false, 1.f);
-			UE_LOG(LogTemp, Warning, TEXT("Hit!"))
-
-			AActor* HitActor = ShotHitResult.GetActor();
-			if (HitActor && HitActor != Hero) // Проверяем, чтобы не наносить урон самому себе
+			for(FHitResult HitResult : ShotHitResults)
 			{
-				if (UAbilitySystemComponent* ASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(HitActor))
+				ShotEnd = HitResult.Location;
+				DrawDebugSphere(GetWorld(), ShotEnd, 50.f, 24, FColor::Red, false, 1.f);
+				UE_LOG(LogTemp, Warning, TEXT("Hit!"))
+
+				AActor* HitActor = HitResult.GetActor();
+				if (HitActor && HitActor != Hero) // Проверяем, чтобы не наносить урон самому себе
 				{
-					FGameplayEffectSpecHandle DamageEffectSpecHandle = ASC->MakeOutgoingSpec(
-						ResponseGameplayEffect, 1, ASC->MakeEffectContext());
+					if (UAbilitySystemComponent* ASC = UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(HitActor))
+					{
+						FGameplayEffectSpecHandle DamageEffectSpecHandle = ASC->MakeOutgoingSpec(
+							ResponseGameplayEffect, 1, ASC->MakeEffectContext());
                     
-					DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(
-						FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
+						DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(
+							FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
                 
-					ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+						ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+					}
 				}
 			}
 		}

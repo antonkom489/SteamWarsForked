@@ -186,9 +186,13 @@ protected:
 	void InitDefaultAttributes() const;
 	virtual void AddStartupEffects();
 	virtual void RemoveCharacterAbilities();
-	
+
+	UFUNCTION(BlueprintCallable)
 	virtual void SetHealth(float Health);
+	UFUNCTION(BlueprintCallable)
 	virtual void SetStamina(float Stamina);
+	UFUNCTION(BlueprintCallable)
+	virtual void SetMoveSpeed(float Speed);
 	
 	
 };

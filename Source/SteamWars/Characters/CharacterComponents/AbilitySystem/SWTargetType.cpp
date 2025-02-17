@@ -22,6 +22,6 @@ void USWTargetType_UseEventData::GetTargets_Implementation(ASWBaseCharacter* Tar
 	}
 	else if (EventData.Target)
 	{
-		OutActors.Add(const_cast<AActor*>(EventData.Target.Get()));
+		//OutActors.Add(const_cast<AActor*>(EventData.Target));
 	}
 }

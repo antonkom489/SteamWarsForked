@@ -4,7 +4,9 @@
 #include "Abilities/Tasks/AbilityTask.h"
 #include "SWAT_WaitTargetDataUsingActor.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitTargetDataUsingActorDelegate, const FGameplayAbilityTargetDataHandle&, Data);
+class AGameplayAbilityTargetActor;
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FWaitTargetDataUsingActorDelegate, const FGameplayAbilityTargetDataHandle&,
+                                            Data);
 
 /**
  * Waits for TargetData from an already spawned TargetActor and does *NOT* destroy it when it receives data.

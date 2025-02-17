@@ -438,4 +438,12 @@ void ASWBaseCharacter::SetStamina(float Stamina)
 	}
 }
 
+void ASWBaseCharacter::SetMoveSpeed(float Speed)
+{
+	if(AttributeSet.IsValid())
+	{
+		AttributeSet->SetMoveSpeed(Speed);
+	}
+}
+
 

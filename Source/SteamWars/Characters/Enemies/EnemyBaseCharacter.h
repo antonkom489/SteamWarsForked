@@ -4,9 +4,11 @@
 #include "../SWBaseCharacter.h"
 #include "EnemyBaseCharacter.generated.h"
 
+class UBehaviorTree;
 struct FOnAttributeChangeData;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEnemyDied);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackEnd, FTimerHandle, TimerHandle);
 
 UCLASS()
 class STEAMWARS_API AEnemyBaseCharacter : public ASWBaseCharacter
@@ -18,6 +20,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnEnemyDied OnEnemyDied;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Events")
+	FOnAttackEnd OnAttackEnd;
 	
 	virtual void FinishDying() override;
 
@@ -34,6 +39,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ShotAI();
+
+	UFUNCTION(BlueprintCallable)
+	UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; }
 	
 protected:
 	virtual void BeginPlay() override;
@@ -53,6 +61,9 @@ protected:
 
 	// Tag change callbacks
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Events")
+	UBehaviorTree* BehaviorTree;
 
 
 private:
