@@ -18,7 +18,6 @@
 #include "Net/UnrealNetwork.h"
 #include "Player/SWPlayerController.h"
 #include "Player/SWPlayerState.h"
-#include "UI/SWFloatingStatusBarWidget.h"
 
 
 ASWFPSCharacter::ASWFPSCharacter(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -48,21 +47,6 @@ ASWFPSCharacter::ASWFPSCharacter(const class FObjectInitializer& ObjectInitializ
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(FirstPersonMeshComponent, SocketFPCamera);
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
-
-	if(UIFloatingStatusBarComponent)
-	{
-		UIFloatingStatusBarComponent = CreateDefaultSubobject<UWidgetComponent>(FName("UIFloatingStatusBarComponent"));
-		UIFloatingStatusBarComponent->SetupAttachment(RootComponent);
-		UIFloatingStatusBarComponent->SetRelativeLocation(FVector(0, 0, 120));
-		UIFloatingStatusBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
-		UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
-	}
-	
-	/*UIFloatingStatusBarClass = StaticLoadClass(UObject::StaticClass(), nullptr, TEXT("/Game/GASShooter/UI/UI_FloatingStatusBar_Hero.UI_FloatingStatusBar_Hero_C"));
-	if (!UIFloatingStatusBarClass)
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Failed to find UIFloatingStatusBarClass. If it was moved, please update the reference location in C++."), *FString(__FUNCTION__));
-	}*/
 	
 	GetMesh()->SetOwnerNoSee(true);
 	GetMesh()->bCastHiddenShadow = true;
@@ -114,20 +98,7 @@ void ASWFPSCharacter::PossessedBy(AController* NewController)
 
 		// Remove Dead tag
 		AbilitySystemComponent->RemoveActiveEffectsWithGrantedTags(FGameplayTagContainer(DeadTag));
-
-		InitializeFloatingStatusBar();
-
-		// If player is host on listen server, the floating status bar would have been created for them from BeginPlay before player possession, hide it
-		if (IsLocallyControlled() && IsPlayerControlled() && UIFloatingStatusBarComponent && UIFloatingStatusBar)
-		{
-			UIFloatingStatusBarComponent->SetVisibility(false, true);
-		}
 	}
-}
-
-class USWFloatingStatusBarWidget* ASWFPSCharacter::GetFloatingStatusBar()
-{
-	return UIFloatingStatusBar;
 }
 
 void ASWFPSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -156,46 +127,6 @@ void ASWFPSCharacter::CharacterInitialSpawnDefaultInventory_Implementation()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Called from %s with original CharacterInitialSpawnDefaultInventory implementation."), *GetName());
 	UE_LOG(LogTemp, Warning, TEXT("%s() original implementation called. Override this in BP instead!."), *FString(__FUNCTION__));
-}
-
-void ASWFPSCharacter::InitializeFloatingStatusBar()
-{
-	// Only create once
-	if (UIFloatingStatusBar || !AbilitySystemComponent.IsValid())
-	{
-		return;
-	}
-
-	// Don't create for locally controlled player. We could add a game setting to toggle this later.
-	if (IsPlayerControlled() && IsLocallyControlled())
-	{
-		return;
-	}
-
-	// Need a valid PlayerState
-	if (!GetPlayerState())
-	{
-		return;
-	}
-
-	// Setup UI for Locally Owned Players only, not AI or the server's copy of the PlayerControllers
-	ASWPlayerController* PC = Cast<ASWPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	if (PC && PC->IsLocalPlayerController())
-	{
-		if (UIFloatingStatusBarClass)
-		{
-			UIFloatingStatusBar = CreateWidget<USWFloatingStatusBarWidget>(PC, UIFloatingStatusBarClass);
-			if (UIFloatingStatusBar && UIFloatingStatusBarComponent)
-			{
-				UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
-
-				// Setup the floating status bar
-				UIFloatingStatusBar->SetHealthPercentage(GetHealth() / GetMaxHealth());
-				UIFloatingStatusBar->OwningCharacter = this;
-				UIFloatingStatusBar->SetCharacterName(CharacterName);
-			}
-		}
-	}
 }
 
 void ASWFPSCharacter::OnRep_Controller()
@@ -524,7 +455,6 @@ void ASWFPSCharacter::OnRep_PlayerState()
 		}
 
 		// Simulated on proxies don't have their PlayerStates yet when BeginPlay is called so we call it again here
-		InitializeFloatingStatusBar();
 	}
 }
 
@@ -844,8 +774,6 @@ FName ASWFPSCharacter::GetWeaponAttachPoint()
 void ASWFPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	InitializeFloatingStatusBar();
 
 	if (GetLocalRole() == ROLE_AutonomousProxy)
 	{

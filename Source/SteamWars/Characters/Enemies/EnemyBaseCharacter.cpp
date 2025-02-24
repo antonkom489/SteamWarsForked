@@ -1,8 +1,11 @@
 ﻿#include "EnemyBaseCharacter.h"
 
+#include "Blueprint/UserWidget.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "UI/SWFloatingStatusBarWidget.h"
 
 AEnemyBaseCharacter::AEnemyBaseCharacter(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -42,24 +45,7 @@ void AEnemyBaseCharacter::BeginPlay()
 		AddStartupEffects();
 		GiveDefaultAbilities();
 
-		// Setup FloatingStatusBar UI for Locally Owned Players only, not AI or the server's copy of the PlayerControllers
-		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-		/*if (PC && PC->IsLocalPlayerController())
-		{
-			if (UIFloatingStatusBarClass)
-			{
-				UIFloatingStatusBar = CreateWidget<UGDFloatingStatusBarWidget>(PC, UIFloatingStatusBarClass);
-				if (UIFloatingStatusBar && UIFloatingStatusBarComponent)
-				{
-					UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
-
-					// Setup the floating status bar
-					UIFloatingStatusBar->SetHealthPercentage(GetHealth() / GetMaxHealth());
-
-					UIFloatingStatusBar->SetCharacterName(CharacterName);
-				}
-			}
-		}*/
+		InitializeFloatingStatusBar();
 
 		// Attribute change callbacks
 		HealthChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate
@@ -77,10 +63,10 @@ void AEnemyBaseCharacter::HealthChanged(const FOnAttributeChangeData& Data)
 	float Health = Data.NewValue;
 
 	// Update floating status bar
-	/*if (UIFloatingStatusBar)
+	if (UIFloatingStatusBar)
 	{
 		UIFloatingStatusBar->SetHealthPercentage(Health / GetMaxHealth());
-	}*/
+	}
 
 	// If the minion died, handle death
 	if (!IsAlive() && !AbilitySystemComponent->HasMatchingGameplayTag(DeadTag))

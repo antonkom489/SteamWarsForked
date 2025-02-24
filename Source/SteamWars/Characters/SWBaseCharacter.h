@@ -169,6 +169,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "GASShooter|UI")
 	class UWidgetComponent* UIFloatingStatusBarComponent;
+
+	UFUNCTION()
+	void InitializeFloatingStatusBar();
 	/*========================================================*/
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GAS | Character | Name")

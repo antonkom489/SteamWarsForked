@@ -60,8 +60,6 @@ public:
 
 	// GAS Server only
 	virtual void PossessedBy(AController* NewController) override;
-	
-	class USWFloatingStatusBarWidget* GetFloatingStatusBar();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
@@ -189,9 +187,6 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void CharacterInitialSpawnDefaultInventory();
-
-	UFUNCTION()
-	void InitializeFloatingStatusBar();
 
 	// Client only
 	virtual void OnRep_PlayerState() override;
