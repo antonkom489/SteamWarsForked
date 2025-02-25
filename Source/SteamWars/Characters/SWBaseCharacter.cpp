@@ -1,10 +1,15 @@
 ﻿#include "SWBaseCharacter.h"
+
+#include "AIController.h"
 #include "CharacterComponents/SWCharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
 #include "Characters/CharacterComponents/AbilitySystem/Abilities/SWGameplayAbility.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/SWPlayerController.h"
 #include "UI/SWFloatingStatusBarWidget.h"
 
 ASWBaseCharacter::ASWBaseCharacter(const class FObjectInitializer& ObjectInitializer) :
@@ -22,6 +27,13 @@ ASWBaseCharacter::ASWBaseCharacter(const class FObjectInitializer& ObjectInitial
 	DeadTag = FGameplayTag::RequestGameplayTag("State.Dead");
 	BeingTakendownTag = FGameplayTag::RequestGameplayTag("State.BeingTakendown");
 	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag("Effect.RemoveOnDeath");
+
+	UIFloatingStatusBarComponent = CreateDefaultSubobject<UWidgetComponent>(FName("UIFloatingStatusBarComponent"));
+	UIFloatingStatusBarComponent->SetupAttachment(RootComponent);
+	UIFloatingStatusBarComponent->SetRelativeLocation(FVector(0, 0, 120));
+	UIFloatingStatusBarComponent->SetWidgetSpace(EWidgetSpace::Screen);
+	UIFloatingStatusBarComponent->SetDrawSize(FVector2D(500, 500));
+
 }
 
 UAbilitySystemComponent* ASWBaseCharacter::GetAbilitySystemComponent() const
@@ -275,9 +287,11 @@ bool ASWBaseCharacter::IsStatusBarAvailable_Implementation() const
 {
 	if (UIFloatingStatusBar)
 	{
+		UE_LOG(LogTemp, Error, TEXT("UIFloatingStatusBar"));
 		return true;
 	}
 
+	UE_LOG(LogTemp, Error, TEXT("!UIFloatingStatusBar"));
 	return false;
 }
 
@@ -285,7 +299,12 @@ void ASWBaseCharacter::FadeInStatusBar_Implementation() const
 {
 	if (UIFloatingStatusBar)
 	{
+		UE_LOG(LogTemp, Error, TEXT("FadeInStatusBar_Implementation"));
 		UIFloatingStatusBar->PlayFadeIn();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("!UIFloatingStatusBar"));
 	}
 }
 
@@ -293,7 +312,12 @@ void ASWBaseCharacter::FadeOutStatusBar_Implementation() const
 {
 	if (UIFloatingStatusBar)
 	{
+		UE_LOG(LogTemp, Error, TEXT("FadeOutStatusBar_Implementation"));
 		UIFloatingStatusBar->PlayFadeOut();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("!UIFloatingStatusBar"));
 	}
 }
 
@@ -351,6 +375,31 @@ float ASWBaseCharacter::GetMoveSpeedBaseValue() const
 	}
 
 	return 0.0f;
+}
+
+void ASWBaseCharacter::InitializeFloatingStatusBar()
+{
+	// Уже создано? Или нет AbilitySystem?
+	if (UIFloatingStatusBar || !AbilitySystemComponent.IsValid())
+	{
+		return;
+	}
+
+	if (UIFloatingStatusBarClass)
+	{
+		UIFloatingStatusBar = CreateWidget<USWFloatingStatusBarWidget>(GetWorld(), UIFloatingStatusBarClass);
+		if (UIFloatingStatusBar && UIFloatingStatusBarComponent)
+		{
+			UIFloatingStatusBarComponent->SetWidget(UIFloatingStatusBar);
+
+			// Настраиваем статус-бар
+			UIFloatingStatusBar->SetHealthPercentage(GetHealth() / GetMaxHealth());
+			UIFloatingStatusBar->OwningCharacter = this;
+			UIFloatingStatusBar->SetCharacterName(CharacterName);
+
+			UE_LOG(LogTemp, Display, TEXT("ASWBaseCharacter::InitializeFloatingStatusBar"));
+		}
+	}
 }
 
 void ASWBaseCharacter::BeginPlay()
