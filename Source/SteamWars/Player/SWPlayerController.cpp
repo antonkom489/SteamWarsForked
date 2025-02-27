@@ -44,8 +44,18 @@ void ASWPlayerController::CreateHUD()
 		return;
 	}
 
+	if (!PauseMenuWidget) // Проверка, создан ли виджет
+	{
+		PauseMenuWidget = CreateWidget<UUserWidget>(this, SWPauseMenuWidgetClass);
+	}
+	if (PauseMenuWidget)
+	{
+		PauseMenuWidget->AddToViewport();
+	}
+	
 	UIHUDWidget = CreateWidget<USWHUDWidget>(this, UIHUDWidgetClass);
 	UIHUDWidget->AddToViewport();
+	HidePauseMenu();
 
 	// Set attributes
 	UIHUDWidget->SetCurrentHealth(PS->GetHealth());
@@ -211,6 +221,8 @@ void ASWPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
+	
+
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
@@ -219,7 +231,7 @@ void ASWPlayerController::SetupInputComponent()
 			// Moving
 			EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 			//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ThisClass::StopMove);
-
+			//EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
 			// Looking
 			EnhancedInputComponent->BindAction(InputActions->LookMouseAction, ETriggerEvent::Triggered, this, &ThisClass::Input_LookMouse);
 		}
@@ -323,10 +335,10 @@ void ASWPlayerController::ShowPauseMenu()
 {
 	if (SWPauseMenuWidgetClass)
 	{
-		PauseMenu = CreateWidget<UUserWidget>(this, SWPauseMenuWidgetClass);
-		if (PauseMenu)
+		PauseMenuWidget = CreateWidget<UUserWidget>(this, SWPauseMenuWidgetClass);
+		if (PauseMenuWidget)
 		{
-			PauseMenu->AddToViewport();
+			PauseMenuWidget->AddToViewport();
 			bIsPaused = true;
 			SetInputMode(FInputModeUIOnly());
 			bShowMouseCursor = true; 
@@ -336,11 +348,12 @@ void ASWPlayerController::ShowPauseMenu()
 
 void ASWPlayerController::HidePauseMenu()
 {
-	if (PauseMenu)
+	if (PauseMenuWidget)
 	{
-		PauseMenu->RemoveFromParent();
+		PauseMenuWidget->RemoveFromParent();
+		PauseMenuWidget = nullptr;
 	}
-    
+
 	bIsPaused = false;
 	SetInputMode(FInputModeGameOnly());
 	bShowMouseCursor = false; 
@@ -351,10 +364,12 @@ void ASWPlayerController::TogglePauseMenu()
 	if (UGameplayStatics::IsGamePaused(GetWorld()))
 	{
 		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		HidePauseMenu();
 	}
 	else
 	{
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		ShowPauseMenu();
 	}
 }
 

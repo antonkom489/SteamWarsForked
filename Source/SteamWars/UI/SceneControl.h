@@ -20,4 +20,7 @@ class STEAMWARS_API USceneControl : public UUserWidget
 
 	UFUNCTION(BlueprintCallable)
 	void TogglePause();
+
+	UFUNCTION(BlueprintCallable)
+	void OnBackButtonClicked();
 };
