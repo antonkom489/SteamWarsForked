@@ -103,8 +103,6 @@ void ASWFPSCharacter::PossessedBy(AController* NewController)
 
 void ASWFPSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	Pause();
-
 	IsEndPlay = true;
 	
 	if (AbilitySystemComponent.IsValid())

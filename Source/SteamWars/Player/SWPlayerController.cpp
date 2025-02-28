@@ -348,6 +348,7 @@ void ASWPlayerController::ShowPauseMenu()
 
 void ASWPlayerController::HidePauseMenu()
 {
+	UGameplayStatics::SetGamePaused(GetWorld(), false);
 	if (PauseMenuWidget)
 	{
 		PauseMenuWidget->RemoveFromParent();
