@@ -20,8 +20,7 @@ public:
 	//void CreatePauseHUD();
 
 	class USWHUDWidget* GetGSHUD();
-
-
+	
 	/**
 	* Weapon HUD info
 	*/
@@ -57,13 +56,17 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "GAS|Gameplay")
 	void Restart();
+	
+	void HidePauseMenu();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
 	TSubclassOf<class USWHUDWidget> UIHUDWidgetClass;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS|UI")
 	TSubclassOf<UUserWidget> SWPauseMenuWidgetClass;
+	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
+	UUserWidget* PauseMenuWidget;
 
 	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
 	class USWHUDWidget* UIHUDWidget;
@@ -86,7 +89,6 @@ protected:
 	bool bIsPaused;
 
 	void ShowPauseMenu();
-	void HidePauseMenu();
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputMappingContext* InputMappingContext = nullptr;
