@@ -232,6 +232,9 @@ void ASWPlayerController::SetupInputComponent()
 			EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 			//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ThisClass::StopMove);
 			//EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
+			EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
+			EnhancedInputComponent->BindAction(InputActions->RestartAction, ETriggerEvent::Triggered, this,
+			&ThisClass::Restart);
 			// Looking
 			EnhancedInputComponent->BindAction(InputActions->LookMouseAction, ETriggerEvent::Triggered, this, &ThisClass::Input_LookMouse);
 		}

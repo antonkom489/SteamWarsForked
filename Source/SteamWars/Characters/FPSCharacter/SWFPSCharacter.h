@@ -264,6 +264,4 @@ private:
 
 	void SetLocalInputToASC(bool bIsPressed, const ESWAbilityInputID AbilityInputID);
 
-	void Pause();
-	void RestartLevel();
 };
