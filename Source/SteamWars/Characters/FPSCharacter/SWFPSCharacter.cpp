@@ -226,11 +226,11 @@ void ASWFPSCharacter::SetCurrentWeapon(ARangeWeaponItem* NewWeapon, ARangeWeapon
 			SecondaryReserveAmmoChangedDelegateHandle = AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(UAmmoAttributeSet::GetReserveAmmoAttributeFromTag(CurrentWeapon->SecondaryAmmoType)).AddUObject(this, &ASWFPSCharacter::CurrentWeaponSecondaryReserveAmmoChanged);
 		}
 
-		/*UAnimMontage* Equip1PMontage = CurrentWeapon->GetEquip1PMontage();
-		if (Equip1PMontage && GetFirstPersonMesh())
+		UAnimMontage* Equip1PMontage = CurrentWeapon->GetEquip1PMontage();
+		if (Equip1PMontage && GetFPSMesh())
 		{
-			GetFirstPersonMesh()->GetAnimInstance()->Montage_Play(Equip1PMontage);
-		}*/
+			GetFPSMesh()->GetAnimInstance()->Montage_Play(Equip1PMontage);
+		}
 
 		/*UAnimMontage* Equip3PMontage = CurrentWeapon->GetEquip3PMontage();
 		if (Equip3PMontage && GetThirdPersonMesh())

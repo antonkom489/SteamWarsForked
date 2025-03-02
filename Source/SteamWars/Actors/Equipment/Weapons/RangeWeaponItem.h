@@ -43,6 +43,8 @@ public:
 	
 	UWeaponBarrelComponent* GetWeaponBarrelComponent() const { return WeaponBarrel; }
 	float GetRateOfFire() const { return RateOfFire; }
+	
+	UAnimMontage* GetEquip1PMontage() { return Equip1PMontage; };
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GASShooter|GSWeapon")
 	FGameplayTag WeaponTag;

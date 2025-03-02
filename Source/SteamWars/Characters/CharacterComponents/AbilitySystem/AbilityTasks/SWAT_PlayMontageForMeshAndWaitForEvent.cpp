@@ -133,10 +133,11 @@ void USWAT_PlayMontageForMeshAndWaitForEvent::Activate()
 		UAnimInstance* AnimInstance = Mesh->GetAnimInstance();
 		if (AnimInstance != nullptr)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("AnimInstance != nullptr"));
 			// Bind to event callback
 			EventHandle = GSAbilitySystemComponent->AddGameplayEventTagContainerDelegate(EventTags, FGameplayEventTagMulticastDelegate::FDelegate::CreateUObject(this, &USWAT_PlayMontageForMeshAndWaitForEvent::OnGameplayEvent));
-
-			/*if (GSAbilitySystemComponent->PlayMontageForMesh(Ability, Mesh, Ability->GetCurrentActivationInfo(), MontageToPlay, Rate, StartSection, bReplicateMontage) > 0.f)
+			
+			if (GSAbilitySystemComponent->PlayMontageForMesh(Ability, Mesh, Ability->GetCurrentActivationInfo(), MontageToPlay, Rate, StartSection, bReplicateMontage) > 0.f)
 			{
 				// Playing a montage could potentially fire off a callback into game code which could kill this ability! Early out if we are  pending kill.
 				if (ShouldBroadcastAbilityTaskDelegates() == false)
@@ -160,7 +161,7 @@ void USWAT_PlayMontageForMeshAndWaitForEvent::Activate()
 				}
 
 				bPlayedMontage = true;
-			}*/
+			}
 		}
 		else
 		{

@@ -9,6 +9,28 @@
 struct FSWGameplayEffectContainer;
 enum class ESWAbilityInputID : uint8;
 
+USTRUCT()
+struct STEAMWARS_API FAbilityMeshMontage
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+	class USkeletalMeshComponent* Mesh;
+
+	UPROPERTY()
+	class UAnimMontage* Montage;
+
+	FAbilityMeshMontage() : Mesh(nullptr), Montage(nullptr)
+	{
+	}
+
+	FAbilityMeshMontage(class USkeletalMeshComponent* InMesh, class UAnimMontage* InMontage) 
+		: Mesh(InMesh), Montage(InMontage)
+	{
+	}
+};
+
 UCLASS()
 class STEAMWARS_API USWGameplayAbility : public UGameplayAbility
 {
@@ -31,6 +53,11 @@ public:
 	// If an ability is marked as 'ActivateAbilityOnGranted', activate them immediately when given here
 	// Epic's comment: Projects may want to initiate passives or do other "BeginPlay" type of logic here.
 	virtual void OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+
+	bool FindAbillityMeshMontage(USkeletalMeshComponent* InMesh, FAbilityMeshMontage& InAbilityMeshMontage);
+	
+	void SetCurrentMontageForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* InCurrentMontage);
+	
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability")
 	bool bActivateOnInput;
@@ -124,7 +151,8 @@ public:
 
 protected:
 
-
+	UPROPERTY()
+	TArray<FAbilityMeshMontage> CurrentAbilityMeshMontages;
 	/*// ----------------------------------------------------------------------------------------------------------------
 	//	Animation Support for multiple USkeletalMeshComponents on the AvatarActor
 	// ----------------------------------------------------------------------------------------------------------------

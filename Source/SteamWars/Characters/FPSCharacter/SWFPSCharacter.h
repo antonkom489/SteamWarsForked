@@ -171,7 +171,6 @@ public:
 	UPROPERTY()
 	class UAmmoAttributeSet* AmmoAttributeSet;
 	
-
 	// Attribute changed delegate handles
 	FDelegateHandle PrimaryReserveAmmoChangedDelegateHandle;
 	FDelegateHandle SecondaryReserveAmmoChangedDelegateHandle;

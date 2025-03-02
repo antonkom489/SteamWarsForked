@@ -27,6 +27,36 @@ void USWGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo,
 	}
 }
 
+bool USWGameplayAbility::FindAbillityMeshMontage(USkeletalMeshComponent* InMesh,
+	FAbilityMeshMontage& InAbilityMeshMontage)
+{
+	for (FAbilityMeshMontage& MeshMontage : CurrentAbilityMeshMontages)
+	{
+		if (MeshMontage.Mesh == InMesh)
+		{
+			InAbilityMeshMontage = MeshMontage;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void USWGameplayAbility::SetCurrentMontageForMesh(USkeletalMeshComponent* InMesh, UAnimMontage* InCurrentMontage)
+{
+	ensure(IsInstantiated());
+
+	FAbilityMeshMontage AbilityMeshMontage;
+	if (FindAbillityMeshMontage(InMesh, AbilityMeshMontage))
+	{
+		AbilityMeshMontage.Montage = InCurrentMontage;
+	}
+	else
+	{
+		CurrentAbilityMeshMontages.Add(FAbilityMeshMontage(InMesh, InCurrentMontage));
+	}
+}
+
 FGameplayAbilityTargetDataHandle USWGameplayAbility::MakeGameplayAbilityTargetDataHandleFromActorArray(
 	const TArray<AActor*> TargetActors)
 {
