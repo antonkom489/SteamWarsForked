@@ -97,6 +97,12 @@ void ASWBaseCharacter::Die()
 	GetCharacterMovement()->GravityScale = 0;
 	GetCharacterMovement()->Velocity = FVector(0);
 
+	ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetController());
+	if (PlayerController)
+	{
+		PlayerController->SetEndGameWidget();
+	}
+
 	OnCharacterDied.Broadcast(this);
 
 	if (AbilitySystemComponent.IsValid())
