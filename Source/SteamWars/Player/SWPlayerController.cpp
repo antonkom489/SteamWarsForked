@@ -44,13 +44,18 @@ void ASWPlayerController::CreateHUD()
 		return;
 	}
 
-	if (!PauseMenuWidget) // Проверка, создан ли виджет
+	if (!PauseMenuWidget)
 	{
 		PauseMenuWidget = CreateWidget<UUserWidget>(this, SWPauseMenuWidgetClass);
 	}
 	if (PauseMenuWidget)
 	{
 		PauseMenuWidget->AddToViewport();
+	}
+
+	if (!EndGameMenuWidget)
+	{
+		EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
 	}
 	
 	UIHUDWidget = CreateWidget<USWHUDWidget>(this, UIHUDWidgetClass);
@@ -187,7 +192,6 @@ void ASWPlayerController::OnRep_PlayerState()
 void ASWPlayerController::Kill()
 {
 	ServerKill();
-	Restart();
 }
 
 void ASWPlayerController::ServerKill_Implementation()
@@ -233,8 +237,6 @@ void ASWPlayerController::SetupInputComponent()
 			//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ThisClass::StopMove);
 			//EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
 			EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
-			EnhancedInputComponent->BindAction(InputActions->RestartAction, ETriggerEvent::Triggered, this,
-			&ThisClass::Restart);
 			// Looking
 			EnhancedInputComponent->BindAction(InputActions->LookMouseAction, ETriggerEvent::Triggered, this, &ThisClass::Input_LookMouse);
 		}
@@ -377,13 +379,22 @@ void ASWPlayerController::TogglePauseMenu()
 	}
 }
 
-void ASWPlayerController::Restart()
+void ASWPlayerController::SetEndGameWidget()
 {
-	UWorld* World = GetWorld();
-	if (World)
+	if (SWEndGameMenuWidgetClass)
 	{
-		FName CurrentLevelName = FName(*World->GetMapName());
+		if (!EndGameMenuWidget)
+		{
+			EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
+		}
         
-		UGameplayStatics::OpenLevel(World, CurrentLevelName);
+		if (EndGameMenuWidget)
+		{
+			EndGameMenuWidget->AddToViewport();
+			bIsPaused = true;
+			SetInputMode(FInputModeUIOnly());
+			bShowMouseCursor = true; 
+		}
 	}
 }
+

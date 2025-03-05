@@ -53,9 +53,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
 	void TogglePauseMenu();
-	
-	UFUNCTION(BlueprintCallable, Category = "GAS|Gameplay")
-	void Restart();
+
+	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
+	void SetEndGameWidget();
 	
 	void HidePauseMenu();
 
@@ -67,6 +67,11 @@ protected:
 	TSubclassOf<UUserWidget> SWPauseMenuWidgetClass;
 	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
 	UUserWidget* PauseMenuWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS|UI")
+	TSubclassOf<UUserWidget> SWEndGameMenuWidgetClass;
+	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
+	UUserWidget* EndGameMenuWidget;
 
 	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
 	class USWHUDWidget* UIHUDWidget;
