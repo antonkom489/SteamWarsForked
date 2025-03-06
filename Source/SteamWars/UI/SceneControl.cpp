@@ -33,3 +33,21 @@ void USceneControl::OnBackButtonClicked()
 		PlayerController->HidePauseMenu();
 	}
 }
+
+void USceneControl::ShowSettings()
+{
+	ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetOwningPlayer());
+	if (PlayerController)
+	{
+		PlayerController->ShowSettingsMenu();
+	}
+}
+
+void USceneControl::HideSettings()
+{
+	ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetOwningPlayer());
+	if (PlayerController)
+	{
+		PlayerController->HideSettingsMenu();
+	}
+}

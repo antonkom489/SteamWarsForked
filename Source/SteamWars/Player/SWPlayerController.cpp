@@ -53,6 +53,11 @@ void ASWPlayerController::CreateHUD()
 		PauseMenuWidget->AddToViewport();
 	}
 
+	if (!SettingsMenuWidget)
+	{
+		SettingsMenuWidget = CreateWidget<UUserWidget>(this, SWSettingsMenuWidgetClass);
+	}
+
 	if (!EndGameMenuWidget)
 	{
 		EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
@@ -348,6 +353,27 @@ void ASWPlayerController::ShowPauseMenu()
 			SetInputMode(FInputModeUIOnly());
 			bShowMouseCursor = true; 
 		}
+	}
+}
+
+void ASWPlayerController::ShowSettingsMenu()
+{
+	if (SWSettingsMenuWidgetClass)
+	{
+		SettingsMenuWidget = CreateWidget<UUserWidget>(this, SWSettingsMenuWidgetClass);
+		if (SettingsMenuWidget)
+		{
+			SettingsMenuWidget->AddToViewport();
+		}
+	}
+}
+
+void ASWPlayerController::HideSettingsMenu()
+{
+	if (SettingsMenuWidget)
+	{
+		SettingsMenuWidget->RemoveFromParent();
+		SettingsMenuWidget = nullptr;
 	}
 }
 
