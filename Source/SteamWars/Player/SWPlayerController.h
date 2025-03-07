@@ -63,6 +63,7 @@ public:
 	
 	void HideSettingsMenu();
 
+
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
 	TSubclassOf<class USWHUDWidget> UIHUDWidgetClass;

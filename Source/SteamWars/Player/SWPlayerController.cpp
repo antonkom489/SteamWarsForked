@@ -9,6 +9,7 @@
 #include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
 #include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Characters/InputData/InputDataAsset.h"
+#include "Sound/SoundMix.h"
 #include "UI/SWHUDWidget.h"
 
 ASWPlayerController::ASWPlayerController() :
@@ -423,4 +424,7 @@ void ASWPlayerController::SetEndGameWidget()
 		}
 	}
 }
+
+
+
 
