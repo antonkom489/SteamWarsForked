@@ -7,6 +7,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "../InputData/InputDataAsset.h"
 #include "Actors/Equipment/Weapons/RangeWeaponItem.h"
+#include "Animation/DebugSkelMeshComponent.h"
 #include "Characters/CharacterComponents/SWCharacterEquipmentComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWBlueprintFunctionLibrary.h"
@@ -491,6 +492,7 @@ void ASWFPSCharacter::FinishDying()
 		if(DeathEffect)
 			AbilitySystemComponent->ApplyGameplayEffectToSelf(Cast<UGameplayEffect>(DeathEffect->GetDefaultObject()), 1.0f, AbilitySystemComponent->MakeEffectContext());
 	}
+	
 	
 	Super::FinishDying();
 }

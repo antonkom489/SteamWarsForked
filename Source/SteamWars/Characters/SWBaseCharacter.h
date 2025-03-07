@@ -11,6 +11,21 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterBaseHitReactDelegate, ESWHitReactDirection, Direction);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCharacterDiedDelegate, ASWBaseCharacter*, Character);
 
+USTRUCT(BlueprintType)
+struct STEAMWARS_API FGSDamageIndicator
+{
+	GENERATED_USTRUCT_BODY()
+
+	FVector SourceLocation;
+
+	FGSDamageIndicator() {}
+
+	FGSDamageIndicator(FVector InSourceLocation) : SourceLocation(InSourceLocation)
+	{
+		
+	}
+};
+
 UCLASS()
 class STEAMWARS_API ASWBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IGSDamageable
 {
@@ -68,6 +83,10 @@ public:
 	int32 GetCharacterLevel() const;
 	/*===============================================================*/
 
+	/*==========================UI==========================*/
+	virtual void AddDamageIndicator(FVector SourceLocation);
+	/*======================================================*/
+	
 	/*==========================HitReact==========================*/
 	UFUNCTION(BlueprintCallable)
 	ESWHitReactDirection GetHitReactDirection(const FVector& ImpactPoint);
@@ -164,6 +183,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS | Character | UI")
 	TSubclassOf<class USWFloatingStatusBarWidget> UIFloatingStatusBarClass;
 
+	UPROPERTY(EditAnywhere, Category = "GASShooter|UI")
+	TSubclassOf<class UHUDDamageIndicator> DamageIndicatorClass;
+	
 	UPROPERTY()
 	class USWFloatingStatusBarWidget* UIFloatingStatusBar;
 
@@ -172,6 +194,11 @@ protected:
 
 	UFUNCTION()
 	void InitializeFloatingStatusBar();
+
+	virtual void ShowDamageIndicator();
+	
+	TArray<FGSDamageIndicator> DamageIndicatorQueue;
+	FTimerHandle DamageIndicatorTimer;
 	/*========================================================*/
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GAS | Character | Name")

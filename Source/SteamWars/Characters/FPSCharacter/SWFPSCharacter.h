@@ -153,7 +153,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASShooter|GSHeroCharacter")
 	FName WeaponAttachPoint;
-
+	
 	void BindASCInput();
 	bool bASCInputBound;
 public:

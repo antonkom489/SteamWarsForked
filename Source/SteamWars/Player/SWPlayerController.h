@@ -51,6 +51,11 @@ public:
 	void ClientSetControlRotation_Implementation(FRotator NewRotation);
 	bool ClientSetControlRotation_Validate(FRotator NewRotation);
 
+	UFUNCTION(Client, Reliable, WithValidation)
+	void ShowDamageIndicator(FVector SourcheLocation);
+	void ShowDamageIndicator_Implementation(FVector SourcheLocation);
+	bool ShowDamageIndicator_Validate(FVector SourcheLocation);
+
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
 	void TogglePauseMenu();
 

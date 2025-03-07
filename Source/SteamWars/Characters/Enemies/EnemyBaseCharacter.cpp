@@ -29,9 +29,11 @@ AEnemyBaseCharacter::AEnemyBaseCharacter(const class FObjectInitializer& ObjectI
 
 void AEnemyBaseCharacter::FinishDying()
 {
+	
 	Super::FinishDying();
 
 	OnEnemyDied.Broadcast();
+	Destroy();
 }
 
 void AEnemyBaseCharacter::BeginPlay()

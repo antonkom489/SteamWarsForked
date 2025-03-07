@@ -67,6 +67,10 @@ void USWAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 		TargetController = Data.Target.AbilityActorInfo->PlayerController.Get();
 		TargetCharacter = Cast<ASWBaseCharacter>(TargetActor);
 	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("!Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid()"))
+	}
 
 	// Get the Source actor
 	AActor* SourceActor = nullptr;
@@ -99,6 +103,10 @@ void USWAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 		{
 			SourceActor = Context.GetEffectCauser();
 		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("!Source && Source->AbilityActorInfo.IsValid() && Source->AbilityActorInfo->AvatarActor.IsValid()"))
 	}
 
 	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
@@ -188,13 +196,15 @@ void USWAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModC
 					}
 				}*/
 
+				UE_LOG(LogTemp, Error, TEXT("SourceActor: %s"), SourceActor ? *SourceActor->GetName() : TEXT("NULL"));
+				UE_LOG(LogTemp, Error, TEXT("TargetActor: %s"), TargetActor ? *TargetActor->GetName() : TEXT("NULL"));
 				//TODO: If want add Damage Marker
-				/*ASWPlayerController* OwnerPC = Cast<ASWPlayerController>(TargetController);
+				ASWPlayerController* OwnerPC = Cast<ASWPlayerController>(TargetController);
 				if (OwnerPC)
 				{
 					FVector sourceLocation = SourceActor ? SourceActor->GetActorLocation() : FVector(0.f);
 					OwnerPC->ShowDamageIndicator(sourceLocation);
-				}*/
+				}
 
 				//TODO: If want add Kill Marker
 				/*if (!TargetCharacter->IsAlive())

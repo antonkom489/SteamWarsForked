@@ -10,6 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/SWPlayerController.h"
+#include "UI/HUDDamageIndicator.h"
 #include "UI/SWFloatingStatusBarWidget.h"
 
 ASWBaseCharacter::ASWBaseCharacter(const class FObjectInitializer& ObjectInitializer) :
@@ -128,7 +129,7 @@ void ASWBaseCharacter::Die()
 
 void ASWBaseCharacter::FinishDying()
 {
-	Destroy();
+	//Destroy();
 }
 
 int32 ASWBaseCharacter::GetCharacterLevel() const
@@ -139,6 +140,16 @@ int32 ASWBaseCharacter::GetCharacterLevel() const
 	}
 
 	return 0;
+}
+
+void ASWBaseCharacter::AddDamageIndicator(FVector SourceLocation)
+{
+	DamageIndicatorQueue.Add(FGSDamageIndicator(SourceLocation));
+
+	if (!GetWorldTimerManager().IsTimerActive(DamageIndicatorTimer))
+	{
+		GetWorldTimerManager().SetTimer(DamageIndicatorTimer, this, &ASWBaseCharacter::ShowDamageIndicator, 0.1f, true, 0.0f);
+	}
 }
 
 ESWHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
@@ -405,6 +416,23 @@ void ASWBaseCharacter::InitializeFloatingStatusBar()
 
 			UE_LOG(LogTemp, Display, TEXT("ASWBaseCharacter::InitializeFloatingStatusBar"));
 		}
+	}
+}
+
+void ASWBaseCharacter::ShowDamageIndicator()
+{
+	if (DamageIndicatorQueue.Num() > 0 && IsValid(this))
+	{
+		UHUDDamageIndicator* DamageIndicator = CreateWidget<UHUDDamageIndicator>(GetLocalViewingPlayerController(), DamageIndicatorClass);
+		DamageIndicator->HitLocation = DamageIndicatorQueue[0].SourceLocation;
+		DamageIndicator->AddToViewport();
+
+		if (DamageIndicatorQueue.Num() < 1)
+		{
+			GetWorldTimerManager().ClearTimer(DamageIndicatorTimer);
+		}
+
+		DamageIndicatorQueue.RemoveAt(0);
 	}
 }
 

@@ -169,6 +169,19 @@ bool ASWPlayerController::ClientSetControlRotation_Validate(FRotator NewRotation
 	return true;
 }
 
+void ASWPlayerController::ShowDamageIndicator_Implementation(FVector SourceLocation)
+{
+	if (ASWBaseCharacter* HeroCharacter = GetPawn<ASWBaseCharacter>())
+	{
+		HeroCharacter->AddDamageIndicator(SourceLocation);
+	}
+}
+
+bool ASWPlayerController::ShowDamageIndicator_Validate(FVector SourcheLocation)
+{
+	return true;
+}
+
 void ASWPlayerController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
