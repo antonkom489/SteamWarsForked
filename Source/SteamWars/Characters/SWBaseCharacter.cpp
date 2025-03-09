@@ -154,7 +154,7 @@ void ASWBaseCharacter::AddDamageIndicator(FVector SourceLocation)
 
 ESWHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& ImpactPoint)
 {
-	/*const FVector& ActorLocation = GetActorLocation();
+	const FVector& ActorLocation = GetActorLocation();
 	// PointPlaneDist is super cheap - 1 vector subtraction, 1 dot product.
 	float DistanceToFrontBackPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorRightVector());
 	float DistanceToRightLeftPlane = FVector::PointPlaneDist(ImpactPoint, ActorLocation, GetActorForwardVector());
@@ -186,7 +186,7 @@ ESWHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& Impac
 		{
 			return ESWHitReactDirection::Left;
 		}
-	}*/
+	}
 
 	return ESWHitReactDirection::Front;
 }

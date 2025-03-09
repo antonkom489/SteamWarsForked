@@ -24,6 +24,14 @@ public:
 	FGameplayAttributeData NormalReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UAmmoAttributeSet, NormalReserveAmmo)
 
+	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_RifleReserveAmmo)
+	FGameplayAttributeData RifleReserveAmmo;
+	ATTRIBUTE_ACCESSORS(UAmmoAttributeSet, RifleReserveAmmo)
+
+	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_MaxRifleReserveAmmo)
+	FGameplayAttributeData MaxRifleReserveAmmo;
+	ATTRIBUTE_ACCESSORS(UAmmoAttributeSet, MaxRifleReserveAmmo)
+	
 	UPROPERTY(BlueprintReadOnly, Category = "Ammo", ReplicatedUsing = OnRep_MaxNormalReserveAmmo)
 	FGameplayAttributeData MaxNormalReserveAmmo;
 	ATTRIBUTE_ACCESSORS(UAmmoAttributeSet, MaxNormalReserveAmmo)
@@ -54,6 +62,7 @@ public:
 protected:
 	// Cache tags
 	FGameplayTag NormalAmmoTag;
+	FGameplayTag RifleAmmoTag;
 	FGameplayTag HeavyAmmoTag;
 	FGameplayTag SpecialAmmoTag;
 
@@ -71,6 +80,12 @@ protected:
 	UFUNCTION()
 	virtual void OnRep_MaxNormalReserveAmmo(const FGameplayAttributeData& OldMaxNormalReserveAmmo);
 
+	UFUNCTION()
+	virtual void OnRep_RifleReserveAmmo(const FGameplayAttributeData& OldNormalReserveAmmo);
+
+	UFUNCTION()
+	virtual void OnRep_MaxRifleReserveAmmo(const FGameplayAttributeData& OldMaxNormalReserveAmmo);
+	
 	UFUNCTION()
 	virtual void OnRep_HeavyReserveAmmo(const FGameplayAttributeData& OldHeavyReserveAmmo);
 

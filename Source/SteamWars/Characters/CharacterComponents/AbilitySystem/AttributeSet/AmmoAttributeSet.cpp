@@ -10,6 +10,7 @@ UAmmoAttributeSet::UAmmoAttributeSet()
 	NormalAmmoTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Normal"));
 	HeavyAmmoTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Heavy"));
 	SpecialAmmoTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Special"));
+	RifleAmmoTag = FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Rifle"));
 }
 
 void UAmmoAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -25,6 +26,11 @@ void UAmmoAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		float Ammo = GetNormalReserveAmmo();
 		SetNormalReserveAmmo(FMath::Clamp<float>(Ammo, 0, GetMaxNormalReserveAmmo()));
+	}
+	else if (Data.EvaluatedData.Attribute == GetRifleReserveAmmoAttribute())
+	{
+		float Ammo = GetRifleReserveAmmo();
+		SetRifleReserveAmmo(FMath::Clamp<float>(Ammo, 0, GetMaxRifleReserveAmmo()));
 	}
 	else if (Data.EvaluatedData.Attribute == GetHeavyReserveAmmoAttribute())
 	{
@@ -44,6 +50,8 @@ void UAmmoAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, NormalReserveAmmo, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, MaxNormalReserveAmmo, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, RifleReserveAmmo, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, MaxRifleReserveAmmo, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, HeavyReserveAmmo, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, MaxHeavyReserveAmmo, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAmmoAttributeSet, SpecialReserveAmmo, COND_None, REPNOTIFY_Always);
@@ -55,6 +63,10 @@ FGameplayAttribute UAmmoAttributeSet::GetReserveAmmoAttributeFromTag(FGameplayTa
 	if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Normal")))
 	{
 		return GetNormalReserveAmmoAttribute();
+	}
+	else if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Rifle")))
+	{
+		return GetRifleReserveAmmoAttribute();
 	}
 	else if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Heavy")))
 	{
@@ -73,6 +85,10 @@ FGameplayAttribute UAmmoAttributeSet::GetMaxReserveAmmoAttributeFromTag(FGamepla
 	if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Normal")))
 	{
 		return GetMaxNormalReserveAmmoAttribute();
+	}
+	else if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Rifle")))
+	{
+		return GetMaxRifleReserveAmmoAttribute();
 	}
 	else if (PrimaryAmmoTag == FGameplayTag::RequestGameplayTag(FName("Weapon.Ammo.Heavy")))
 	{
@@ -109,6 +125,16 @@ void UAmmoAttributeSet::OnRep_NormalReserveAmmo(const FGameplayAttributeData& Ol
 void UAmmoAttributeSet::OnRep_MaxNormalReserveAmmo(const FGameplayAttributeData& OldMaxNormalReserveAmmo)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAmmoAttributeSet, MaxNormalReserveAmmo, OldMaxNormalReserveAmmo);
+}
+
+void UAmmoAttributeSet::OnRep_RifleReserveAmmo(const FGameplayAttributeData& OldRifleReserveAmmo)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAmmoAttributeSet, RifleReserveAmmo, OldRifleReserveAmmo);
+}
+
+void UAmmoAttributeSet::OnRep_MaxRifleReserveAmmo(const FGameplayAttributeData& OldMaxRifleReserveAmmo)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAmmoAttributeSet, MaxRifleReserveAmmo, OldMaxRifleReserveAmmo);
 }
 
 void UAmmoAttributeSet::OnRep_HeavyReserveAmmo(const FGameplayAttributeData& OldHeavyReserveAmmo)
