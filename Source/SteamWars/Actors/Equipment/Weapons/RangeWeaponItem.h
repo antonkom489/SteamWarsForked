@@ -28,6 +28,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bSpawnWithCollision;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Damage")
+	float Damage;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Damage")
+	float TimeBetweenShot;
 	
 	UPROPERTY(BlueprintAssignable, Category = "GASShooter|GSWeapon")
 	FWeaponAmmoChangedDelegate OnPrimaryClipAmmoChanged;

@@ -63,7 +63,7 @@ void UEnemyShotAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 							ResponseGameplayEffect, 1, ASC->MakeEffectContext());
                     
 						DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(
-							FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
+							FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Hero->Damage);
                 
 						ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
 					}

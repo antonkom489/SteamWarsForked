@@ -23,6 +23,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Events")
 	FOnAttackEnd OnAttackEnd;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Damage")
+	float Damage;
 	
 	virtual void FinishDying() override;
 
