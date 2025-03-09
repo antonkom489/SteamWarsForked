@@ -23,4 +23,10 @@ class STEAMWARS_API USceneControl : public UUserWidget
 
 	UFUNCTION(BlueprintCallable)
 	void OnBackButtonClicked();
+
+	UFUNCTION(BlueprintCallable)
+	void ShowSettings();
+	
+	UFUNCTION(BlueprintCallable)
+	void HideSettings();
 };

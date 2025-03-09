@@ -9,6 +9,7 @@
 #include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
 #include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Characters/InputData/InputDataAsset.h"
+#include "Sound/SoundMix.h"
 #include "UI/SWHUDWidget.h"
 
 ASWPlayerController::ASWPlayerController() :
@@ -51,6 +52,11 @@ void ASWPlayerController::CreateHUD()
 	if (PauseMenuWidget)
 	{
 		PauseMenuWidget->AddToViewport();
+	}
+
+	if (!SettingsMenuWidget)
+	{
+		SettingsMenuWidget = CreateWidget<UUserWidget>(this, SWSettingsMenuWidgetClass);
 	}
 
 	if (!EndGameMenuWidget)
@@ -364,6 +370,27 @@ void ASWPlayerController::ShowPauseMenu()
 	}
 }
 
+void ASWPlayerController::ShowSettingsMenu()
+{
+	if (SWSettingsMenuWidgetClass)
+	{
+		SettingsMenuWidget = CreateWidget<UUserWidget>(this, SWSettingsMenuWidgetClass);
+		if (SettingsMenuWidget)
+		{
+			SettingsMenuWidget->AddToViewport();
+		}
+	}
+}
+
+void ASWPlayerController::HideSettingsMenu()
+{
+	if (SettingsMenuWidget)
+	{
+		SettingsMenuWidget->RemoveFromParent();
+		SettingsMenuWidget = nullptr;
+	}
+}
+
 void ASWPlayerController::HidePauseMenu()
 {
 	UGameplayStatics::SetGamePaused(GetWorld(), false);
@@ -410,4 +437,7 @@ void ASWPlayerController::SetEndGameWidget()
 		}
 	}
 }
+
+
+
 

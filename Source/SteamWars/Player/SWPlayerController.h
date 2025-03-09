@@ -64,6 +64,11 @@ public:
 	
 	void HidePauseMenu();
 
+	void ShowSettingsMenu();
+	
+	void HideSettingsMenu();
+
+
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GAS|UI")
 	TSubclassOf<class USWHUDWidget> UIHUDWidgetClass;
@@ -72,6 +77,11 @@ protected:
 	TSubclassOf<UUserWidget> SWPauseMenuWidgetClass;
 	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
 	UUserWidget* PauseMenuWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS|UI")
+	TSubclassOf<UUserWidget> SWSettingsMenuWidgetClass;
+	UPROPERTY(BlueprintReadWrite, Category = "GAS|UI")
+	UUserWidget* SettingsMenuWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS|UI")
 	TSubclassOf<UUserWidget> SWEndGameMenuWidgetClass;
