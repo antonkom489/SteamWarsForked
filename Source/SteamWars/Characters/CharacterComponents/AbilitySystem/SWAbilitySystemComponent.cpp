@@ -1,7 +1,7 @@
 #include "SWAbilitySystemComponent.h"
-
 #include "AbilitySystemGlobals.h"
 #include "Abilities/SWGameplayAbility.h"
+#include "GameplayCueManager.h"
 
 void USWAbilitySystemComponent::ReceiveDamage(USWAbilitySystemComponent* SourceASC, float UnmitigatedDamage,
                                               float MitigatedDamage)
@@ -32,6 +32,12 @@ bool USWAbilitySystemComponent::BatchRPCTryActivateAbility(FGameplayAbilitySpecH
 	}
 
 	return AbilityActivated;
+}
+
+void USWAbilitySystemComponent::ExecuteGameplayCueLocal(const FGameplayTag GameplayCueTag,
+	const FGameplayCueParameters& GameplayCueParameters)
+{
+	UAbilitySystemGlobals::Get().GetGameplayCueManager()->HandleGameplayCue(GetOwner(), GameplayCueTag, EGameplayCueEvent::Type::Executed, GameplayCueParameters);
 }
 
 FGameplayAbilitySpecHandle USWAbilitySystemComponent::FindAbilitySpecHandleForClass(
