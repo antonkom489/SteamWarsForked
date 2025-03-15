@@ -16,7 +16,8 @@ enum class ESpawnersID : uint8
 	Seven,
 	Eith,
 	Nine,
-	Ten
+	Ten,
+	Weapon
 };
 
 UENUM(BlueprintType)

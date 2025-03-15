@@ -53,6 +53,28 @@ void AEnemySpawner::SpawnEnemy()
    });
 }
 
+void AEnemySpawner::SpawnWeapon(int i)
+{
+	if (WeaponQueue[i] && WeaponQueue.Num()>0)
+	GetWorld()->SpawnActor<ARangeWeaponItem>(WeaponQueue[i], GetActorTransform());
+}
+
+void AEnemySpawner::AddWeaponToQueue(const TArray<TSubclassOf<ARangeWeaponItem>>& WeaponClasses)
+{
+	if (WeaponClasses.Num() > 0) 
+	{
+		for (const TSubclassOf<ARangeWeaponItem>& WeaponClass : WeaponClasses)
+		{
+			WeaponQueue.Add(WeaponClass); 
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No weapon classes to add to the queue."));
+	}
+}
+
+
 void AEnemySpawner::AddEnemyToQueue(const TSubclassOf<AEnemyBaseCharacter>& EnemyClass)
 {
 	if(EnemyClass)
