@@ -9,17 +9,19 @@ void ASWGameMode::StartWave()
 	BuildEnemyPool();
 
 	const int SpawnEnemyCount = FMath::Min(GetPoolSize(), EnemyMaxCount) - 1;
-	
-	for(int i = 0; i <= SpawnEnemyCount; i++)
+
+	for (int i = 0; i <= SpawnEnemyCount; i++)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("iter: %d"), i);
 		SpawnEnemy();
 	}
+
+	SpawnWeapon();
 }
 
 void ASWGameMode::EnterTransition()
 {
-	if(GetWorld())
+	if (GetWorld())
 	{
 		GetWorld()->GetTimerManager().SetTimer(WaveTimer, this, &ASWGameMode::NewWave, TransitionWaveTime, false);
 	}
@@ -59,13 +61,13 @@ void ASWGameMode::EnterTransition()
 
 void ASWGameMode::BuildEnemyPool()
 {
-	if(WaveDataTable)
+	if (WaveDataTable)
 	{
 		const FWaveDataFor* Pool = WaveDataTable->FindRow<FWaveDataFor>(
-		FName(FString::FromInt(WaveNumber)), "");
-		if(Pool)
+			FName(FString::FromInt(WaveNumber)), "");
+		if (Pool)
 		{
-			for(const FWaveSpawnData& SpawnInfo : Pool->SpawnInfos)
+			for (const FWaveSpawnData& SpawnInfo : Pool->SpawnInfos)
 			{
 				if (SpawnInfo.EnemyClass)
 				{
@@ -90,7 +92,7 @@ void ASWGameMode::BuildEnemyPool()
 			}
 		}
 	}
-	
+
 	EnemyRemaining = GetPoolSize();
 	UE_LOG(LogTemp, Warning, TEXT("Enemy Remaining: %d"), EnemyRemaining);
 }
@@ -130,12 +132,11 @@ int ASWGameMode::GetPoolSize() const
 
 void ASWGameMode::OnEnemyDefeated()
 {
-	
 	EnemyRemaining -= 1;
-	
-	if(EnemyRemaining < EnemyMaxCount)
+
+	if (EnemyRemaining < EnemyMaxCount)
 	{
-		if(EnemyRemaining <= 0)
+		if (EnemyRemaining <= 0)
 		{
 			EnterTransition();
 		}
@@ -232,7 +233,7 @@ void ASWGameMode::NewWave()
 void ASWGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	InitializeSpawners();
 	NewWave();
 }
@@ -336,12 +337,68 @@ void ASWGameMode::SpawnEnemy()
 	}
 
 	Spawner->AddEnemyToQueue(SelectedEnemy);
-	UE_LOG(LogTemp, Warning, TEXT("Spawned enemy %s in spawner %d"), *SelectedEnemy->GetName(), static_cast<int32>(SelectedSpawnerID));
+	
+	UE_LOG(LogTemp, Warning, TEXT("Spawned enemy %s in spawner %d"), *SelectedEnemy->GetName(),
+	       static_cast<int32>(SelectedSpawnerID));
 }
+
+void ASWGameMode::SpawnWeapon()
+{
+	AEnemySpawner* Spawner = SpawnersMap.FindRef(ESpawnersID::Weapon);
+	if (Spawner)
+	{
+		Spawner->AddWeaponToQueue(GetAllWeaponClassesFromDataTable(WaveDataTable));
+		Spawner->SpawnWeapon(WaveNumber);
+		UE_LOG(LogTemp, Warning, TEXT("Spawned weapon"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("weapon not spawned"));
+	}
+}
+
+TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetWeaponClasses(const FWaveDataFor& WaveData)
+{
+	TArray<TSubclassOf<ARangeWeaponItem>> WeaponClasses;
+
+	for (const FWaveWeaponData& WeaponData : WaveData.Weapons)
+	{
+		if (WeaponData.WeaponItemClass)
+		{
+			WeaponClasses.Add(WeaponData.WeaponItemClass);
+		}
+	}
+
+	return WeaponClasses;
+}
+
+TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetAllWeaponClassesFromDataTable(UDataTable* WaveDataTable)
+{
+	TArray<TSubclassOf<ARangeWeaponItem>> AllWeaponClasses;
+
+	if (!WaveDataTable) return AllWeaponClasses;
+
+	// Получаем все строки из таблицы
+	TArray<FWaveDataFor*> Rows;
+	WaveDataTable->GetAllRows<FWaveDataFor>("", Rows);
+
+	// Перебираем все строки
+	for (FWaveDataFor* Row : Rows)
+	{
+		if (Row)
+		{
+			TArray<TSubclassOf<ARangeWeaponItem>> WeaponClasses = GetWeaponClasses(*Row);
+			AllWeaponClasses.Append(WeaponClasses);
+		}
+	}
+
+	return AllWeaponClasses;
+}
+
 
 void ASWGameMode::InitializeSpawners()
 {
-	if(GetWorld())
+	if (GetWorld())
 	{
 		for (TActorIterator<AEnemySpawner> It(GetWorld()); It; ++It)
 		{
@@ -359,7 +416,7 @@ ESpawnersID ASWGameMode::GetSpawnerIDForEnemy(TSubclassOf<AEnemyBaseCharacter> E
 {
 	const FWaveDataFor* Pool = WaveDataTable->FindRow<FWaveDataFor>(
 		FName(FString::FromInt(WaveNumber)), "");
-	if(Pool)
+	if (Pool)
 	{
 		for (const FWaveSpawnData& SpawnInfo : Pool->SpawnInfos) // CurrentWaveData - текущие данные волны
 		{
@@ -369,6 +426,6 @@ ESpawnersID ASWGameMode::GetSpawnerIDForEnemy(TSubclassOf<AEnemyBaseCharacter> E
 			}
 		}
 	}
-	
+
 	return ESpawnersID::None; // Если спавнер не найден
 }

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Actors/Equipment/Weapons/RangeWeaponItem.h"
 #include "EnemySpawner.generated.h"
 
 enum class ESpawnersID : uint8;
@@ -29,8 +30,10 @@ protected:
 	
 public:
 	void SpawnEnemy();
-
+	void SpawnWeapon(int i);
+	
 	void AddEnemyToQueue(const TSubclassOf<AEnemyBaseCharacter>& EnemyClass);
+	void AddWeaponToQueue(const TArray<TSubclassOf<ARangeWeaponItem>>& WeaponClass);
 
 	ESpawnersID GetSpawnID() const;
 
@@ -39,4 +42,5 @@ public:
 private:
 	FTimerHandle TimerHandle;
 	TArray<TSubclassOf<AEnemyBaseCharacter>> EnemyQueue;
+	TArray<TSubclassOf<ARangeWeaponItem>> WeaponQueue;
 };
