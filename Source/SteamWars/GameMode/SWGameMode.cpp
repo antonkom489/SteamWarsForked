@@ -2,6 +2,7 @@
 #include "EngineUtils.h"
 #include "Characters/Enemies/EnemyBaseCharacter.h"
 #include "Characters/Enemies/EnemySpawner.h"
+#include "Player/SWPlayerController.h"
 
 void ASWGameMode::StartWave()
 {
@@ -138,7 +139,16 @@ void ASWGameMode::OnEnemyDefeated()
 	{
 		if (EnemyRemaining <= 0)
 		{
-			EnterTransition();
+			if (GetPoolSize() <= 0)
+			{
+				ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
+				if (PlayerController)
+				{
+					PlayerController->SetEndGameWidget();
+				}
+			}
+			else
+				EnterTransition();
 		}
 	}
 	else
