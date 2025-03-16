@@ -1,5 +1,6 @@
 ﻿#include "SWGameMode.h"
 #include "EngineUtils.h"
+#include "Player/SWPlayerController.h"
 #include "Characters/Enemies/EnemyBaseCharacter.h"
 #include "Characters/Enemies/EnemySpawner.h"
 
@@ -90,6 +91,14 @@ void ASWGameMode::BuildEnemyPool()
 					}
 				}
 			}
+		}
+	}
+	else
+	{
+		ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld());
+		if (PlayerController)
+		{
+			PlayerController->SetEndGameWidget();
 		}
 	}
 
@@ -337,7 +346,7 @@ void ASWGameMode::SpawnEnemy()
 	}
 
 	Spawner->AddEnemyToQueue(SelectedEnemy);
-	
+
 	UE_LOG(LogTemp, Warning, TEXT("Spawned enemy %s in spawner %d"), *SelectedEnemy->GetName(),
 	       static_cast<int32>(SelectedSpawnerID));
 }
