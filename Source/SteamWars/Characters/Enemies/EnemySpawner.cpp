@@ -55,8 +55,15 @@ void AEnemySpawner::SpawnEnemy()
 
 void AEnemySpawner::SpawnWeapon(int i)
 {
-	if (WeaponQueue[i] && WeaponQueue.Num()>0)
-	GetWorld()->SpawnActor<ARangeWeaponItem>(WeaponQueue[i], GetActorTransform());
+	i--;
+	if (i >= 0 && i < WeaponQueue.Num() && WeaponQueue[i])
+	{
+		GetWorld()->SpawnActor<ARangeWeaponItem>(WeaponQueue[i], GetActorTransform());
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Invalid index or weapon class is null: Index = %d"), i);
+	}
 }
 
 void AEnemySpawner::AddWeaponToQueue(const TArray<TSubclassOf<ARangeWeaponItem>>& WeaponClasses)
