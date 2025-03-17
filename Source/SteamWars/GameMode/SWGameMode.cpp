@@ -92,6 +92,14 @@ void ASWGameMode::BuildEnemyPool()
 				}
 			}
 		}
+		else
+		{
+			ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
+			if (PlayerController)
+			{
+				PlayerController->SetEndGameWidget();
+			}
+		}
 	}
 
 	EnemyRemaining = GetPoolSize();
@@ -139,15 +147,6 @@ void ASWGameMode::OnEnemyDefeated()
 	{
 		if (EnemyRemaining <= 0)
 		{
-			if (GetPoolSize() <= 0)
-			{
-				ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
-				if (PlayerController)
-				{
-					PlayerController->SetEndGameWidget();
-				}
-			}
-			else
 				EnterTransition();
 		}
 	}

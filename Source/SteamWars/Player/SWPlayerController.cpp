@@ -426,12 +426,12 @@ void ASWPlayerController::SetEndGameWidget()
 		if (!EndGameMenuWidget)
 		{
 			EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
+			bIsPaused = true;
 		}
         
 		if (EndGameMenuWidget)
 		{
 			EndGameMenuWidget->AddToViewport();
-			bIsPaused = true;
 			SetInputMode(FInputModeUIOnly());
 			bShowMouseCursor = true; 
 		}
