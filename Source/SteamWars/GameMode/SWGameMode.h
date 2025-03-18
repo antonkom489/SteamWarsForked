@@ -17,8 +17,6 @@ struct FWaveSpawnData : public FTableRowBase
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AEnemyBaseCharacter> EnemyClass;
 	
-	
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int EnemyCount = 0;
 
@@ -48,6 +46,12 @@ struct FWaveDataFor : public FTableRowBase
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FWaveWeaponData> Weapons;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int EnemyMaxCount = 5;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float TransitionWaveTime = 3.0f;
 };
 
 UCLASS()
@@ -57,11 +61,7 @@ class STEAMWARS_API ASWGameMode : public AGameMode
 
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
-	float TransitionWaveTime = 3.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wave")
-	int EnemyMaxCount = 5;
+	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave")
 	UDataTable* WaveDataTable;
@@ -78,6 +78,9 @@ public:
 	int32 GetEnemyRemaining() const { return EnemyRemaining; };
 
 private:
+
+	float TransitionWaveTime = 3.0f;
+	int EnemyMaxCount = 5;
 	FTimerHandle WaveTimer;
 	TSubclassOf<AEnemyBaseCharacter> EnemyChar;
 	TMap<ESpawnersID, AEnemySpawner*> SpawnersMap;

@@ -74,6 +74,9 @@ void ASWGameMode::BuildEnemyPool()
 				{
 					ESpawnersID SpawnerID = SpawnInfo.SpawnerID; // Предполагается, что у вас есть ID спавнера
 
+					EnemyMaxCount = Pool->EnemyMaxCount;
+					TransitionWaveTime = Pool->TransitionWaveTime;
+
 					// Проверяем, есть ли такой спавнер в пуле
 					if (!SpawnerEnemyPool.Contains(SpawnerID))
 					{
