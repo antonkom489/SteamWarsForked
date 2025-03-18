@@ -844,7 +844,7 @@ void ASWFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::Crouch, true);
 
 		EnhancedInputComponent->BindAction(InputActions->CrouchAction, ETriggerEvent::Completed, this,
-			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::Crouch, false);
+			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::Crouch, true);
 
 		EnhancedInputComponent->BindAction(InputActions->JumpAction, ETriggerEvent::Started, this,
 			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::Jump, true);
