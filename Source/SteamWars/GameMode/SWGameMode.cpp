@@ -16,8 +16,6 @@ void ASWGameMode::StartWave()
 		UE_LOG(LogTemp, Warning, TEXT("iter: %d"), i);
 		SpawnEnemy();
 	}
-
-	SpawnWeapon();
 }
 
 void ASWGameMode::EnterTransition()
@@ -150,7 +148,8 @@ void ASWGameMode::OnEnemyDefeated()
 	{
 		if (EnemyRemaining <= 0)
 		{
-				EnterTransition();
+			SpawnWeapon();
+			EnterTransition();
 		}
 	}
 	else
