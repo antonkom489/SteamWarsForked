@@ -33,7 +33,7 @@ struct FWaveWeaponData : public FTableRowBase
 	TSubclassOf<ARangeWeaponItem> WeaponItemClass;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ESpawnersID SpawnerID = ESpawnersID::Weapon;
+	ESpawnersID SpawnerWeaponID = ESpawnersID::Weapon_None;
 };
 
 USTRUCT(BlueprintType)
@@ -88,6 +88,7 @@ private:
 	int EnemyRemaining = 0;
 	TMap<TSubclassOf<AEnemyBaseCharacter>, int> EnemyPool;
 	TMap<ESpawnersID, TMap<TSubclassOf<AEnemyBaseCharacter>, int32>> SpawnerEnemyPool;
+	TArray<ESpawnersID> GetWeaponSpawnersForCurrentWave();
 
 	void SpawnEnemy();
 	void StartWave();

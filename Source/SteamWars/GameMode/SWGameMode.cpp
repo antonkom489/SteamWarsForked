@@ -355,18 +355,45 @@ void ASWGameMode::SpawnEnemy()
 
 void ASWGameMode::SpawnWeapon()
 {
-	AEnemySpawner* Spawner = SpawnersMap.FindRef(ESpawnersID::Weapon);
-	if (Spawner)
+	TArray<ESpawnersID> WeaponSpawners = GetWeaponSpawnersForCurrentWave();
+
+	for (ESpawnersID SpawnerID : WeaponSpawners)
 	{
-		Spawner->AddWeaponToQueue(GetAllWeaponClassesFromDataTable(WaveDataTable));
-		Spawner->SpawnWeapon(WaveNumber);
-		UE_LOG(LogTemp, Warning, TEXT("Spawned weapon"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("weapon not spawned"));
+		AEnemySpawner* Spawner = SpawnersMap.FindRef(SpawnerID);
+		if (Spawner)
+		{
+			Spawner->AddWeaponToQueue(GetAllWeaponClassesFromDataTable(WaveDataTable));
+			Spawner->SpawnWeapon(WaveNumber);
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Weapon spawned"));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Weapon not spawned"));
+		}
 	}
 }
+
+TArray<ESpawnersID> ASWGameMode::GetWeaponSpawnersForCurrentWave()
+{
+	TArray<ESpawnersID> WeaponSpawners;
+
+	const FWaveDataFor* CurrentWaveData = WaveDataTable->FindRow<FWaveDataFor>(
+		FName(FString::FromInt(WaveNumber)), "");
+
+	if (CurrentWaveData)
+	{
+		for (const FWaveWeaponData& WeaponData : CurrentWaveData->Weapons)
+		{
+			if (WeaponData.SpawnerWeaponID != ESpawnersID::Weapon_None)
+			{
+				WeaponSpawners.Add(WeaponData.SpawnerWeaponID);
+			}
+		}
+	}
+
+	return WeaponSpawners;
+}
+
 
 TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetWeaponClasses(const FWaveDataFor& WaveData)
 {
