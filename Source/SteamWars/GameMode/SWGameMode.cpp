@@ -369,7 +369,7 @@ void ASWGameMode::SpawnWeapon()
 			USWHUDWidget* PlayerWidget = PlayerController->GetHUDWidget();
 			if (PlayerWidget)
 			{
-				PlayerWidget->SetWeaponText(FText::FromString("Spawned weapon"));
+				PlayerWidget->SetWeaponText(FText::FromString("Weapon delivered: machine gun"));
 			}
 		}
 

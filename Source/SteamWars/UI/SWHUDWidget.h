@@ -3,8 +3,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
+#include "TimerManager.h"
 #include "SWHUDWidget.generated.h"
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponTextChanged, FText, NewText);
 
 class UPaperSprite;
 class UTexture2D;
@@ -77,16 +77,19 @@ public:
 	void SetHeroLevel(int32 HeroLevel);
 
 	
-	UPROPERTY(BlueprintAssignable, Category = "Events")
-	FOnWeaponTextChanged OnWeaponTextChanged;
-	
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponText(FText NewText);
-	
+	void ResetWeaponText();
+
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponTextBlock(UTextBlock* TextBlock);
 
 protected:
+	
+	FTimerHandle TimerHandle;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	float ResetTime = 5.0f;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Text")
 	UTextBlock* WeaponTextBlock; 
