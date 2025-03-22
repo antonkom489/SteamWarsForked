@@ -18,6 +18,14 @@ class UWeaponBarrelComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponAmmoChangedDelegate, int32, OldValue, int32, NewValue);
 
+UENUM(BlueprintType)
+enum EWeaponType
+{
+	None,
+	Pistol,
+	Rifle
+};
+
 UCLASS(Blueprintable)
 class STEAMWARS_API ARangeWeaponItem : public AActor, public IAbilitySystemInterface
 {
@@ -31,6 +39,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Damage")
 	float Damage;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Type")
+	TEnumAsByte<EWeaponType> WeaponType;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Damage")
 	float TimeBetweenShot;
