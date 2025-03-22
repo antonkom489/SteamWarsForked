@@ -2,7 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
 #include "SWHUDWidget.generated.h"
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWeaponTextChanged, FText, NewText);
 
 class UPaperSprite;
 class UTexture2D;
@@ -73,4 +75,19 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetHeroLevel(int32 HeroLevel);
+
+	
+	UPROPERTY(BlueprintAssignable, Category = "Events")
+	FOnWeaponTextChanged OnWeaponTextChanged;
+	
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponText(FText NewText);
+	
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponTextBlock(UTextBlock* TextBlock);
+
+protected:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Text")
+	UTextBlock* WeaponTextBlock; 
 };

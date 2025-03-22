@@ -2,3 +2,4 @@
 
 
 #include "SWFloatingStatusBarWidget.h"
+

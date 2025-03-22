@@ -3,6 +3,8 @@
 #include "Characters/Enemies/EnemyBaseCharacter.h"
 #include "Characters/Enemies/EnemySpawner.h"
 #include "Player/SWPlayerController.h"
+#include "UI/SWFloatingStatusBarWidget.h"
+#include "UI/SWHUDWidget.h"
 
 void ASWGameMode::StartWave()
 {
@@ -98,7 +100,7 @@ void ASWGameMode::BuildEnemyPool()
 			ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
 			if (PlayerController)
 			{
-				PlayerController->SetEndGameWidget();
+				PlayerController->SetEndGameWidget(FText::FromString("You win!"));
 			}
 		}
 	}
@@ -360,6 +362,18 @@ void ASWGameMode::SpawnWeapon()
 	{
 		Spawner->AddWeaponToQueue(GetAllWeaponClassesFromDataTable(WaveDataTable));
 		Spawner->SpawnWeapon(WaveNumber);
+		
+		ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
+		if (PlayerController)
+		{
+			USWHUDWidget* PlayerWidget = PlayerController->GetHUDWidget();
+			if (PlayerWidget)
+			{
+				PlayerWidget->SetWeaponText(FText::FromString("Spawned weapon"));
+			}
+		}
+
+        	
 		UE_LOG(LogTemp, Warning, TEXT("Spawned weapon"));
 	}
 	else
