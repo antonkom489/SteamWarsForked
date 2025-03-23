@@ -1,8 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "EndGame.h"
 #include "Kismet/GameplayStatics.h"
+
+void UEndGame::NativeConstruct()
+{
+	Super::NativeConstruct(); 
+}
 
 void UEndGame::RestartGame()
 {
@@ -13,4 +15,17 @@ void UEndGame::RestartGame()
         
 		UGameplayStatics::OpenLevel(World, CurrentLevelName);
 	}
+}
+
+void UEndGame::SetGameOverText(FText NewText)
+{
+	if (GameOverTextBlock)
+	{
+		GameOverTextBlock->SetText(NewText);
+	}
+}
+
+void UEndGame::SetGameOverTextBlock(UTextBlock* TextBlock)
+{
+	GameOverTextBlock = TextBlock;
 }

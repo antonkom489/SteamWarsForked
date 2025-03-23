@@ -101,7 +101,7 @@ void ASWBaseCharacter::Die()
 	ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetController());
 	if (PlayerController)
 	{
-		PlayerController->SetEndGameWidget();
+		PlayerController->SetEndGameWidget(FText::FromString("You Lose!"));
 	}
 
 	OnCharacterDied.Broadcast(this);
