@@ -451,6 +451,7 @@ void ASWPlayerController::SetEndGameWidget(FText GameOverText)
 			if (UEndGame* EndGameWidget = Cast<UEndGame>(EndGameMenuWidget))
 			{
 				EndGameWidget->SetGameOverText(GameOverText);
+				UGameplayStatics::SetGamePaused(GetWorld(), true);
 			}
 			else
 			{
