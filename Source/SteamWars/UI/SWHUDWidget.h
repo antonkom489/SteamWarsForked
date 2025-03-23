@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/TextBlock.h"
+#include "TimerManager.h"
 #include "SWHUDWidget.generated.h"
 
 class UPaperSprite;
@@ -73,4 +75,22 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetHeroLevel(int32 HeroLevel);
+
+	
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponText(FText NewText);
+	void ResetWeaponText();
+
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponTextBlock(UTextBlock* TextBlock);
+
+protected:
+	
+	FTimerHandle TimerHandle;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
+	float ResetTime = 5.0f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Text")
+	UTextBlock* WeaponTextBlock; 
 };

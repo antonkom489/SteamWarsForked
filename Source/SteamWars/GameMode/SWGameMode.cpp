@@ -3,6 +3,8 @@
 #include "Characters/Enemies/EnemyBaseCharacter.h"
 #include "Characters/Enemies/EnemySpawner.h"
 #include "Player/SWPlayerController.h"
+#include "UI/SWFloatingStatusBarWidget.h"
+#include "UI/SWHUDWidget.h"
 
 void ASWGameMode::StartWave()
 {
@@ -98,7 +100,7 @@ void ASWGameMode::BuildEnemyPool()
 			ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
 			if (PlayerController)
 			{
-				PlayerController->SetEndGameWidget();
+				PlayerController->SetEndGameWidget(FText::FromString("You win!"));
 			}
 		}
 	}
@@ -355,45 +357,31 @@ void ASWGameMode::SpawnEnemy()
 
 void ASWGameMode::SpawnWeapon()
 {
-	TArray<ESpawnersID> WeaponSpawners = GetWeaponSpawnersForCurrentWave();
-
-	for (ESpawnersID SpawnerID : WeaponSpawners)
+	AEnemySpawner* Spawner = SpawnersMap.FindRef(ESpawnersID::Weapon);
+	if (Spawner)
 	{
-		AEnemySpawner* Spawner = SpawnersMap.FindRef(SpawnerID);
-		if (Spawner)
-		{
-			Spawner->AddWeaponToQueue(GetAllWeaponClassesFromDataTable(WaveDataTable));
-			Spawner->SpawnWeapon(WaveNumber);
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Weapon spawned"));
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Weapon not spawned"));
-		}
-	}
-}
+		Spawner->AddWeaponToQueue(GetWeaponClassFromDataTable(WaveDataTable, WaveNumber));
+		bool spawn = Spawner->SpawnWeapon();
 
-TArray<ESpawnersID> ASWGameMode::GetWeaponSpawnersForCurrentWave()
-{
-	TArray<ESpawnersID> WeaponSpawners;
-
-	const FWaveDataFor* CurrentWaveData = WaveDataTable->FindRow<FWaveDataFor>(
-		FName(FString::FromInt(WaveNumber)), "");
-
-	if (CurrentWaveData)
-	{
-		for (const FWaveWeaponData& WeaponData : CurrentWaveData->Weapons)
+		if (spawn)
 		{
-			if (WeaponData.SpawnerWeaponID != ESpawnersID::Weapon_None)
+			ASWPlayerController* PlayerController = Cast<ASWPlayerController>(GetWorld()->GetFirstPlayerController());
+			if (PlayerController)
 			{
-				WeaponSpawners.Add(WeaponData.SpawnerWeaponID);
+				USWHUDWidget* PlayerWidget = PlayerController->GetHUDWidget();
+				if (PlayerWidget)
+				{
+					PlayerWidget->SetWeaponText(FText::FromString("Weapon delivered: machine gun"));
+				}
 			}
-		}
+			UE_LOG(LogTemp, Warning, TEXT("Spawned weapon"));
+		}	
 	}
-
-	return WeaponSpawners;
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("weapon not spawned"));
+	}
 }
-
 
 TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetWeaponClasses(const FWaveDataFor& WaveData)
 {
@@ -410,27 +398,20 @@ TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetWeaponClasses(const FWaveD
 	return WeaponClasses;
 }
 
-TArray<TSubclassOf<ARangeWeaponItem>> ASWGameMode::GetAllWeaponClassesFromDataTable(UDataTable* WaveDataTable)
+TSubclassOf<ARangeWeaponItem> ASWGameMode::GetWeaponClassFromDataTable(UDataTable* WaveDT, int WaveIndex)
 {
-	TArray<TSubclassOf<ARangeWeaponItem>> AllWeaponClasses;
+	if (!WaveDT) return nullptr;
 
-	if (!WaveDataTable) return AllWeaponClasses;
-
-	// Получаем все строки из таблицы
-	TArray<FWaveDataFor*> Rows;
-	WaveDataTable->GetAllRows<FWaveDataFor>("", Rows);
-
-	// Перебираем все строки
-	for (FWaveDataFor* Row : Rows)
+	const FWaveDataFor* Row = WaveDT->FindRow<FWaveDataFor>(FName(FString::FromInt(WaveIndex)), "");
+	if (Row)
 	{
-		if (Row)
+		if (Row->Weapons.Num() > 0)
 		{
-			TArray<TSubclassOf<ARangeWeaponItem>> WeaponClasses = GetWeaponClasses(*Row);
-			AllWeaponClasses.Append(WeaponClasses);
+			return Row->Weapons[0].WeaponItemClass;
 		}
 	}
 
-	return AllWeaponClasses;
+	return nullptr;
 }
 
 

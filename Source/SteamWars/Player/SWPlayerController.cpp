@@ -10,13 +10,20 @@
 #include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Characters/InputData/InputDataAsset.h"
 #include "Sound/SoundMix.h"
+#include "UI/EndGame.h"
 #include "UI/SWHUDWidget.h"
 
 ASWPlayerController::ASWPlayerController() :
-	RotArrayX { 0.f, 0.f, 0.f },
-	RotArrayY { 0.f, 0.f, 0.f }
+	RotArrayX{0.f, 0.f, 0.f},
+	RotArrayY{0.f, 0.f, 0.f}
 {
 }
+
+USWHUDWidget* ASWPlayerController::GetHUDWidget() const
+{
+	return Cast<USWHUDWidget>(UIHUDWidget); // Предполагается, что вы храните ссылку на виджет в `MyHUDWidget`
+}
+
 
 void ASWPlayerController::CreateHUD()
 {
@@ -28,7 +35,9 @@ void ASWPlayerController::CreateHUD()
 
 	if (!UIHUDWidgetClass)
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s() Missing UIHUDWidgetClass. Please fill in on the Blueprint of the PlayerController."), *FString(__FUNCTION__));
+		UE_LOG(LogTemp, Error,
+		       TEXT("%s() Missing UIHUDWidgetClass. Please fill in on the Blueprint of the PlayerController."),
+		       *FString(__FUNCTION__));
 		return;
 	}
 
@@ -63,7 +72,7 @@ void ASWPlayerController::CreateHUD()
 	{
 		EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
 	}
-	
+
 	UIHUDWidget = CreateWidget<USWHUDWidget>(this, UIHUDWidgetClass);
 	UIHUDWidget->AddToViewport();
 	HidePauseMenu();
@@ -93,7 +102,8 @@ void ASWPlayerController::CreateHUD()
 			// PlayerState's Pawn isn't set up yet so we can't just call PS->GetPrimaryReserveAmmo()
 			if (PS->GetAmmoAttributeSet())
 			{
-				FGameplayAttribute Attribute = PS->GetAmmoAttributeSet()->GetReserveAmmoAttributeFromTag(CurrentWeapon->PrimaryAmmoType);
+				FGameplayAttribute Attribute = PS->GetAmmoAttributeSet()->GetReserveAmmoAttributeFromTag(
+					CurrentWeapon->PrimaryAmmoType);
 				if (Attribute.IsValid())
 				{
 					UIHUDWidget->SetPrimaryReserveAmmo(PS->GetAbilitySystemComponent()->GetNumericAttribute(Attribute));
@@ -231,7 +241,8 @@ void ASWPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
+		GetLocalPlayer()))
 	{
 		// add the mapping context so we get controls
 		Subsystem->AddMappingContext(InputMappingContext, 0);
@@ -244,25 +255,30 @@ void ASWPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	
 
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
 	{
-		if(InputActions)
+		if (InputActions)
 		{
 			// Moving
-			EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+			EnhancedInputComponent->BindAction(InputActions->MoveAction, ETriggerEvent::Triggered, this,
+			                                   &ThisClass::Input_Move);
 			//EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ThisClass::StopMove);
 			//EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
-			EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this, &ThisClass::TogglePauseMenu);
+			EnhancedInputComponent->BindAction(InputActions->PauseAction, ETriggerEvent::Triggered, this,
+			                                   &ThisClass::TogglePauseMenu);
 			// Looking
-			EnhancedInputComponent->BindAction(InputActions->LookMouseAction, ETriggerEvent::Triggered, this, &ThisClass::Input_LookMouse);
+			EnhancedInputComponent->BindAction(InputActions->LookMouseAction, ETriggerEvent::Triggered, this,
+			                                   &ThisClass::Input_LookMouse);
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
+		UE_LOG(LogTemp, Error,
+		       TEXT(
+			       "'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."
+		       ), *GetNameSafe(this));
 	}
 }
 
@@ -309,7 +325,7 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 		result += RotArrayX[i];
 	}
 	HeroCharacter->AddControllerYawInput(result / MaxRotCache);
-	
+
 
 	RotArrayY[RotCacheIndex] = Value.Y;
 	result = 0.f;
@@ -351,7 +367,6 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 
 			currentWeapon->bUpdateRecoilYawCheckpointInNextShot = true;
 		}
-
 	}
 }
 
@@ -365,7 +380,7 @@ void ASWPlayerController::ShowPauseMenu()
 			PauseMenuWidget->AddToViewport();
 			bIsPaused = true;
 			SetInputMode(FInputModeUIOnly());
-			bShowMouseCursor = true; 
+			bShowMouseCursor = true;
 		}
 	}
 }
@@ -402,7 +417,7 @@ void ASWPlayerController::HidePauseMenu()
 
 	bIsPaused = false;
 	SetInputMode(FInputModeGameOnly());
-	bShowMouseCursor = false; 
+	bShowMouseCursor = false;
 }
 
 void ASWPlayerController::TogglePauseMenu()
@@ -419,25 +434,35 @@ void ASWPlayerController::TogglePauseMenu()
 	}
 }
 
-void ASWPlayerController::SetEndGameWidget()
+void ASWPlayerController::SetEndGameWidget(FText GameOverText)
 {
 	if (SWEndGameMenuWidgetClass)
 	{
+		EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
+		
 		if (!EndGameMenuWidget)
 		{
-			EndGameMenuWidget = CreateWidget<UUserWidget>(this, SWEndGameMenuWidgetClass);
 			bIsPaused = true;
 		}
-        
+
 		if (EndGameMenuWidget)
 		{
 			EndGameMenuWidget->AddToViewport();
+			if (UEndGame* EndGameWidget = Cast<UEndGame>(EndGameMenuWidget))
+			{
+				EndGameWidget->SetGameOverText(GameOverText);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Error, TEXT("cant cast EndGameMenuWidget"));
+			}
 			SetInputMode(FInputModeUIOnly());
-			bShowMouseCursor = true; 
+			bShowMouseCursor = true;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("EndGameMenuWidget not created"));
 		}
 	}
 }
-
-
-
 

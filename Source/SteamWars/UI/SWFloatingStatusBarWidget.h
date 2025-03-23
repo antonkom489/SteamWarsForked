@@ -4,7 +4,6 @@
 #include "Blueprint/UserWidget.h"
 #include "SWFloatingStatusBarWidget.generated.h"
 
-
 UCLASS()
 class STEAMWARS_API USWFloatingStatusBarWidget : public UUserWidget
 {
@@ -25,4 +24,6 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void PlayFadeOut();
+
+	
 };

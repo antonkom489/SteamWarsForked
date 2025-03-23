@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "UI/SWHUDWidget.h"
 #include "SWPlayerController.generated.h"
 
 class UPaperSprite;
@@ -15,6 +16,8 @@ class STEAMWARS_API ASWPlayerController : public APlayerController
 
 public:
 	ASWPlayerController();
+
+	USWHUDWidget* GetHUDWidget() const;
 
 	void CreateHUD();
 	//void CreatePauseHUD();
@@ -60,7 +63,7 @@ public:
 	void TogglePauseMenu();
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
-	void SetEndGameWidget();
+	void SetEndGameWidget(FText GameOverText);
 	
 	void HidePauseMenu();
 

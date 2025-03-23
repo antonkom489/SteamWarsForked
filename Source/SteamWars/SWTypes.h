@@ -17,17 +17,7 @@ enum class ESpawnersID : uint8
 	Eith,
 	Nine,
 	Ten,
-	Weapon_None,
-	Weapon_One,
-	Weapon_Two,
-	Weapon_Three,
-	Weapon_Four,
-	Weapon_Five,
-	Weapon_Six,
-	Weapon_Seven,
-	Weapon_Eith,
-	Weapon_Nine,
-	Weapon_Ten
+	Weapon
 };
 
 UENUM(BlueprintType)
