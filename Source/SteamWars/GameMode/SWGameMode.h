@@ -99,7 +99,7 @@ private:
 	ESpawnersID GetSpawnerIDForEnemy(TSubclassOf<AEnemyBaseCharacter> Enemy);
 
 	static TArray<TSubclassOf<ARangeWeaponItem>> GetWeaponClasses(const FWaveDataFor& WaveData);
-	static TArray<TSubclassOf<ARangeWeaponItem>> GetAllWeaponClassesFromDataTable(UDataTable* WaveDataTable);
+	TSubclassOf<ARangeWeaponItem> GetWeaponClassFromDataTable(UDataTable* WaveDataTable, int32 WaveIndex);
 	
 	TSubclassOf<AEnemyBaseCharacter> GetEnemyFromPool();
 	void NewWave();

@@ -53,27 +53,27 @@ void AEnemySpawner::SpawnEnemy()
    });
 }
 
-void AEnemySpawner::SpawnWeapon(int i)
+bool AEnemySpawner::SpawnWeapon()
 {
-	i--;
-	if (i >= 0 && i < WeaponQueue.Num() && WeaponQueue[i])
+	if (WeaponQueue)
 	{
-		GetWorld()->SpawnActor<ARangeWeaponItem>(WeaponQueue[i], GetActorTransform());
+		GetWorld()->SpawnActor<ARangeWeaponItem>(WeaponQueue, GetActorTransform());
+
+		WeaponQueue = nullptr;
+		return true;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Invalid index or weapon class is null: Index = %d"), i);
+		UE_LOG(LogTemp, Warning, TEXT("Invalid index or weapon class is null"));
+		return false;
 	}
 }
 
-void AEnemySpawner::AddWeaponToQueue(const TArray<TSubclassOf<ARangeWeaponItem>>& WeaponClasses)
+void AEnemySpawner::AddWeaponToQueue(const TSubclassOf<ARangeWeaponItem>& WeaponClass)
 {
-	if (WeaponClasses.Num() > 0) 
+	if (WeaponClass) 
 	{
-		for (const TSubclassOf<ARangeWeaponItem>& WeaponClass : WeaponClasses)
-		{
-			WeaponQueue.Add(WeaponClass); 
-		}
+		WeaponQueue = WeaponClass; 
 	}
 	else
 	{
