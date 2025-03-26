@@ -188,7 +188,7 @@ ESWHitReactDirection ASWBaseCharacter::GetHitReactDirection(const FVector& Impac
 		}
 	}
 
-	return ESWHitReactDirection::Front;
+	//return ESWHitReactDirection::Front;
 }
 
 void ASWBaseCharacter::PlayHitReact_Implementation(FGameplayTag HitDirection, AActor* DamageCauser)
