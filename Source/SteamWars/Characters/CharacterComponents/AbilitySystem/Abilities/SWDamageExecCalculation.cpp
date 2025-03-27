@@ -79,4 +79,6 @@ void USWDamageExecCalculation::Execute_Implementation(const FGameplayEffectCusto
 		USWAbilitySystemComponent* SourceASC = Cast<USWAbilitySystemComponent>(SourceAbilitySystemComponent);
 		TargetASC->ReceiveDamage(SourceASC, UnmitigatedDamage, MitigatedDamage);
 	}
+
+	
 }
