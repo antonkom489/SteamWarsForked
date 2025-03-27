@@ -315,7 +315,7 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 		return;
 	}
 	float LookScaleModifier = 1.f;
-	LookScaleModifier *= FMath::Lerp(1.f, ADSSensitivityScale, HeroCharacter->GetADSAlpha());
+	LookScaleModifier *= FMath::Lerp(0.6f, ADSSensitivityScale, HeroCharacter->GetADSAlpha());
 	const FVector2D Value = InputActionValue.Get<FVector2D>() * LookScaleModifier;
 
 	RotArrayX[RotCacheIndex] = Value.X;
