@@ -2,6 +2,7 @@
 #include "EnemyBaseCharacter.h"
 #include "Components/SphereComponent.h"
 #include "GameMode/SWGameMode.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 AEnemySpawner::AEnemySpawner()
@@ -37,6 +38,8 @@ void AEnemySpawner::SpawnEnemy()
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
+			UKismetSystemLibrary::Delay(this, 1.0f, FLatentActionInfo());
+			
 			AEnemyBaseCharacter* SpawnedEnemy = GetWorld()->SpawnActor<AEnemyBaseCharacter>(Enemy, GetActorTransform(), SpawnParams);
 			if(SpawnedEnemy)
 			{
