@@ -51,7 +51,6 @@ void UEnemyShotAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 			for(FHitResult HitResult : ShotHitResults)
 			{
 				ShotEnd = HitResult.Location;
-				DrawDebugSphere(GetWorld(), ShotEnd, 50.f, 24, FColor::Red, false, 1.f);
 				UE_LOG(LogTemp, Warning, TEXT("Hit!"))
 
 				AActor* HitActor = HitResult.GetActor();
@@ -70,7 +69,6 @@ void UEnemyShotAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 				}
 			}
 		}
-		DrawDebugLine(GetWorld(), ShotStart, ShotEnd, FColor::Green, false, 1.f, 0, 0.3f);
 		
 		/*FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(ResponseGameplayEffect, GetAbilityLevel());
 		
