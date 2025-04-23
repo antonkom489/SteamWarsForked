@@ -15,6 +15,7 @@ class ASWGATA_SphereTrace;
 enum class ESWAbilityInputID : uint8;
 class ASWFPSCharacter;
 class UWeaponBarrelComponent;
+class UParticleSystem; // Добавьте этот класс
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponAmmoChangedDelegate, int32, OldValue, int32, NewValue);
 
@@ -57,7 +58,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "GASShooter|GSWeapon")
 	FWeaponAmmoChangedDelegate OnMaxSecondaryClipAmmoChanged;
-	
+
 	UWeaponBarrelComponent* GetWeaponBarrelComponent() const { return WeaponBarrel; }
 	float GetRateOfFire() const { return RateOfFire; }
 	
@@ -106,7 +107,7 @@ public:
 	// Pickup on touch
 	virtual void NotifyActorBeginOverlap(class AActor* Other) override;
 
-	UFUNCTION(BlueprintCallable, Category = "GASShooter|GSWeapon")
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "GASShooter|GSWeapon")
 	TSubclassOf<class USWHUDReticle> GetPrimaryHUDReticleClass() const;
 
 	// Called when the player equips this weapon
@@ -219,8 +220,6 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASShooter|UI")
 	TSubclassOf<class USWHUDReticle> PrimaryHUDReticleClass;
-	/*UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASShooter|UI")
-	TSubclassOf<class UGSHUDReticle> PrimaryHUDReticleClass;*/
 
 	UPROPERTY()
 	ASWGATA_LineTrace* LineTraceTargetActor;
@@ -242,13 +241,10 @@ protected:
 	FVector ADSOffset;
 
 	// Relative Location of weapon 3P Mesh when in pickup mode
-	// 1P weapon mesh is invisible so it doesn't need one
 	UPROPERTY(EditDefaultsOnly, Category = "GASShooter|GSWeapon")
 	FVector WeaponMesh3PickupRelativeLocation;
 
 	// Relative Location Offset of the offset root
-	// This is only necessary because right now, I'm using first person animations from all over around the internet/marketplace
-	// so they are not consistent in how the character hierarchy and viewport location are setup. This offset will fixes that for each weapon
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "GASShooter|GSWeapon")
 	FVector OffsetRootLocationOffset;
 
@@ -306,12 +302,11 @@ protected:
 	UFUNCTION()
 	virtual void OnRep_MaxSecondaryClipAmmo(int32 OldMaxSecondaryClipAmmo);
 
-
 	/////////////////////////////////// Destiny-like Recoil
 	UFUNCTION(BlueprintCallable, Category = "GASShooter|Recoil")
 	float SampleRecoilDirection(float x);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASShooter|Recoil") // might want to make this a part of attribute set?
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASShooter|Recoil")
 	float RecoilStat = 70.f;
 
 	UFUNCTION(BlueprintCallable, Category = "GASShooter|Recoil")
@@ -347,8 +342,6 @@ protected:
 	float SpreadIncrementADSMod = 0.5f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASShooter|Recoil")
 	float SpreadRecoveryInterpSpeed = 20.f;
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASShooter|Recoil")
-	//float SpreadRecoveryInterpSpeedAiming = 35.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASShooter|Recoil")
 	bool bIsUseADSStabilizer = true;
@@ -376,8 +369,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "GASShooter|Recoil")
 	FRotator RecoilCheckpoint;
 
-	
-
 	UFUNCTION(BlueprintCallable, Category = "GASShooter|Recoil")
 	void IncrementSpread();
 
@@ -387,8 +378,23 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GASShooter|Recoil")
 	void ResetADSHeat();
 
+	
+	UFUNCTION(BlueprintCallable, Category = "Effects")
+	UParticleSystem* GetStartParticleEffect() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Effects")
+	UParticleSystem* GetEndParticleEffect() const;
+
 private:
 	FTimerHandle ShotTimerHandle;
 
 	float GetShotTimerInterval();
+
+	// Particle Effects
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	UParticleSystem* StartParticleEffect;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	UParticleSystem* EndParticleEffect;
+
 };

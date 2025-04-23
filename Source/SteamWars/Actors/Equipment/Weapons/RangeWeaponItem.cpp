@@ -556,5 +556,14 @@ float ARangeWeaponItem::GetShotTimerInterval()
 	return 60.0f / RateOfFire;
 }
 
+UParticleSystem* ARangeWeaponItem::GetStartParticleEffect() const
+{
+	return StartParticleEffect;
+}
+
+UParticleSystem* ARangeWeaponItem::GetEndParticleEffect() const
+{
+	return EndParticleEffect;
+}
 
 
