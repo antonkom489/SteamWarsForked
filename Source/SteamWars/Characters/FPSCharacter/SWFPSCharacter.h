@@ -75,7 +75,7 @@ public:
 	ARangeWeaponItem* GetCurrentWeapon() const;
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
-	bool +(ARangeWeaponItem* NewWeapon, bool bEquipWeapon = false);
+	bool AddWeaponToInventory(ARangeWeaponItem* NewWeapon, bool bEquipWeapon = false);
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	bool RemoveWeaponFromInventory(ARangeWeaponItem* WeaponToRemove);
