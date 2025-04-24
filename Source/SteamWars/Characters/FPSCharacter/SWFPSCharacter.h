@@ -24,7 +24,7 @@ enum class ESWHeroWeaponState : uint8
 	RocketLauncherAiming	UMETA(DisplayName = "Rocket Launcher Aiming")
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct STEAMWARS_API FSWHeroInventory
 {
 	GENERATED_USTRUCT_BODY()
@@ -75,7 +75,7 @@ public:
 	ARangeWeaponItem* GetCurrentWeapon() const;
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
-	bool AddWeaponToInventory(ARangeWeaponItem* NewWeapon, bool bEquipWeapon = false);
+	bool +(ARangeWeaponItem* NewWeapon, bool bEquipWeapon = false);
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|Inventory")
 	bool RemoveWeaponFromInventory(ARangeWeaponItem* WeaponToRemove);
@@ -159,10 +159,13 @@ protected:
 public:
 	bool bChangedWeaponLocally;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Inventory)
+	UPROPERTY(ReplicatedUsing = OnRep_Inventory, BlueprintReadOnly)
 	FSWHeroInventory Inventory;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "GAS|Inventory")
+	UFUNCTION(BlueprintCallable)
+	FSWHeroInventory GetInventory();
+
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "GAS|Inventory")
 	TArray<TSubclassOf<ARangeWeaponItem>> DefaultInventoryWeaponClasses;
 
 	UPROPERTY(ReplicatedUsing = OnRep_CurrentWeapon)

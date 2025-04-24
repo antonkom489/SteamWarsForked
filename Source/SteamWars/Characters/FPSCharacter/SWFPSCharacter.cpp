@@ -788,6 +788,11 @@ void ASWFPSCharacter::BindASCInput()
 	}
 }
 
+FSWHeroInventory ASWFPSCharacter::GetInventory()
+{
+	return Inventory;
+}
+
 void ASWFPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

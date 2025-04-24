@@ -160,6 +160,11 @@ void ASWGameMode::OnEnemyDefeated()
 	}
 }
 
+void ASWGameMode::InitWaveNumber(int NewWaveNumber)
+{
+	WaveNumber = NewWaveNumber;
+}
+
 /*TSubclassOf<AEnemyBaseCharacter> ASWGameMode::GetEnemyFromPool()
 {
 	TArray<TSubclassOf<AEnemyBaseCharacter>> Keys;
@@ -241,12 +246,18 @@ void ASWGameMode::NewWave()
 	WaveNumber += 1;
 	UE_LOG(LogTemp, Warning, TEXT("New Wave"));
 	StartWave();
+	NewWaveDelegate.Broadcast(WaveNumber);
+}
+
+ASWGameMode::ASWGameMode()
+{
+	WaveNumber = 1;
 }
 
 void ASWGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	InitializeSpawners();
 	NewWave();
 }

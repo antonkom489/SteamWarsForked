@@ -9,6 +9,8 @@
 class AEnemyBaseCharacter;
 class AEnemySpawner;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FNewWaveDelegate, int, WaveNumber);
+
 USTRUCT(BlueprintType)
 struct FWaveSpawnData : public FTableRowBase
 {
@@ -60,8 +62,10 @@ class STEAMWARS_API ASWGameMode : public AGameMode
 	GENERATED_BODY()
 
 public:
-
+	ASWGameMode();
 	
+	UPROPERTY(BlueprintAssignable, Category = "Wave")
+	FNewWaveDelegate NewWaveDelegate;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wave")
 	UDataTable* WaveDataTable;
@@ -77,6 +81,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Wave")
 	int32 GetEnemyRemaining() const { return EnemyRemaining; };
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void InitWaveNumber(int NewWaveNumber);
+	
 private:
 
 	float TransitionWaveTime = 3.0f;
@@ -84,7 +92,7 @@ private:
 	FTimerHandle WaveTimer;
 	TSubclassOf<AEnemyBaseCharacter> EnemyChar;
 	TMap<ESpawnersID, AEnemySpawner*> SpawnersMap;
-	int WaveNumber = 0;
+	int WaveNumber;
 	int EnemyRemaining = 0;
 	TMap<TSubclassOf<AEnemyBaseCharacter>, int> EnemyPool;
 	TMap<ESpawnersID, TMap<TSubclassOf<AEnemyBaseCharacter>, int32>> SpawnerEnemyPool;

@@ -33,7 +33,7 @@ class STEAMWARS_API ARangeWeaponItem : public AActor, public IAbilitySystemInter
 
 public:
 	ARangeWeaponItem();
-
+	
 	UPROPERTY(BlueprintReadWrite)
 	bool bSpawnWithCollision;
 
