@@ -380,10 +380,10 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable, Category = "Effects")
-	UParticleSystem* GetStartParticleEffect() const;
+	UNiagaraSystem* GetStartParticleEffect() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Effects")
-	UParticleSystem* GetEndParticleEffect() const;
+	UNiagaraSystem* GetEndParticleEffect() const;
 
 private:
 	FTimerHandle ShotTimerHandle;
@@ -392,9 +392,9 @@ private:
 
 	// Particle Effects
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
-	UParticleSystem* StartParticleEffect;
+	UNiagaraSystem* StartParticleEffect; // Измените на Niagara
 
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
-	UParticleSystem* EndParticleEffect;
+	UNiagaraSystem* EndParticleEffect; // Измените на Niagara
 
 };

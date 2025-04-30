@@ -879,11 +879,31 @@ void ASWFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 		EnhancedInputComponent->BindAction(InputActions->PrevWeaponAction, ETriggerEvent::Completed, this,
 			&ASWFPSCharacter::InvokeAbility, ESWAbilityInputID::PrevWeapon, false);
 
-		
+		EnhancedInputComponent->BindAction(InputActions->XRayAction, ETriggerEvent::Triggered, this,
+	&ASWFPSCharacter::OnXrayPressed);
+
+		EnhancedInputComponent->BindAction(InputActions->XRayAction, ETriggerEvent::Completed, this,
+			&ASWFPSCharacter::OnXrayReleased);
 
 		
 	}
 	//BindASCInput();
+}
+
+void ASWFPSCharacter::OnXrayPressed()
+{
+	if (FirstPersonCameraComponent)
+	{
+		FirstPersonCameraComponent->PostProcessBlendWeight = 1;
+	}
+}
+
+void ASWFPSCharacter::OnXrayReleased()
+{
+	if (FirstPersonCameraComponent)
+	{
+		FirstPersonCameraComponent->PostProcessBlendWeight = 0;
+	}
 }
 
 void ASWFPSCharacter::Move(const FInputActionValue& Value)
