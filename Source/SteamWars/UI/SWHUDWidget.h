@@ -33,6 +33,9 @@ public:
 	void SetPrimaryClipAmmo(int32 ClipAmmo);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void SetMaxPrimaryClipAmmo(int32 ClipAmmo);
+	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)

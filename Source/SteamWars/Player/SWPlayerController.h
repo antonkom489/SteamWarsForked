@@ -38,6 +38,9 @@ public:
 	void SetPrimaryClipAmmo(int32 ClipAmmo);
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
+	void SetMaxPrimaryClipAmmo();
+
+	UFUNCTION(BlueprintCallable, Category = "GAS|UI")
 	void SetPrimaryReserveAmmo(int32 ReserveAmmo);
 
 	UFUNCTION(BlueprintCallable, Category = "GAS|UI")

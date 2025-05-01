@@ -97,6 +97,7 @@ void ASWPlayerController::CreateHUD()
 			UIHUDWidget->SetEquippedWeaponSprite(CurrentWeapon->PrimaryIcon);
 			UIHUDWidget->SetEquippedWeaponStatusText(CurrentWeapon->GetDefaultStatusText());
 			UIHUDWidget->SetPrimaryClipAmmo(Hero->GetPrimaryClipAmmo());
+			UIHUDWidget->SetMaxPrimaryClipAmmo(Hero->GetMaxPrimaryClipAmmo());
 			UIHUDWidget->SetReticle(CurrentWeapon->GetPrimaryHUDReticleClass());
 
 			// PlayerState's Pawn isn't set up yet so we can't just call PS->GetPrimaryReserveAmmo()
@@ -139,6 +140,15 @@ void ASWPlayerController::SetPrimaryClipAmmo(int32 ClipAmmo)
 	if (UIHUDWidget)
 	{
 		UIHUDWidget->SetPrimaryClipAmmo(ClipAmmo);
+	}
+}
+
+void ASWPlayerController::SetMaxPrimaryClipAmmo()
+{
+	if (UIHUDWidget)
+	{
+		ASWFPSCharacter* Hero = GetPawn<ASWFPSCharacter>();
+		UIHUDWidget->SetMaxPrimaryClipAmmo(Hero->GetMaxPrimaryClipAmmo());
 	}
 }
 
