@@ -250,6 +250,7 @@ bool ASWPlayerController::ServerKill_Validate()
 void ASWPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	
 
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
 		GetLocalPlayer()))
@@ -259,6 +260,10 @@ void ASWPlayerController::BeginPlay()
 
 		UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
 	}
+	
+	float Sens = 1.0f;
+	GConfig->GetFloat(TEXT("/Script/Game.Settings"), TEXT("MouseSensitivity"), Sens, GGameIni);
+	PlayerInput->SetMouseSensitivity(Sens);
 }
 
 void ASWPlayerController::SetupInputComponent()
@@ -326,7 +331,7 @@ void ASWPlayerController::Input_LookMouse(const FInputActionValue& InputActionVa
 	}
 	float LookScaleModifier = 1.f;
 	LookScaleModifier *= FMath::Lerp(0.6f, ADSSensitivityScale, HeroCharacter->GetADSAlpha());
-	const FVector2D Value = InputActionValue.Get<FVector2D>() * LookScaleModifier;
+	const FVector2D Value = InputActionValue.Get<FVector2D>() * LookScaleModifier * PlayerInput->GetMouseSensitivityX();
 
 	RotArrayX[RotCacheIndex] = Value.X;
 	float result = 0.f;

@@ -19,10 +19,17 @@ void USettings::InitializeMouseSensitivity()
 void USettings::SetMouseSens(float NewSensitivity)
 {
 	if (PlayerInput)
-	PlayerInput->SetMouseSensitivity(NewSensitivity);
+	{
+		PlayerInput->SetMouseSensitivity(NewSensitivity);
+		GConfig->SetFloat(TEXT("/Script/Game.Settings"), TEXT("MouseSensitivity"), NewSensitivity, GGameIni);
+		GConfig->Flush(false, GGameIni);
+	}
 }
+
 
 float USettings::GetMouseSens()
 {
-	return  PlayerInput->GetMouseSensitivityX();
+	float Sens = 1.0f;
+	GConfig->GetFloat(TEXT("/Script/Game.Settings"), TEXT("MouseSensitivity"), Sens, GGameIni);
+	return Sens;
 }
