@@ -54,4 +54,3 @@ void ASWProjectile::Initialize(FVector TargetLocation)
 	// Устанавливаем новое вращение снаряда
 	SetActorRotation(NewRotation);
 }
-
