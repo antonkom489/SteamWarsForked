@@ -28,6 +28,12 @@ public:
 	float Damage;
 	
 	virtual void FinishDying() override;
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Events")
+	void DiedEnemy();
+	virtual void DiedEnemy_Implementation();
+	void DestroyEnemyActor();
+	void EnableRagdoll();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Events")
 	void Threated(FVector ThreatedSource);
@@ -68,7 +74,21 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Events")
 	UBehaviorTree* BehaviorTree;
 
+	FTimerHandle MovementCheckTimer;
+	FVector LastCheckedLocation;
+	float TimeNotMoving = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float RequiredStillTime = 3.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MovementCheckInterval = 0.2f;
+
+	UFUNCTION()
+	void CheckStandingStill();
 
 private:
 	bool bIsInCover = false;
+
+	FTimerHandle DestroyTimerHandle;
 };
