@@ -3,7 +3,9 @@
 #include "Blueprint/UserWidget.h"
 #include "Characters/CharacterComponents/AbilitySystem/SWAbilitySystemComponent.h"
 #include "Characters/CharacterComponents/AbilitySystem/AttributeSet/SWAttributeSet.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "UI/SWFloatingStatusBarWidget.h"
 
@@ -31,10 +33,59 @@ void AEnemyBaseCharacter::FinishDying()
 {
 	
 	Super::FinishDying();
+	
+	DiedEnemy(); 
+}
 
+void AEnemyBaseCharacter::DiedEnemy_Implementation()
+{
+	
 	OnEnemyDied.Broadcast();
+
+	// Активируем ragdoll
+	EnableRagdoll();
+
+	
+	// Запускаем таймер на уничтожение
+	GetWorld()->GetTimerManager().SetTimer(
+		DestroyTimerHandle,
+		this,
+		&AEnemyBaseCharacter::DestroyEnemyActor,
+		5.0f,
+		false
+	);
+	
+}
+
+void AEnemyBaseCharacter::DestroyEnemyActor()
+{
 	Destroy();
 }
+
+void AEnemyBaseCharacter::EnableRagdoll()
+{
+	// Отключаем движение
+	GetCharacterMovement()->DisableMovement();
+
+	// Отключаем столкновение капсулы
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	// Устанавливаем профиль коллизии для ragdoll
+	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+
+	// Отключаем текущую анимацию
+	GetMesh()->SetAnimationMode(EAnimationMode::AnimationCustomMode);
+
+	// Включаем симуляцию физики
+	GetMesh()->SetSimulatePhysics(true);
+
+	// Обнуляем velocity на случай, если персонаж двигался
+	GetMesh()->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
+
+	FVector LaunchImpulse = GetActorForwardVector() * -1000.f + FVector(0.f, 0.f, 300.f); // Назад + вверх
+	GetMesh()->AddImpulseToAllBodiesBelow(LaunchImpulse, TEXT("Bone"), true);
+}
+
 
 void AEnemyBaseCharacter::BeginPlay()
 {
@@ -58,6 +109,16 @@ void AEnemyBaseCharacter::BeginPlay()
 		(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun")),
 			EGameplayTagEventType::NewOrRemoved).AddUObject(this, &AEnemyBaseCharacter::StunTagChanged);
 	}
+
+	LastCheckedLocation = GetActorLocation();
+
+	GetWorld()->GetTimerManager().SetTimer(
+		MovementCheckTimer,
+		this,
+		&AEnemyBaseCharacter::CheckStandingStill,
+		MovementCheckInterval,
+		true
+	);
 }
 
 void AEnemyBaseCharacter::HealthChanged(const FOnAttributeChangeData& Data)
@@ -91,9 +152,57 @@ void AEnemyBaseCharacter::StunTagChanged(const FGameplayTag CallbackTag, int32 N
 	}
 }
 
+void AEnemyBaseCharacter::CheckStandingStill()
+{
+	FVector CurrentLocation = GetActorLocation();
+	float DistanceMoved = FVector::DistSquared(CurrentLocation, LastCheckedLocation);
+
+	const float Tolerance = 5.0f; // квадрат расстояния в см^2
+
+	if (DistanceMoved < Tolerance)
+	{
+		TimeNotMoving += MovementCheckInterval;
+
+		if (TimeNotMoving >= RequiredStillTime)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Enemy has been standing still for %.1f seconds"), TimeNotMoving);
+			FVector NewLocation = FVector(1500.f, 600.f, 200.f);
+			FRotator NewRotation = FRotator::ZeroRotator;
+
+			TeleportTo(NewLocation, NewRotation, false, true);
+		}
+	}
+	else
+	{
+		TimeNotMoving = 0.0f; // сброс таймера, враг двигается
+	}
+
+	LastCheckedLocation = CurrentLocation;
+}
+
 void AEnemyBaseCharacter::Threated_Implementation(FVector ThreatedSource)
 {
-	
+	FVector CurrentLocation = GetActorLocation();
+	float DistanceMoved = FVector::DistSquared(CurrentLocation, LastCheckedLocation);
+
+	const float Tolerance = 5.0f; // квадрат расстояния в см^2
+
+	if (DistanceMoved < Tolerance)
+	{
+		TimeNotMoving += MovementCheckInterval;
+
+		if (TimeNotMoving >= RequiredStillTime)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Enemy has been standing still for %.1f seconds"), TimeNotMoving);
+			// здесь можешь вызвать нужную функцию или флаг
+		}
+	}
+	else
+	{
+		TimeNotMoving = 0.0f; // сброс таймера, враг двигается
+	}
+
+	LastCheckedLocation = CurrentLocation;
 }
 
 void AEnemyBaseCharacter::EnterCover_Implementation()
