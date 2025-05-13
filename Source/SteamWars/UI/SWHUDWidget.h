@@ -1,6 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/GameplayStatics.h"
+#include "MovieSceneSequence.h"
+#include "LevelSequenceActor.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
 #include "TimerManager.h"
@@ -47,11 +50,13 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetReticle(TSubclassOf<class USWHUDReticle> ReticleClass);
 
-
 	/**
 	* Attribute setters
 	*/
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sequence")
+	ULevelSequence* MySequence;
+	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxHealth(float MaxHealth);
 
@@ -95,5 +100,7 @@ protected:
 	float ResetTime = 5.0f;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Text")
-	UTextBlock* WeaponTextBlock; 
+	UTextBlock* WeaponTextBlock;
+
+	void PlaySequence();
 };

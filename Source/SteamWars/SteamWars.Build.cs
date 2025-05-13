@@ -10,7 +10,8 @@ public class SteamWars : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "AIModule", "NetCore", "UMG" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks", "Paper2D", "Niagara" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "GameplayAbilities", "GameplayTags", "GameplayTasks", "Paper2D", "Niagara", "LevelSequence", 
+			"MovieScene"  });
 
 		PublicIncludePaths.Add("SteamWars");
 		
