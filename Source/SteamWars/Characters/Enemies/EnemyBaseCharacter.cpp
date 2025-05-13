@@ -51,7 +51,7 @@ void AEnemyBaseCharacter::DiedEnemy_Implementation()
 		DestroyTimerHandle,
 		this,
 		&AEnemyBaseCharacter::DestroyEnemyActor,
-		5.0f,
+		TimeToDestroy,
 		false
 	);
 	
@@ -82,7 +82,7 @@ void AEnemyBaseCharacter::EnableRagdoll()
 	// Обнуляем velocity на случай, если персонаж двигался
 	GetMesh()->SetAllPhysicsLinearVelocity(FVector::ZeroVector);
 
-	FVector LaunchImpulse = GetActorForwardVector() * -1000.f + FVector(0.f, 0.f, 300.f); // Назад + вверх
+	FVector LaunchImpulse = GetActorForwardVector() * BackImpulse + Impulse; // Назад + вверх
 	GetMesh()->AddImpulseToAllBodiesBelow(LaunchImpulse, TEXT("Bone"), true);
 }
 

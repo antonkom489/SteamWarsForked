@@ -17,6 +17,8 @@ class STEAMWARS_API AEnemyBaseCharacter : public ASWBaseCharacter
 
 public:
 	AEnemyBaseCharacter(const class FObjectInitializer& ObjectInitializer);
+
+	
 	
 	UPROPERTY(BlueprintAssignable, Category = "Events")
 	FOnEnemyDied OnEnemyDied;
@@ -62,6 +64,15 @@ protected:
 	// Actual hard pointer to AttributeSetBase
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Events")
 	class USWAttributeSet* HardRefAttributeSet;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Impulse")
+	FVector Impulse = FVector(0.f, 0.f, 150.f);
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Impulse")
+	float BackImpulse = -100.0f;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Impulse")
+	float TimeToDestroy = 5.0f;
 	
 	FDelegateHandle HealthChangedDelegateHandle;
 
