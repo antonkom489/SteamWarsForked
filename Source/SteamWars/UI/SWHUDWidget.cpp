@@ -1,5 +1,6 @@
 #include "SWHUDWidget.h"
 #include "LevelSequencePlayer.h"
+#include "Player/SWPlayerController.h"
 
 void USWHUDWidget::SetWeaponTextBlock(UTextBlock* TextBlock)
 {
@@ -30,7 +31,7 @@ void USWHUDWidget::ResetWeaponText()
 void USWHUDWidget::PlaySequence()
 {
 	if (MySequence)
-	{
+	{		
 		ALevelSequenceActor* SequenceActor = GetWorld()->SpawnActor<ALevelSequenceActor>(ALevelSequenceActor::StaticClass());
 		SequenceActor->SetSequence(MySequence);
         
@@ -41,10 +42,46 @@ void USWHUDWidget::PlaySequence()
 			FMovieSceneSequencePlaybackSettings(),
 			SequenceActor
 		);
-        
+
+		if (GetWorld())
+		{
+			APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+			if (PlayerController)
+			{
+				PlayerController->DisableInput(nullptr);
+				PlayerController->GetPawn()->DisableInput(nullptr);
+			}
+		}
+		
 		if (SequencePlayer)
 		{
-			SequencePlayer->Play();
+			FTimerHandle PlayDelayHandle;
+			GetWorld()->GetTimerManager().SetTimer(
+				PlayDelayHandle,
+				[SequencePlayer]()
+				{
+					if (SequencePlayer)
+					{
+						SequencePlayer->Play();
+					}
+				},
+				PlayDelay,
+				false
+			);
+			SequencePlayer->OnFinished.AddDynamic(this, &USWHUDWidget::OnSequenceFinished);
+		}
+	}
+}
+
+void USWHUDWidget::OnSequenceFinished()
+{
+	if (GetWorld())
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		if (PlayerController)
+		{
+			PlayerController->EnableInput(nullptr);
+			PlayerController->GetPawn()->EnableInput(nullptr);
 		}
 	}
 }

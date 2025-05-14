@@ -56,6 +56,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sequence")
 	ULevelSequence* MySequence;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sequence")
+	float PlayDelay = 5.0f;
 	
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetMaxHealth(float MaxHealth);
@@ -103,4 +106,6 @@ protected:
 	UTextBlock* WeaponTextBlock;
 
 	void PlaySequence();
+	UFUNCTION()
+	void OnSequenceFinished();
 };
