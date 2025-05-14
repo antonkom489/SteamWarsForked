@@ -1,5 +1,6 @@
 #include "SWHUDWidget.h"
 #include "LevelSequencePlayer.h"
+#include "Characters/FPSCharacter/SWFPSCharacter.h"
 #include "Player/SWPlayerController.h"
 
 void USWHUDWidget::SetWeaponTextBlock(UTextBlock* TextBlock)
@@ -42,7 +43,7 @@ void USWHUDWidget::PlaySequence()
 			FMovieSceneSequencePlaybackSettings(),
 			SequenceActor
 		);
-
+		
 		if (SequencePlayer)
 		{
 			SequencePlayer->OnPlay.AddDynamic(this, &USWHUDWidget::DisablePlayerInput);
@@ -84,6 +85,12 @@ void USWHUDWidget::DisablePlayerInput()
 		{
 			PlayerController->DisableInput(nullptr);
 			PlayerController->GetPawn()->DisableInput(nullptr);
+		}
+
+		ASWFPSCharacter* FPSCharacter = Cast<ASWFPSCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		if (IsValid(FPSCharacter))
+		{
+			FPSCharacter->OnXrayReleased();
 		}
 	}
 }

@@ -249,9 +249,10 @@ public:
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void OnXrayPressed();
+	void OnXrayReleased();
 
 private:
-	void OnXrayReleased();
+	
 	/*---------------Movement---------------*/
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
