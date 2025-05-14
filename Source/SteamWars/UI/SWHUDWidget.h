@@ -108,4 +108,6 @@ protected:
 	void PlaySequence();
 	UFUNCTION()
 	void OnSequenceFinished();
+	UFUNCTION()
+	void DisablePlayerInput();
 };

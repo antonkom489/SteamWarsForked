@@ -43,22 +43,11 @@ void USWHUDWidget::PlaySequence()
 			SequenceActor
 		);
 
-		if (GetWorld())
-		{
-			APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-			if (PlayerController)
-			{
-				PlayerController->DisableInput(nullptr);
-				PlayerController->GetPawn()->DisableInput(nullptr);
-			}
-		}
-		
 		if (SequencePlayer)
 		{
+			SequencePlayer->OnPlay.AddDynamic(this, &USWHUDWidget::DisablePlayerInput);
 			FTimerHandle PlayDelayHandle;
-			GetWorld()->GetTimerManager().SetTimer(
-				PlayDelayHandle,
-				[SequencePlayer]()
+			GetWorld()->GetTimerManager().SetTimer( PlayDelayHandle, [SequencePlayer]()
 				{
 					if (SequencePlayer)
 					{
@@ -85,3 +74,17 @@ void USWHUDWidget::OnSequenceFinished()
 		}
 	}
 }
+
+void USWHUDWidget::DisablePlayerInput()
+{
+	if (GetWorld())
+	{
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		if (PlayerController)
+		{
+			PlayerController->DisableInput(nullptr);
+			PlayerController->GetPawn()->DisableInput(nullptr);
+		}
+	}
+}
+
